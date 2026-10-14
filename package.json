@@ -1,0 +1,26 @@
+{
+  "name": "cornerstone-health-services",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Cornerstone Health Services Inc - psychiatric care website (Quincy, MA)",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run build:client && npm run build:ssr && npm run prerender",
+    "build:client": "vite build",
+    "build:ssr": "vite build --ssr src/entry-server.jsx --outDir dist-ssr",
+    "prerender": "node scripts/prerender.mjs",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-react": "^6.1.2",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.4"
+  }
+}

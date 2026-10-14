@@ -1,0 +1,205 @@
+@import 'tailwindcss';
+
+/* ===========================================================================
+   CORNERSTONE HEALTH SERVICES INC — design tokens
+   ---------------------------------------------------------------------------
+   Sourced from the live site's own theme stylesheet (style.min.css :root block),
+   so this build matches the real brand rather than an approximation:
+
+     --priColor:  #0e0f3b   primary  (deep navy / indigo)
+     --secColor:  #27d4ed   secondary (cyan)
+     --terColor:  #14a5eb   tertiary  (blue)
+     --gradientColor: linear-gradient(180deg, #27d4ed 0%, #14a5eb 100%)
+     --priFont:   'Jost'
+     --secFont:   'Allison'          (script accent)
+     --bodyColor: #555555
+     --bodyFontSize: 16px / --bodyLineHeight: 23px
+
+   The live site also uses #f9f9ff for its main content background.
+
+   CONTRAST NOTES (WCAG 2.1 AA: 4.5:1 normal text, 3:1 large text and UI):
+     measured against white —
+       navy #0e0f3b ........ 18.26:1  PASS any size
+       body #555555 ........  7.46:1  PASS any size
+       coral #ca4b4b .......  4.55:1  PASS normal text
+       coral-deep #a83a3a ..  6.30:1  PASS any size
+       cyan-deep #0a7d94 ...  4.80:1  PASS normal text   (derived)
+       blue-deep #0b6fa4 ...  5.49:1  PASS normal text   (derived)
+       cyan #27d4ed ........  1.79:1  FAIL — decorative only
+       blue #14a5eb ........  2.76:1  FAIL — decorative only
+
+     measured against navy #0e0f3b —
+       white ............... 18.26:1  PASS
+       cyan #27d4ed ........ 10.20:1  PASS
+       blue #14a5eb ........  6.62:1  PASS
+
+   RULES THAT FOLLOW FROM THIS:
+     1. cyan and blue are never used for text on light backgrounds. Body-size
+        text in that family uses --color-cyan-deep / --color-blue-deep.
+     2. Nothing white sits on cyan or blue. The signature gradient button uses
+        NAVY text (min 6.62:1 across the whole gradient).
+     3. cyan/blue as large display text or as fills behind navy text is fine.
+   =========================================================================== */
+
+@theme {
+  --font-sans: 'Jost', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    Roboto, Helvetica, Arial, sans-serif;
+  /* Script accent face. Used only for the short decorative line above a
+     heading, mirroring the live site's `.h1_hdng` treatment. */
+  --font-script: 'Allison', 'Segoe Script', cursive;
+
+  /* ----- Primary: deep navy / indigo (#0e0f3b) ----- */
+  --color-navy-50: #eef0f8;
+  --color-navy-100: #d9dcee;
+  --color-navy-200: #b3b9db;
+  --color-navy-400: #5a628f;
+  --color-navy-600: #2b3057;
+  --color-navy: #0e0f3b;
+  --color-navy-900: #060717;
+
+  /* ----- Secondary: cyan (#27d4ed) ----- */
+  --color-cyan-50: #e9fbfe;
+  --color-cyan-100: #c9f5fc;
+  --color-cyan-200: #94eaf7;
+  --color-cyan: #27d4ed;
+  --color-cyan-deep: #0a7d94; /* accessible text variant */
+  --color-cyan-ink: #075e70; /* heavier variant for small text */
+
+  /* ----- Tertiary: blue (#14a5eb) ----- */
+  --color-blue-50: #e8f5fd;
+  --color-blue-100: #cbe9fb;
+  --color-blue-200: #97d3f6;
+  --color-blue: #14a5eb;
+  --color-blue-deep: #0b6fa4; /* accessible text variant */
+  --color-blue-ink: #084d72;
+
+  /* ----- Neutrals ----- */
+  --color-calm: #f9f9ff;
+  --color-calm-200: #eef0fa;
+  --color-body: #555555;
+
+  /* ----- Alert / crisis (live site's error + required-field colours) ----- */
+  --color-coral-50: #fcecec;
+  --color-coral-100: #f7d9d9;
+  --color-coral: #ca4b4b;
+  --color-coral-deep: #a83a3a;
+
+  /* ----- Focus ring: passes 3:1 against BOTH white (5.49:1) and navy (3.33:1) ----- */
+  --color-focus: #0b6fa4;
+
+  /* ----- Container radii ----- */
+  --radius-clinical: 10px;
+  --radius-clinical-sm: 8px;
+  --radius-clinical-lg: 12px;
+
+  --shadow-clinical: 0 1px 2px rgba(14, 15, 59, 0.06),
+    0 4px 16px rgba(14, 15, 59, 0.06);
+  --shadow-clinical-lg: 0 4px 8px rgba(14, 15, 59, 0.06),
+    0 16px 40px rgba(14, 15, 59, 0.1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-calm);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  :target {
+    scroll-margin-top: 7rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-navy);
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Focus ring passes 3:1 against both the light page and navy bands. */
+  :focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--color-cyan-100);
+    color: var(--color-navy);
+  }
+}
+
+@layer utilities {
+  /* The brand's signature gradient, straight from --gradientColor. */
+  .bg-brand-gradient {
+    background-image: linear-gradient(180deg, #27d4ed 0%, #14a5eb 100%);
+  }
+
+  .text-brand-gradient {
+    background-image: linear-gradient(180deg, #14a5eb 0%, #27d4ed 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Very low-contrast dot texture, used behind the dark brand bands so large
+     navy fills read as textured rather than flat. Colour comes from
+     `currentColor`, so set a text colour (e.g. text-white/10) on the element. */
+  .pattern-dots {
+    background-image: radial-gradient(currentColor 1px, transparent 1.5px);
+    background-size: 22px 22px;
+  }
+
+  /* Soft cyan bloom for hero / call-to-action panels. */
+  .bg-brand-bloom {
+    background-image: radial-gradient(
+      55% 55% at 50% 0%,
+      rgba(39, 212, 237, 0.22) 0%,
+      rgba(20, 165, 235, 0.08) 45%,
+      transparent 72%
+    );
+  }
+
+  /* Screen-reader-only, but focusable (skip links). */
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
