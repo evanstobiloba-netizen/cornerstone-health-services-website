@@ -174,6 +174,13 @@ After deploying, submit `https://<domain>/sitemap.xml` in Google Search Console.
 
 ### Client preview on GitHub Pages
 
+**Live preview:** <https://evanstobiloba-netizen.github.io/cornerstone-health-services-website/>
+
+> Note the account name: `evanst`**`o`**`biloba-netizen`. Trivially misspelled
+> (`evanstabiloba-…`, `evanstiloba-…`), and a wrong hostname returns *GitHub's own*
+> 404 — not this site's. If a preview link 404s with a bare GitHub page, check the
+> hostname first. The repo's own website link points at the correct URL.
+
 For a shareable preview before the real domain is pointed, the site publishes to
 the `gh-pages` branch:
 
