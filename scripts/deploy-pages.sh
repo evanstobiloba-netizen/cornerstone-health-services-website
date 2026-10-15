@@ -65,7 +65,9 @@ git \
   -c user.email="${GIT_AUTHOR_EMAIL:-$(git -C "$REPO_DIR" config user.email || echo deploy@localhost)}" \
   commit -q -m "Deploy preview ($(date -u +%Y-%m-%dT%H:%MZ))"
 git remote add origin "$REMOTE"
-git push -q -f origin gh-pages
+# HTTP/2 breaks the initial pack upload against GitHub for this client
+# ("RPC failed; HTTP 400"); HTTP/1.1 with a large buffer is reliable.
+git -c http.version=HTTP/1.1 -c http.postBuffer=524288000 push -q -f origin gh-pages
 
 echo
 echo "Pushed gh-pages. Preview: $VITE_SITE_URL/"
