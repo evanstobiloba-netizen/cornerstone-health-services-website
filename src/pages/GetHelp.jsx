@@ -17,49 +17,38 @@ export default function GetHelp() {
       {/* Crisis first — before anything else on the page. */}
       <section className="border-b border-coral/30 bg-coral-50">
         <div className="mx-auto max-w-7xl px-4 py-10 lg:px-8">
-          <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-            <div>
-              <p className="flex items-center gap-2 text-sm font-bold uppercase tracking-[0.14em] text-coral-deep">
-                <Icon name="alert-triangle" size={16} />
-                If this is an emergency
-              </p>
-              <h1 className="mt-2 text-2xl font-medium text-navy sm:text-3xl">
-                If you or someone else is in immediate danger, call 911 now.
-              </h1>
-              <p className="mt-3 text-[1.02rem] leading-relaxed text-body">
-                For a suicidal or mental-health crisis, call or text{' '}
-                <strong className="text-coral-deep">988</strong> — the Suicide
-                &amp; Crisis Lifeline. It is free, confidential, and answered
-                24 hours a day. You do not have to be a patient, and you do not
-                have to explain yourself perfectly.
-              </p>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+          <div className="max-w-4xl">
+            <p className="flex items-center gap-2 text-sm font-bold uppercase tracking-[0.14em] text-coral-deep">
+              <Icon name="alert-triangle" size={16} />
+              24/7 crisis support
+            </p>
+            <h1 className="mt-2 text-2xl font-medium text-navy sm:text-3xl">
+              If you or someone else is in immediate danger, call 911
+            </h1>
+            <p className="mt-3 text-[1.02rem] leading-relaxed text-body">
+              For a suicidal or mental-health crisis, call or text{' '}
               <a
                 href={crisis.lifelineHref}
-                className="flex items-center justify-center gap-2 rounded-clinical bg-coral px-6 py-4 text-base font-bold text-white transition-colors hover:bg-coral-deep"
+                className="font-bold text-coral-deep underline underline-offset-2"
               >
-                <Icon name="heart-pulse" size={20} />
-                Call or text 988
-              </a>
-              <a
-                href="tel:911"
-                className="flex items-center justify-center gap-2 rounded-clinical border-2 border-coral bg-white px-6 py-4 text-base font-bold text-coral-deep transition-colors hover:bg-coral-50"
-              >
-                <Icon name="phone" size={20} />
-                Call 911
-              </a>
-            </div>
+                988
+              </a>{' '}
+              — free, confidential, and available 24/7.
+            </p>
           </div>
         </div>
       </section>
 
-      <section className="relative overflow-hidden border-b border-navy-100 bg-white">
+      <section className="relative overflow-hidden border-b border-navy-100 bg-mesh-calm">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-32 -top-40 h-[30rem] w-[30rem] rounded-full bg-cyan-50 blur-3xl"
+          className="pointer-events-none absolute -left-40 top-[-12%] h-[32rem] w-[32rem] rounded-full bg-cyan-50/70 blur-[120px]"
         />
-        <div className="relative mx-auto max-w-7xl px-4 py-14 lg:px-8 lg:py-20">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-40 right-[-10%] h-[32rem] w-[32rem] rounded-full bg-blue-50/60 blur-[120px]"
+        />
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:py-20 lg:px-8 lg:py-24">
           <SectionHeading
             script={getHelp.script}
             title={getHelp.title}
