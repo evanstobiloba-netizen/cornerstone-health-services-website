@@ -15,17 +15,28 @@ import HeroSlideshow from '../components/HeroSlideshow.jsx'
 import Icon from '../components/Icon.jsx'
 import InsuranceLogo from '../components/InsuranceLogo.jsx'
 import LocationMap from '../components/LocationMap.jsx'
-import { Card, CheckList, SectionHeading } from '../components/Ui.jsx'
+import {
+  Badge,
+  Card,
+  CheckList,
+  Container,
+  Eyebrow,
+  IconBadge,
+  Section,
+  SectionHeading,
+  Stat,
+} from '../components/Ui.jsx'
+import { asset } from '../lib/asset.js'
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <StatsBand />
       <InsuranceMarquee />
       <Welcome />
       <ServicesGrid />
       <PathToHealing />
+      <StatsBand />
       <GetSupport />
       <FaqPreview />
       <Location />
@@ -44,100 +55,136 @@ function Hero() {
   ]
 
   return (
-    <section className="relative isolate overflow-hidden border-b border-navy-100 bg-white">
-      {/* Photographic backdrop — a slow cross-fade, held back so it reads as
-          texture rather than subject. */}
-      <HeroSlideshow className="absolute inset-0 h-full w-full lg:left-auto lg:right-0 lg:w-[58%]" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-hero-scrim" />
-
+    <Section className="relative overflow-hidden bg-mesh-calm">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-40 top-[-12%] h-[40rem] w-[40rem] rounded-full bg-cyan-50/70 blur-[120px]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-60 -left-20 h-[32rem] w-[32rem] rounded-full bg-blue-50/60 blur-[120px]"
+        className="pointer-events-none absolute -left-52 top-[-18rem] h-[46rem] w-[46rem] rounded-full bg-brand-bloom blur-3xl"
       />
 
-      <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-20 lg:px-8 lg:py-28">
-        <div>
-          <p className="font-script text-4xl leading-none text-blue-deep sm:text-[2.85rem]">
-            Mental Wellness, Within Reach
-          </p>
-          <h1 className="mt-2 text-4xl font-medium leading-[1.06] tracking-[-0.025em] text-navy sm:text-5xl lg:text-[3.5rem]">
-            Compassionate psychiatric care for adults across Massachusetts
-          </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-body">
-            {about.homepageWelcome}
-          </p>
+      <Container className="relative">
+        <div className="grid items-center gap-14 lg:grid-cols-[1.04fr_0.96fr] lg:gap-16">
+          <div>
+            <Badge tone="white" className="mb-6">
+              <span className="relative flex h-2 w-2" aria-hidden="true">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-cyan opacity-70" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-gradient" />
+              </span>
+              Accepting new patients
+            </Badge>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button to="/book" size="lg" icon="calendar">
-              Book Now
-            </Button>
-            <Button
-              href={practice.phoneHref}
-              variant="outline"
-              size="lg"
-              icon="phone"
-            >
-              {practice.phoneDisplay}
-            </Button>
+            <SectionHeading
+              as="h1"
+              size="xl"
+              eyebrow="Mental Wellness, Within Reach"
+              title="Compassionate psychiatric care for adults across Massachusetts"
+            />
+
+            <p className="mt-6 max-w-xl text-[1.05rem] leading-relaxed text-body">
+              {about.homepageWelcome}
+            </p>
+
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <Button to="/book" size="lg" icon="calendar">
+                Book Now
+              </Button>
+              <Button
+                href={practice.phoneHref}
+                variant="outline"
+                size="lg"
+                icon="phone"
+              >
+                {practice.phoneDisplay}
+              </Button>
+            </div>
+
+            <ul className="mt-10 flex flex-wrap gap-x-7 gap-y-3 border-t border-navy-100 pt-7">
+              {trust.map((t) => (
+                <li
+                  key={t.text}
+                  className="inline-flex items-center gap-2 text-[0.9rem] font-medium text-navy-600"
+                >
+                  <Icon name={t.icon} size={17} className="text-cyan-deep" />
+                  {t.text}
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <ul className="mt-10 grid gap-2.5 rounded-clinical-lg border border-navy-100/70 bg-white/85 p-3 shadow-clinical backdrop-blur sm:grid-cols-3">
-            {trust.map((t) => (
-              <li
-                key={t.text}
-                className="flex items-center gap-2.5 rounded-clinical-sm px-2 py-1.5"
-              >
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-brand-gradient text-navy">
-                  <Icon name={t.icon} size={16} />
-                </span>
-                <span className="text-[0.85rem] font-semibold leading-snug text-navy-600">
-                  {t.text}
-                </span>
-              </li>
-            ))}
-          </ul>
+          <div className="relative">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-clinical-xl shadow-clinical-xl ring-1 ring-navy-100/70 sm:aspect-[5/4] lg:aspect-[4/5]">
+              <HeroSlideshow className="absolute inset-0 h-full w-full" />
+              {/* Sits at the top so it never collides with the slide dots. */}
+              <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-white/90 px-3.5 py-1.5 text-[0.72rem] font-semibold text-navy shadow-clinical backdrop-blur">
+                <Icon name="video" size={14} className="text-cyan-deep" />
+                In person &amp; telehealth
+              </span>
+            </div>
+          </div>
         </div>
-
-        {/* Reserves the photographic column on large screens. */}
-        <div aria-hidden="true" className="hidden lg:block" />
-      </div>
-    </section>
+      </Container>
+    </Section>
   )
 }
 
-/* ------------------------------------------------------------ Stats band */
+/* ---------------------------------------------------- Insurance marquee */
 
-function StatsBand() {
+/**
+ * Slim auto-scrolling ticker of the accepted plans.
+ *
+ * The track holds the same list twice. Each copy carries a trailing `pr-2.5`
+ * equal to the internal item gap, so one copy's width is exactly one period and
+ * a `-50%` translate loops with no visible seam.
+ *
+ * The first copy stays in the accessibility tree; the second is a clone marked
+ * `aria-hidden` and is removed entirely under `prefers-reduced-motion`, where
+ * the ticker becomes a plain wrapped row instead of moving.
+ */
+function InsuranceMarquee() {
+  const track = (
+    <ul className="flex items-center gap-3 pr-3">
+      {insurances.map((i) => (
+        <li
+          key={i.slug}
+          className="flex h-16 items-center justify-center rounded-clinical border border-navy-100 bg-white px-6"
+        >
+          <InsuranceLogo item={i} imgClassName="h-9" />
+        </li>
+      ))}
+    </ul>
+  )
+
   return (
-    <section aria-label="Practice at a glance" className="relative overflow-hidden bg-mesh-navy">
+    <section
+      aria-label="Insurance plans accepted"
+      className="relative border-y border-navy-100/80 bg-white"
+    >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 pattern-dots text-white/10"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px rule-brand"
       />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-32 left-1/2 h-80 w-[48rem] -translate-x-1/2 rounded-full bg-cyan/25 blur-[140px]"
-      />
+      <div className="mx-auto flex max-w-7xl items-center gap-6 px-5 py-6 sm:px-6 lg:px-8">
+        <p className="hidden shrink-0 items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-navy-400 sm:flex">
+          <Icon name="shield" size={15} className="text-cyan-deep" />
+          Insurance accepted
+        </p>
 
-      <dl className="relative mx-auto grid max-w-7xl grid-cols-2 gap-x-6 gap-y-10 px-4 py-16 sm:grid-cols-4 lg:px-8">
-        {stats.map((s) => (
-          <div key={s.label} className="group text-center">
-            <dt className="sr-only">{s.label}</dt>
-            <dd>
-              <span className="block bg-gradient-to-b from-white via-cyan-50 to-cyan bg-clip-text text-4xl font-semibold leading-none tracking-tight text-transparent sm:text-5xl">
-                {s.value}
-              </span>
-              <span className="mt-3 block text-[0.8rem] font-semibold uppercase leading-snug tracking-[0.12em] text-navy-200">
-                {s.label}
-              </span>
-            </dd>
+        <div className="marquee-mask group relative min-w-0 flex-1 overflow-hidden">
+          <div className="marquee-track flex w-max items-center [--marquee-duration:64s] group-hover:[animation-play-state:paused]">
+            {track}
+            <div aria-hidden="true" data-marquee-clone="" className="flex">
+              {track}
+            </div>
           </div>
-        ))}
-      </dl>
+        </div>
+
+        <Link
+          to="/insurance"
+          className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-blue-deep underline-offset-4 hover:underline"
+        >
+          All {insurances.length} plans
+          <Icon name="arrow" size={15} />
+        </Link>
+      </div>
     </section>
   )
 }
@@ -146,22 +193,23 @@ function StatsBand() {
 
 function Welcome() {
   return (
-    <section className="relative overflow-hidden bg-mesh-calm">
+    <Section tone="calm" className="relative overflow-hidden">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-40 left-1/2 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-cyan-50/60 blur-[120px]"
+        className="pointer-events-none absolute -right-40 top-[-14rem] h-[40rem] w-[40rem] rounded-full bg-brand-bloom blur-3xl"
       />
-      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:py-24 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+
+      <Container className="relative">
+        <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16">
           <div>
             <SectionHeading
-              script={practice.welcome.script}
+              eyebrow={practice.welcome.script}
               title={practice.welcome.title}
             />
             <p className="mt-6 text-[1.05rem] leading-relaxed text-body">
               {about.intro}
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-9 flex flex-wrap gap-3">
               <Button to="/about" variant="primary" size="lg" icon="arrow" iconRight>
                 About Us
               </Button>
@@ -172,26 +220,28 @@ function Welcome() {
           </div>
 
           <div className="space-y-5">
-            <Card className="border-l-4 border-l-cyan">
-              <h3 className="font-script text-3xl leading-none text-blue-deep">
-                Our Mission
-              </h3>
-              <p className="mt-2.5 text-[0.98rem] font-medium leading-relaxed text-navy">
-                {about.mission}
-              </p>
+            <Card className="flex gap-5">
+              <IconBadge name="heart-pulse" tone="gradient" />
+              <div>
+                <h3 className="text-xl font-medium text-navy">Our Mission</h3>
+                <p className="mt-2 text-[0.95rem] leading-relaxed text-body">
+                  {about.mission}
+                </p>
+              </div>
             </Card>
-            <Card className="border-l-4 border-l-navy">
-              <h3 className="font-script text-3xl leading-none text-cyan-deep">
-                Our Vision
-              </h3>
-              <p className="mt-2.5 text-[0.98rem] font-medium leading-relaxed text-navy">
-                {about.vision}
-              </p>
+            <Card className="flex gap-5">
+              <IconBadge name="sparkle" tone="cyan" />
+              <div>
+                <h3 className="text-xl font-medium text-navy">Our Vision</h3>
+                <p className="mt-2 text-[0.95rem] leading-relaxed text-body">
+                  {about.vision}
+                </p>
+              </div>
             </Card>
           </div>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   )
 }
 
@@ -199,15 +249,11 @@ function Welcome() {
 
 function ServicesGrid() {
   return (
-    <section className="relative overflow-hidden border-y border-navy-100/80 bg-mesh-white">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-40 right-0 h-[32rem] w-[32rem] rounded-full bg-blue-50/60 blur-[120px]"
-      />
-      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:py-24 lg:px-8">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+    <Section tone="white" className="relative overflow-hidden">
+      <Container className="relative">
+        <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
-            script="Available Services"
+            eyebrow="Available Services"
             title="Our Mental Health Offerings"
             body="Explore our wide range of services designed to promote mental wellness and personal growth."
           />
@@ -222,36 +268,49 @@ function ServicesGrid() {
           </Button>
         </div>
 
-        <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((s) => (
             <li key={s.slug}>
               <Link
                 to={`/services/${s.slug}`}
-                className="group flex h-full flex-col rounded-clinical-lg border border-navy-100/80 bg-white/95 p-6 shadow-clinical backdrop-blur transition-all duration-200 hover:-translate-y-1 hover:border-blue/40 hover:shadow-clinical-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
+                className="group flex h-full flex-col overflow-hidden rounded-clinical-lg bg-white shadow-clinical ring-1 ring-navy-100/70 transition duration-200 hover:-translate-y-1 hover:shadow-clinical-lg hover:ring-navy-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
               >
-                <span className="grid h-14 w-14 place-items-center rounded-clinical bg-brand-gradient text-navy shadow-clinical">
-                  <Icon name={s.icon} size={25} />
-                </span>
-                <h3 className="mt-5 text-[1.08rem] font-medium tracking-tight text-navy">
-                  {s.title}
-                </h3>
-                <p className="mt-2.5 flex-1 text-sm leading-relaxed text-body">
-                  {s.card}
-                </p>
-                <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-blue-deep">
-                  Read more
-                  <Icon
-                    name="arrow"
-                    size={15}
-                    className="transition-transform duration-200 group-hover:translate-x-0.5"
+                <div className="relative aspect-[2/1] overflow-hidden bg-navy-50">
+                  <img
+                    src={asset(`services/${s.slug}.jpg`)}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.04]"
                   />
-                </span>
+                  <span className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-navy/45 to-transparent" />
+                  <span className="absolute bottom-3 left-3 grid h-10 w-10 place-items-center rounded-clinical bg-white/95 text-navy shadow-clinical backdrop-blur">
+                    <Icon name={s.icon} size={20} />
+                  </span>
+                </div>
+                <div className="flex flex-1 flex-col p-6">
+                  <h3 className="font-sans text-[1.05rem] font-semibold leading-snug text-navy">
+                    {s.title}
+                  </h3>
+                  <p className="mt-2.5 flex-1 text-sm leading-relaxed text-body">
+                    {s.card}
+                  </p>
+                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep">
+                    Read more
+                    <Icon
+                      name="arrow"
+                      size={15}
+                      className="transition-transform duration-200 group-hover:translate-x-0.5"
+                    />
+                  </span>
+                </div>
               </Link>
             </li>
           ))}
         </ul>
-      </div>
-    </section>
+      </Container>
+    </Section>
   )
 }
 
@@ -280,33 +339,27 @@ function PathToHealing() {
   ]
 
   return (
-    <section className="relative overflow-hidden bg-mesh-calm">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-40 left-1/2 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-blue-50/60 blur-[120px]"
-      />
-      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:py-24 lg:px-8">
+    <Section tone="calm" className="relative overflow-hidden">
+      <Container className="relative">
         <SectionHeading
-          script="Your Path to Healing"
+          eyebrow="Your Path to Healing"
           title="Start Your Healing Journey"
           body="Take the first step toward a healthier, more balanced life. Our compassionate care team is here to guide you every step of the way."
           align="center"
         />
 
-        <ol className="mt-12 grid gap-6 lg:grid-cols-3">
+        <ol className="mt-14 grid gap-6 lg:grid-cols-3">
           {steps.map((s) => (
             <li key={s.step}>
               <Card className="h-full">
-                <div className="flex items-center gap-3">
-                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-clinical bg-navy text-white shadow-clinical">
-                    <Icon name={s.icon} size={22} />
-                  </span>
-                  <span className="font-script text-4xl leading-none text-cyan-deep">
+                <div className="flex items-center gap-4">
+                  <IconBadge name={s.icon} tone="navy" size="lg" />
+                  <span className="font-display text-4xl font-medium leading-none text-navy-200">
                     {s.step}
                   </span>
                 </div>
-                <h3 className="mt-4 text-lg font-medium text-navy">{s.title}</h3>
-                <p className="mt-2 text-[0.98rem] leading-relaxed text-body">
+                <h3 className="mt-6 text-xl font-medium text-navy">{s.title}</h3>
+                <p className="mt-2.5 text-[0.95rem] leading-relaxed text-body">
                   {s.body}
                 </p>
               </Card>
@@ -322,72 +375,43 @@ function PathToHealing() {
             Get help?
           </Button>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   )
 }
 
-/* ---------------------------------------------------- Insurance marquee */
+/* ------------------------------------------------------------ Stats band */
 
-/**
- * Slim auto-scrolling ticker of the accepted plans, sitting between the stats
- * band and the welcome copy.
- *
- * The track holds the same list twice. Each copy carries a trailing `pr-2.5`
- * equal to the internal item gap, so one copy's width is exactly one period and
- * a `-50%` translate loops with no visible seam.
- *
- * The first copy stays in the accessibility tree; the second is a clone marked
- * `aria-hidden` and is removed entirely under `prefers-reduced-motion`, where
- * the ticker becomes a plain wrapped row instead of moving.
- */
-function InsuranceMarquee() {
-  const track = (
-    <ul className="flex items-center gap-2.5 pr-2.5">
-      {insurances.map((i) => (
-        <li
-          key={i.slug}
-          className="flex h-16 items-center justify-center rounded-clinical border border-navy-100 bg-white px-6"
-        >
-          <InsuranceLogo item={i} imgClassName="h-9" />
-        </li>
-      ))}
-    </ul>
-  )
-
+function StatsBand() {
   return (
-    <section
-      aria-label="Insurance plans accepted"
-      className="relative overflow-hidden border-b border-navy-100/80 bg-white"
+    <Section
+      tone="navy"
+      tight
+      className="relative overflow-hidden"
+      aria-label="Practice at a glance"
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan/60 to-transparent"
+        className="pointer-events-none absolute inset-0 pattern-dots text-white/10"
       />
-      <div className="mx-auto flex max-w-7xl items-center gap-5 px-4 py-5 lg:px-8">
-        <p className="hidden shrink-0 items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-navy-400 sm:flex">
-          <Icon name="shield" size={15} className="text-cyan-deep" />
-          Insurance accepted
-        </p>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-40 left-1/2 h-96 w-[52rem] -translate-x-1/2 rounded-full bg-cyan/20 blur-[150px]"
+      />
 
-        <div className="marquee-mask group relative min-w-0 flex-1 overflow-hidden">
-          <div className="marquee-track flex w-max items-center [--marquee-duration:64s] group-hover:[animation-play-state:paused]">
-            {track}
-            <div aria-hidden="true" data-marquee-clone="" className="flex">
-              {track}
+      <Container className="relative">
+        <dl className="grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-4">
+          {stats.map((s) => (
+            <div key={s.label}>
+              <dt className="sr-only">{s.label}</dt>
+              <dd>
+                <Stat value={s.value} label={s.label} light />
+              </dd>
             </div>
-          </div>
-        </div>
-
-        <Link
-          to="/insurance"
-          className="inline-flex shrink-0 items-center gap-1.5 text-sm font-bold text-blue-deep underline-offset-4 hover:underline"
-        >
-          All {insurances.length} plans
-          <Icon name="arrow" size={15} />
-        </Link>
-      </div>
-    </section>
+          ))}
+        </dl>
+      </Container>
+    </Section>
   )
 }
 
@@ -422,30 +446,32 @@ function GetSupport() {
   ]
 
   return (
-    <section className="relative overflow-hidden bg-mesh-calm">
-      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:py-24 lg:px-8">
+    <Section tone="white">
+      <Container>
         <SectionHeading
-          script="How you can reach us"
+          eyebrow="How you can reach us"
           title="More ways to get support"
           align="center"
         />
-        <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {tiles.map((t) => (
             <li key={t.to}>
               <Link
                 to={t.to}
-                className="group flex h-full flex-col rounded-clinical-lg border border-navy-100/80 bg-white/95 p-6 shadow-clinical backdrop-blur transition-all duration-200 hover:-translate-y-1 hover:border-blue/40 hover:shadow-clinical-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
+                className="group flex h-full flex-col rounded-clinical-lg bg-white p-6 shadow-clinical ring-1 ring-navy-100/70 transition duration-200 hover:-translate-y-1 hover:shadow-clinical-lg hover:ring-navy-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
               >
-                <span className="grid h-12 w-12 place-items-center rounded-clinical bg-cyan-50 text-cyan-deep transition-colors group-hover:bg-brand-gradient group-hover:text-navy">
-                  <Icon name={t.icon} size={22} />
-                </span>
-                <h3 className="mt-4 text-[1.02rem] font-medium text-navy">
+                <IconBadge
+                  name={t.icon}
+                  tone="cyan"
+                  className="transition-colors group-hover:bg-brand-gradient group-hover:text-navy"
+                />
+                <h3 className="mt-5 font-sans text-[1.02rem] font-semibold text-navy">
                   {t.title}
                 </h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-body">
+                <p className="mt-2.5 flex-1 text-sm leading-relaxed text-body">
                   {t.body}
                 </p>
-                <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-blue-deep">
+                <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep">
                   Continue
                   <Icon
                     name="arrow"
@@ -457,8 +483,8 @@ function GetSupport() {
             </li>
           ))}
         </ul>
-      </div>
-    </section>
+      </Container>
+    </Section>
   )
 }
 
@@ -466,21 +492,21 @@ function GetSupport() {
 
 function FaqPreview() {
   return (
-    <section className="relative overflow-hidden border-y border-navy-100/80 bg-mesh-white">
-      <div className="relative mx-auto max-w-4xl px-4 py-20 sm:py-24 lg:px-8">
+    <Section tone="calm" className="relative overflow-hidden">
+      <Container size="narrow" className="relative">
         <SectionHeading
-          script="Questions"
+          eyebrow="Questions"
           title="Frequently Asked Questions"
           align="center"
         />
         <Accordion items={faqs} className="mt-12" />
-        <div className="mt-8 text-center">
+        <div className="mt-9 text-center">
           <Button to="/faqs" variant="outline" size="md" icon="arrow" iconRight>
             All frequently asked questions
           </Button>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   )
 }
 
@@ -488,23 +514,21 @@ function FaqPreview() {
 
 function Location() {
   return (
-    <section className="relative overflow-hidden bg-mesh-calm">
-      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:py-24 lg:px-8">
+    <Section tone="white">
+      <Container>
         <SectionHeading
-          script="Keep in Touch"
+          eyebrow="Keep in Touch"
           title="Contact information"
           body="Your path to better mental well-being begins with just one conversation. Connect with us today."
         />
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10">
+        <div className="mt-14 grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
           <LocationMap height="h-[24rem]" />
 
           <div className="space-y-5">
             <Card>
-              <h3 className="font-script text-3xl leading-none text-blue-deep">
-                Need assistance?
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-body">
+              <h3 className="text-xl font-medium text-navy">Need assistance?</h3>
+              <p className="mt-2 text-[0.95rem] leading-relaxed text-body">
                 Reach out to our team with any questions or concerns and we will
                 provide the support and guidance you need.
               </p>
@@ -512,7 +536,7 @@ function Location() {
                 href={practice.phoneHref}
                 size="md"
                 icon="phone"
-                className="mt-4 w-full"
+                className="mt-5 w-full"
               >
                 {practice.phoneDisplay}
               </Button>
@@ -521,17 +545,17 @@ function Location() {
                 variant="outline"
                 size="md"
                 icon="document"
-                className="mt-2 w-full"
+                className="mt-2.5 w-full"
               >
                 Message us
               </Button>
             </Card>
 
             <Card>
-              <h3 className="text-base font-medium text-navy">
+              <h3 className="font-sans text-base font-semibold text-navy">
                 Also listed on Zocdoc
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-body">
+              <p className="mt-2 text-[0.95rem] leading-relaxed text-body">
                 Prefer to see live availability and book a slot yourself?
               </p>
               <Button
@@ -541,21 +565,23 @@ function Location() {
                 variant="primary"
                 size="md"
                 icon="external-link"
-                className="mt-4 w-full"
+                className="mt-5 w-full"
               >
                 Book on Zocdoc
               </Button>
             </Card>
 
             <Card>
-              <h3 className="text-base font-medium text-navy">Resources</h3>
+              <h3 className="font-sans text-base font-semibold text-navy">
+                Resources
+              </h3>
               <CheckList
                 items={resources.slice(0, 3).map((r) => r.name)}
                 className="mt-4"
               />
               <Link
                 to="/resources"
-                className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-blue-deep underline-offset-4 hover:underline"
+                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep underline-offset-4 hover:underline"
               >
                 All resources
                 <Icon name="arrow" size={15} />
@@ -563,8 +589,8 @@ function Location() {
             </Card>
           </div>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   )
 }
 
@@ -577,82 +603,85 @@ function ClosingCta() {
     'We contact you within 24–48 business hours',
   ]
   return (
-    <section className="relative overflow-hidden bg-mesh-navy">
+    <Section tone="navy" className="relative overflow-hidden">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 pattern-dots text-white/[0.08]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-40 -left-20 h-96 w-96 rounded-full bg-cyan/25 blur-[140px]"
+        className="pointer-events-none absolute -left-32 -top-40 h-[28rem] w-[28rem] rounded-full bg-cyan/25 blur-[150px]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -bottom-40 -right-20 h-96 w-96 rounded-full bg-blue/20 blur-[140px]"
+        className="pointer-events-none absolute -bottom-40 -right-24 h-[28rem] w-[28rem] rounded-full bg-blue/20 blur-[150px]"
       />
 
-      <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:px-8">
-        <div>
-          <p className="font-script text-4xl leading-none text-cyan sm:text-[2.85rem]">
-            Struggling with your mental health?
-          </p>
-          <h2 className="mt-2 text-3xl font-medium tracking-tight text-white sm:text-4xl lg:text-[2.75rem]">
-            We&rsquo;re here to help.
-          </h2>
-          <p className="mt-5 max-w-xl text-lg leading-relaxed text-navy-100">
-            Book now and let us guide you toward a brighter tomorrow. If you
-            would rather speak to someone first, call us — a real person answers
-            during office hours.
-          </p>
-
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button href={practice.phoneHref} variant="accent" size="lg" icon="phone">
-              {practice.phoneDisplay}
-            </Button>
-            <Button
-              href={`mailto:${practice.email}`}
-              variant="onDark"
-              size="lg"
-              icon="document"
-            >
-              Email us
-            </Button>
-          </div>
-
-          <div className="mt-8 rounded-clinical-lg border border-coral/60 bg-coral/20 p-5 backdrop-blur">
-            <p className="flex items-center gap-2 font-bold text-white">
-              <Icon name="alert-triangle" size={17} />
-              24/7 crisis support
+      <Container className="relative">
+        <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16">
+          <div>
+            <Eyebrow light>Struggling with your mental health?</Eyebrow>
+            <h2 className="mt-4 text-[2rem] leading-[1.08] text-white sm:text-[2.6rem] lg:text-[3rem]">
+              We&rsquo;re here to help.
+            </h2>
+            <p className="mt-5 max-w-xl text-[1.05rem] leading-relaxed text-navy-100">
+              Book now and let us guide you toward a brighter tomorrow. If you
+              would rather speak to someone first, call us — a real person answers
+              during office hours.
             </p>
-            <p className="mt-1.5 text-sm leading-relaxed text-white/95">
-              Call or text{' '}
-              <a
-                href={crisis.lifelineHref}
-                className="font-bold text-white underline underline-offset-2"
+
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Button
+                href={practice.phoneHref}
+                variant="accent"
+                size="lg"
+                icon="phone"
               >
-                988
-              </a>{' '}
-              — free and confidential, any time.
+                {practice.phoneDisplay}
+              </Button>
+              <Button
+                href={`mailto:${practice.email}`}
+                variant="onDark"
+                size="lg"
+                icon="document"
+              >
+                Email us
+              </Button>
+            </div>
+
+            <div className="mt-9 rounded-clinical-lg border border-coral/50 bg-coral/15 p-5 backdrop-blur">
+              <p className="flex items-center gap-2 font-semibold text-white">
+                <Icon name="alert-triangle" size={17} />
+                24/7 crisis support
+              </p>
+              <p className="mt-2 text-[0.95rem] leading-relaxed text-white/95">
+                Call or text{' '}
+                <a
+                  href={crisis.lifelineHref}
+                  className="font-bold text-white underline underline-offset-4"
+                >
+                  988
+                </a>{' '}
+                — free and confidential, any time.
+              </p>
+            </div>
+          </div>
+
+          <div className="rounded-clinical-xl border border-white/15 bg-white/10 p-7 shadow-clinical-lg backdrop-blur sm:p-9">
+            <Eyebrow light>Start your healing journey</Eyebrow>
+            <h3 className="mt-4 text-2xl font-medium text-white">
+              Request an appointment
+            </h3>
+            <CheckList items={expectations} light className="mt-7" />
+            <Button to="/book" size="lg" icon="calendar" className="mt-7 w-full">
+              Book Now
+            </Button>
+            <p className="mt-3 text-center text-xs text-navy-200">
+              Takes about 2 minutes. We reply within 24–48 business hours.
             </p>
           </div>
         </div>
-
-        <div className="rounded-clinical-lg border border-white/15 bg-white/10 p-6 shadow-clinical-lg backdrop-blur sm:p-8">
-          <p className="font-script text-3xl leading-none text-cyan sm:text-[2.25rem]">
-            Start your healing journey
-          </p>
-          <h3 className="mt-2 text-xl font-medium text-white sm:text-2xl">
-            Request an appointment
-          </h3>
-          <CheckList items={expectations} light className="mt-6" />
-          <Button to="/book" size="lg" icon="calendar" className="mt-6 w-full">
-            Book Now
-          </Button>
-          <p className="mt-2 text-center text-xs text-navy-200">
-            Takes about 2 minutes. We reply within 24–48 business hours.
-          </p>
-        </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   )
 }

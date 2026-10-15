@@ -1,21 +1,30 @@
 @import 'tailwindcss';
 
 /* ===========================================================================
-   CORNERSTONE HEALTH SERVICES INC — design tokens
+   CORNERSTONE HEALTH SERVICES INC — design system
    ---------------------------------------------------------------------------
-   Sourced from the live site's own theme stylesheet (style.min.css :root block),
-   so this build matches the real brand rather than an approximation:
+   "Calm clinical-modern": airy layout, a warm display serif over a clean
+   clinical sans, soft depth instead of hard borders, and one restrained brand
+   bloom per section rather than an all-over gradient wash.
+
+   COLOUR IS THE BRAND AND IS UNCHANGED. It is taken from the live site's own
+   theme stylesheet (style.min.css :root block), so the palette still matches
+   the logo and the practice's existing material:
 
      --priColor:  #0e0f3b   primary  (deep navy / indigo)
      --secColor:  #27d4ed   secondary (cyan)
      --terColor:  #14a5eb   tertiary  (blue)
      --gradientColor: linear-gradient(180deg, #27d4ed 0%, #14a5eb 100%)
-     --priFont:   'Jost'
-     --secFont:   'Allison'          (script accent)
      --bodyColor: #555555
      --bodyFontSize: 16px / --bodyLineHeight: 23px
 
    The live site also uses #f9f9ff for its main content background.
+
+   WHAT CHANGED IN THIS REVISION: only the design layer. Typography (display
+   serif + Inter replacing Jost + the Allison script), the radius and elevation
+   scales, the component set, the page layouts and the navigation. Every piece
+   of copy, the routes, the SEO/prerender pipeline and the palette are
+   unchanged.
 
    CONTRAST NOTES (WCAG 2.1 AA: 4.5:1 normal text, 3:1 large text and UI):
      measured against white —
@@ -33,7 +42,7 @@
        cyan #27d4ed ........ 10.20:1  PASS
        blue #14a5eb ........  6.62:1  PASS
 
-   RULES THAT FOLLOW FROM THIS:
+   RULES THAT FOLLOW FROM THIS (unchanged):
      1. cyan and blue are never used for text on light backgrounds. Body-size
         text in that family uses --color-cyan-deep / --color-blue-deep.
      2. Nothing white sits on cyan or blue. The signature gradient button uses
@@ -42,17 +51,23 @@
    =========================================================================== */
 
 @theme {
-  --font-sans: 'Jost', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+  /* ----- Type: a calm display serif over a clinical sans ----- */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
     Roboto, Helvetica, Arial, sans-serif;
-  /* Script accent face. Used only for the short decorative line above a
-     heading, mirroring the live site's `.h1_hdng` treatment. */
-  --font-script: 'Allison', 'Segoe Script', cursive;
+  --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Palatino,
+    Georgia, serif;
+  /* Retained only so a stray `font-script` never falls back to a system
+     cursive face; the script accent is no longer part of the design. */
+  --font-script: 'Fraunces', 'Iowan Old Style', Palatino, Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   /* ----- Primary: deep navy / indigo (#0e0f3b) ----- */
   --color-navy-50: #eef0f8;
   --color-navy-100: #d9dcee;
   --color-navy-200: #b3b9db;
+  --color-navy-300: #8f97c4;
   --color-navy-400: #5a628f;
+  --color-navy-500: #3f4670;
   --color-navy-600: #2b3057;
   --color-navy: #0e0f3b;
   --color-navy-900: #060717;
@@ -76,6 +91,7 @@
   /* ----- Neutrals ----- */
   --color-calm: #f9f9ff;
   --color-calm-200: #eef0fa;
+  --color-mist: #f4f6fc;
   --color-body: #555555;
 
   /* ----- Alert / crisis (live site's error + required-field colours) ----- */
@@ -87,15 +103,19 @@
   /* ----- Focus ring: passes 3:1 against BOTH white (5.49:1) and navy (3.33:1) ----- */
   --color-focus: #0b6fa4;
 
-  /* ----- Container radii ----- */
-  --radius-clinical: 10px;
-  --radius-clinical-sm: 8px;
-  --radius-clinical-lg: 12px;
+  /* ----- Radius scale: softer than the previous 10px system ----- */
+  --radius-clinical-sm: 10px;
+  --radius-clinical: 16px;
+  --radius-clinical-lg: 24px;
+  --radius-clinical-xl: 32px;
 
-  --shadow-clinical: 0 1px 2px rgba(14, 15, 59, 0.06),
-    0 4px 16px rgba(14, 15, 59, 0.06);
-  --shadow-clinical-lg: 0 4px 8px rgba(14, 15, 59, 0.06),
-    0 16px 40px rgba(14, 15, 59, 0.1);
+  /* ----- Elevation: low-contrast, navy-tinted, layered ----- */
+  --shadow-clinical: 0 1px 2px rgba(14, 15, 59, 0.04),
+    0 10px 24px -12px rgba(14, 15, 59, 0.14);
+  --shadow-clinical-lg: 0 2px 6px rgba(14, 15, 59, 0.05),
+    0 28px 56px -20px rgba(14, 15, 59, 0.22);
+  --shadow-clinical-xl: 0 4px 10px rgba(14, 15, 59, 0.06),
+    0 48px 80px -28px rgba(14, 15, 59, 0.28);
 }
 
 @layer base {
@@ -109,7 +129,8 @@
     color: var(--color-body);
     font-family: var(--font-sans);
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 1.65;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -123,8 +144,11 @@
   h3,
   h4 {
     color: var(--color-navy);
-    letter-spacing: -0.015em;
-    line-height: 1.1;
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
     text-wrap: balance;
   }
 
@@ -132,11 +156,12 @@
     text-wrap: pretty;
   }
 
-  /* Focus ring passes 3:1 against both the light page and navy bands. */
+  /* Focus ring passes 3:1 against both the light page and navy bands. The
+     outline follows each element's own border-radius, so no radius is set
+     here (setting one would visibly reshape the control while focused). */
   :focus-visible {
     outline: 3px solid var(--color-focus);
     outline-offset: 2px;
-    border-radius: 4px;
   }
 
   ::selection {
@@ -158,6 +183,17 @@
     color: transparent;
   }
 
+  /* A 1px brand hairline, used as a top rule on feature bands. */
+  .rule-brand {
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      rgba(39, 212, 237, 0.75) 35%,
+      rgba(20, 165, 235, 0.75) 65%,
+      transparent
+    );
+  }
+
   /* Very low-contrast dot texture, used behind the dark brand bands so large
      navy fills read as textured rather than flat. Colour comes from
      `currentColor`, so set a text colour (e.g. text-white/10) on the element. */
@@ -169,10 +205,10 @@
   /* Soft cyan bloom for hero / call-to-action panels. */
   .bg-brand-bloom {
     background-image: radial-gradient(
-      55% 55% at 50% 0%,
-      rgba(39, 212, 237, 0.22) 0%,
-      rgba(20, 165, 235, 0.08) 45%,
-      transparent 72%
+      60% 60% at 50% 0%,
+      rgba(39, 212, 237, 0.28) 0%,
+      rgba(20, 165, 235, 0.1) 45%,
+      transparent 74%
     );
   }
 
@@ -181,42 +217,41 @@
   .bg-mesh-calm {
     background-color: #f9f9ff;
     background-image: radial-gradient(
-        at 18% 0%,
-        rgba(39, 212, 237, 0.1) 0%,
-        transparent 55%
+        at 14% -4%,
+        rgba(39, 212, 237, 0.14) 0%,
+        transparent 52%
       ),
-      radial-gradient(at 82% 4%, rgba(20, 165, 235, 0.1) 0%, transparent 55%),
-      radial-gradient(at 50% 100%, rgba(39, 212, 237, 0.06) 0%, transparent 65%);
+      radial-gradient(at 88% 2%, rgba(20, 165, 235, 0.12) 0%, transparent 52%);
   }
 
   .bg-mesh-white {
     background-color: #ffffff;
     background-image: radial-gradient(
-        at 2% 0%,
-        rgba(39, 212, 237, 0.08) 0%,
-        transparent 50%
+        at 0% 0%,
+        rgba(39, 212, 237, 0.09) 0%,
+        transparent 46%
       ),
-      radial-gradient(at 98% 0%, rgba(20, 165, 235, 0.08) 0%, transparent 50%);
+      radial-gradient(at 100% 0%, rgba(20, 165, 235, 0.09) 0%, transparent 46%);
   }
 
   .bg-mesh-navy {
     background-color: #0e0f3b;
     background-image: radial-gradient(
-        at 4% 0%,
-        rgba(39, 212, 237, 0.2) 0%,
-        transparent 55%
+        at 0% 0%,
+        rgba(39, 212, 237, 0.24) 0%,
+        transparent 52%
       ),
-      radial-gradient(at 96% 0%, rgba(20, 165, 235, 0.18) 0%, transparent 55%),
-      radial-gradient(at 50% 100%, rgba(39, 212, 237, 0.12) 0%, transparent 65%);
+      radial-gradient(at 100% 0%, rgba(20, 165, 235, 0.2) 0%, transparent 52%),
+      radial-gradient(at 50% 120%, rgba(39, 212, 237, 0.14) 0%, transparent 60%);
   }
 
   /* Keeps a headline deeply legible over a photographic hero. */
   .bg-hero-scrim {
     background-image: linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.94) 0%,
-      rgba(255, 255, 255, 0.9) 45%,
-      rgba(255, 255, 255, 0.78) 100%
+      rgba(255, 255, 255, 0.96) 0%,
+      rgba(255, 255, 255, 0.92) 45%,
+      rgba(255, 255, 255, 0.8) 100%
     );
   }
 
@@ -225,9 +260,9 @@
       background-image: linear-gradient(
         100deg,
         #ffffff 0%,
-        rgba(255, 255, 255, 0.98) 38%,
-        rgba(255, 255, 255, 0.86) 55%,
-        rgba(255, 255, 255, 0.35) 78%,
+        rgba(255, 255, 255, 0.99) 34%,
+        rgba(255, 255, 255, 0.9) 52%,
+        rgba(255, 255, 255, 0.42) 76%,
         rgba(255, 255, 255, 0) 100%
       );
     }
@@ -279,6 +314,27 @@
   }
   to {
     transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes cornerstone-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes cornerstone-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -1.5rem, 0) scale(1.04);
   }
 }
 

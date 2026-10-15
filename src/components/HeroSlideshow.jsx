@@ -72,7 +72,7 @@ export default function HeroSlideshow({
       </div>
 
       <div
-        className="absolute inset-x-0 bottom-5 z-20 flex justify-center gap-1.5"
+        className="absolute inset-x-0 bottom-4 z-20 flex justify-center gap-1.5"
         role="group"
         aria-label="Hero image slideshow"
       >
@@ -85,14 +85,17 @@ export default function HeroSlideshow({
               onClick={() => setIndex(i)}
               aria-label={`Show image ${i + 1} of ${slides.length}`}
               aria-current={active ? 'true' : undefined}
-              className="group grid h-6 w-6 place-items-center rounded-full"
+              className="group grid h-7 w-7 place-items-center rounded-full"
             >
+              {/* Dots sit on a photograph, so they are white-based rather
+                  than navy-based — navy at low opacity disappears over a
+                  mid-tone image. */}
               <span
                 aria-hidden="true"
-                className={`block rounded-full transition-all duration-300 ${
+                className={`block rounded-full shadow-sm ring-1 ring-navy/10 transition-all duration-300 ${
                   active
-                    ? 'h-2.5 w-6 bg-cyan-deep'
-                    : 'h-2.5 w-2.5 bg-navy/30 group-hover:bg-navy/60'
+                    ? 'h-2.5 w-7 bg-white'
+                    : 'h-2.5 w-2.5 bg-white/60 group-hover:bg-white/90'
                 }`}
               />
             </button>

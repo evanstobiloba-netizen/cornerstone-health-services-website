@@ -45,7 +45,7 @@ export default function MobileHome() {
           </div>
         </div>
 
-        <div className="border-b border-navy-100 bg-white/95 backdrop-blur">
+        <div className="border-b border-navy-100 bg-white/95 backdrop-blur-md">
           <div className="mx-auto flex max-w-lg items-center justify-between gap-3 px-4 py-3">
             <Link to="/" aria-label="Cornerstone Health Services Inc — home">
               <img
@@ -57,7 +57,7 @@ export default function MobileHome() {
             </Link>
             <Link
               to="/"
-              className="text-xs font-bold text-cyan-deep underline underline-offset-2"
+              className="text-xs font-bold text-blue-deep underline underline-offset-2"
             >
               Full site
             </Link>
@@ -67,15 +67,18 @@ export default function MobileHome() {
 
       <div className="mx-auto max-w-lg px-4 pb-8 pt-6">
         {/* Hero */}
-        <p className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-[0.7rem] font-bold text-cyan-deep ring-1 ring-inset ring-cyan-200">
-          <span className="h-2 w-2 rounded-full bg-cyan" aria-hidden="true" />
+        <p className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[0.7rem] font-bold text-navy shadow-clinical ring-1 ring-inset ring-navy-100">
+          <span
+            className="h-2 w-2 rounded-full bg-brand-gradient"
+            aria-hidden="true"
+          />
           Accepting new patients
         </p>
 
-        <p className="mt-4 font-script text-3xl leading-none text-blue-deep">
+        <p className="mt-5 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-blue-deep">
           Mental Wellness, Within Reach
         </p>
-        <h1 className="mt-1 text-[2rem] font-medium leading-[1.12] text-navy">
+        <h1 className="mt-2.5 text-[2rem] font-medium leading-[1.12] text-navy">
           Compassionate care for adults across Massachusetts
         </h1>
         <p className="mt-3 text-[0.95rem] leading-relaxed text-body">
@@ -84,7 +87,7 @@ export default function MobileHome() {
         </p>
 
         {/* One-tap actions */}
-        <div className="mt-5 grid gap-3">
+        <div className="mt-6 grid gap-3">
           <a
             href={practice.phoneHref}
             className="flex items-center gap-3 rounded-clinical-lg bg-navy px-5 py-4 text-left text-white shadow-clinical"
@@ -125,11 +128,11 @@ export default function MobileHome() {
           {stats.map((m) => (
             <div
               key={m.label}
-              className="rounded-clinical-lg border border-navy-100 bg-white px-4 py-3"
+              className="rounded-clinical-lg bg-white px-4 py-3 shadow-clinical ring-1 ring-navy-100/70"
             >
               <dt className="sr-only">{m.label}</dt>
               <dd>
-                <span className="block text-xl font-bold text-navy">
+                <span className="block font-display text-xl font-medium text-navy">
                   {m.value}
                 </span>
                 <span className="mt-1 block text-[0.7rem] leading-snug text-body">
@@ -141,13 +144,15 @@ export default function MobileHome() {
         </dl>
 
         {/* Services */}
-        <h2 className="mt-8 text-lg font-bold text-navy">Our services</h2>
-        <ul className="mt-3 space-y-2">
+        <h2 className="mt-9 font-display text-xl font-medium text-navy">
+          Our services
+        </h2>
+        <ul className="mt-4 space-y-2.5">
           {services.map((s) => (
             <li key={s.slug}>
               <Link
                 to={`/services/${s.slug}`}
-                className="flex items-center gap-3 rounded-clinical border border-navy-100 bg-white px-4 py-3"
+                className="flex items-center gap-3 rounded-clinical-lg bg-white px-4 py-3 shadow-clinical ring-1 ring-navy-100/70"
               >
                 <span className="grid h-9 w-9 shrink-0 place-items-center rounded-clinical bg-cyan-50 text-cyan-deep">
                   <Icon name={s.icon} size={18} />
@@ -155,24 +160,24 @@ export default function MobileHome() {
                 <span className="flex-1 text-[0.9rem] font-semibold text-navy">
                   {s.title}
                 </span>
-                <Icon name="arrow" size={16} className="text-navy-400" />
+                <Icon name="arrow" size={16} className="text-navy-300" />
               </Link>
             </li>
           ))}
         </ul>
 
         {/* Insurance */}
-        <h2 className="mt-8 text-lg font-bold text-navy">
+        <h2 className="mt-9 font-display text-xl font-medium text-navy">
           Insurance accepted
         </h2>
-        <p className="mt-1.5 text-sm text-body">
+        <p className="mt-2 text-sm text-body">
           {insurances.length} plans, including Medicare and MassHealth.
         </p>
-        <ul className="mt-3 flex flex-wrap gap-2">
+        <ul className="mt-4 flex flex-wrap gap-2">
           {insurances.map((i) => (
             <li
               key={i.name}
-              className="inline-flex items-center gap-1.5 rounded-full border border-navy-100 bg-white px-3 py-1.5 text-[0.75rem] font-semibold text-navy"
+              className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[0.75rem] font-semibold text-navy ring-1 ring-navy-100"
             >
               <Icon
                 name="check"
@@ -186,24 +191,24 @@ export default function MobileHome() {
         </ul>
         <Link
           to="/insurance"
-          className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-blue-deep underline underline-offset-4"
+          className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-blue-deep underline underline-offset-4"
         >
           See all accepted plans
           <Icon name="arrow" size={15} />
         </Link>
 
         {/* Quick request */}
-        <h2 className="mt-8 text-lg font-bold text-navy">
+        <h2 className="mt-9 font-display text-xl font-medium text-navy">
           Request an appointment
         </h2>
-        <p className="mt-1.5 text-sm text-body">
+        <p className="mt-2 text-sm text-body">
           Takes about three minutes. Submissions are encrypted.
         </p>
         <div className="mt-4">
           <LeadForm form={forms.book} id="mobile-book" />
         </div>
 
-        <div className="mt-6 grid gap-2">
+        <div className="mt-6 grid gap-2.5">
           <Button to="/services" variant="outline" size="lg" className="w-full">
             Clinical services
           </Button>
@@ -212,11 +217,12 @@ export default function MobileHome() {
           </Button>
         </div>
 
-        <p className="mt-8 text-center text-xs leading-relaxed text-navy-400">
+        <p className="mt-9 text-center text-xs leading-relaxed text-navy-400">
           {practice.legalName}
           <br />
           {practice.address.line1} {practice.address.line2},{' '}
-          {practice.address.city}, {practice.address.state} {practice.address.zip}
+          {practice.address.city}, {practice.address.state}{' '}
+          {practice.address.zip}
           <br />
           This site is general information, not medical advice.
         </p>

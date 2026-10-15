@@ -1,7 +1,15 @@
 import { about, practice } from '../data/site.js'
 import Button from '../components/Button.jsx'
 import Icon from '../components/Icon.jsx'
-import { Card, CheckList, SectionHeading } from '../components/Ui.jsx'
+import {
+  Card,
+  CheckList,
+  Container,
+  Eyebrow,
+  IconBadge,
+  Section,
+  SectionHeading,
+} from '../components/Ui.jsx'
 import { asset } from '../lib/asset.js'
 
 export default function About() {
@@ -16,97 +24,113 @@ export default function About() {
 }
 
 function Intro() {
+  const atAGlance = [
+    ['Founded', practice.founded],
+    ['We serve', practice.serves],
+    ['Based in', `${practice.address.city}, ${practice.address.state}`],
+    ['Visits', 'In person & telehealth'],
+    ['Emergency care', 'Not provided — call 911'],
+  ]
+
   return (
-    <section className="relative isolate overflow-hidden border-b border-navy-100 bg-white">
-      <img
-        src={asset('about-hero.jpg')}
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover object-center lg:left-auto lg:right-0 lg:w-[58%]"
-        loading="eager"
-        decoding="async"
-      />
-      <div aria-hidden="true" className="absolute inset-0 bg-hero-scrim" />
+    <Section tone="calm" className="relative overflow-hidden">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-40 top-[-12%] h-[40rem] w-[40rem] rounded-full bg-cyan-50/70 blur-[120px]"
+        className="pointer-events-none absolute -left-52 top-[-18rem] h-[46rem] w-[46rem] rounded-full bg-brand-bloom blur-3xl"
       />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-60 -left-20 h-[32rem] w-[32rem] rounded-full bg-blue-50/60 blur-[120px]"
-      />
-      <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-20 lg:px-8 lg:py-24">
-        <div>
-          <SectionHeading
-            as="h1"
-            script="About Us"
-            title={`About ${practice.legalName}`}
-          />
-          <p className="mt-6 text-[1.05rem] leading-relaxed text-body">
-            {about.intro}
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button to="/book" size="lg" icon="calendar">
-              Book Now
-            </Button>
-            <Button to="/services" variant="outline" size="lg">
-              Our services
-            </Button>
+
+      <Container className="relative">
+        <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-start lg:gap-16">
+          <div>
+            <SectionHeading
+              as="h1"
+              size="xl"
+              eyebrow="About Us"
+              title={`About ${practice.legalName}`}
+            />
+            <p className="mt-6 text-[1.05rem] leading-relaxed text-body">
+              {about.intro}
+            </p>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Button to="/book" size="lg" icon="calendar">
+                Book Now
+              </Button>
+              <Button to="/services" variant="outline" size="lg">
+                Our services
+              </Button>
+            </div>
           </div>
 
-          <div className="mt-10 rounded-clinical-lg border border-navy-100/80 bg-white/90 p-6 shadow-clinical backdrop-blur">
-            <p className="font-script text-3xl leading-none text-blue-deep">
-              At a glance
-            </p>
-            <dl className="mt-5 space-y-4 text-sm">
-              {[
-                ['Founded', practice.founded],
-                ['We serve', practice.serves],
-                ['Based in', `${practice.address.city}, ${practice.address.state}`],
-                ['Visits', 'In person & telehealth'],
-                ['Emergency care', 'Not provided — call 911'],
-              ].map(([k, v]) => (
+          <Card className="lg:mt-2">
+            <Eyebrow>At a glance</Eyebrow>
+            <dl className="mt-6 space-y-4 text-sm">
+              {atAGlance.map(([k, v]) => (
                 <div
                   key={k}
-                  className="flex items-start justify-between gap-4 border-b border-navy-100/60 pb-3.5 last:border-0 last:pb-0"
+                  className="flex items-start justify-between gap-4 border-b border-navy-100/70 pb-3.5 last:border-0 last:pb-0"
                 >
-                  <dt className="text-navy-600">{k}</dt>
-                  <dd className="text-right font-bold text-navy">{v}</dd>
+                  <dt className="text-navy-500">{k}</dt>
+                  <dd className="text-right font-semibold text-navy">{v}</dd>
                 </div>
               ))}
             </dl>
-          </div>
+          </Card>
         </div>
 
-        <div aria-hidden="true" className="hidden lg:block" />
-      </div>
-    </section>
+        <div className="relative mt-14 aspect-[16/9] overflow-hidden rounded-clinical-xl shadow-clinical-lg ring-1 ring-navy-100/70 sm:aspect-[2/1] lg:aspect-[3/1]">
+          <img
+            src={asset('about-hero.jpg')}
+            alt=""
+            aria-hidden="true"
+            loading="eager"
+            decoding="async"
+            className="h-full w-full object-cover object-center"
+          />
+        </div>
+      </Container>
+    </Section>
   )
 }
 
 function MissionVision() {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-20 lg:px-8">
-      <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
-        <Card className="border-t-4 border-t-cyan">
-          <h2 className="font-script text-4xl leading-none text-blue-deep">
-            Our Mission
-          </h2>
-          <p className="mt-3 text-[1.02rem] leading-relaxed text-body">
-            {about.mission}
-          </p>
-        </Card>
+    <Section tone="white">
+      <Container>
+        <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
+          <Card className="relative overflow-hidden p-8 sm:p-10">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-brand-bloom blur-2xl"
+            />
+            <div className="relative">
+              <IconBadge name="heart-pulse" tone="gradient" size="lg" />
+              <h2 className="mt-6 text-2xl font-medium text-navy sm:text-[2rem]">
+                Our Mission
+              </h2>
+              <p className="mt-4 text-[1.02rem] leading-relaxed text-body">
+                {about.mission}
+              </p>
+            </div>
+          </Card>
 
-        <Card className="border-t-4 border-t-blue">
-          <h2 className="font-script text-4xl leading-none text-cyan-deep">
-            Our Vision
-          </h2>
-          <p className="mt-3 text-[1.02rem] leading-relaxed text-body">
-            {about.vision}
-          </p>
-        </Card>
-      </div>
-    </section>
+          <Card className="relative overflow-hidden p-8 sm:p-10">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-brand-bloom blur-2xl"
+            />
+            <div className="relative">
+              <IconBadge name="sparkle" tone="cyan" size="lg" />
+              <h2 className="mt-6 text-2xl font-medium text-navy sm:text-[2rem]">
+                Our Vision
+              </h2>
+              <p className="mt-4 text-[1.02rem] leading-relaxed text-body">
+                {about.vision}
+              </p>
+            </div>
+          </Card>
+        </div>
+      </Container>
+    </Section>
   )
 }
 
@@ -119,13 +143,74 @@ function Facts() {
     'A stigma-free, welcoming environment focused on reducing barriers to care',
   ]
 
+  const cards = [
+    {
+      icon: 'shield',
+      tone: 'cyan',
+      title: 'Privacy and confidentiality',
+      body: (
+        <>
+          Your information is handled in line with HIPAA and our{' '}
+          <a
+            href={practice.privacyUrl}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="font-semibold text-blue-deep underline underline-offset-2"
+          >
+            Privacy Policy
+          </a>
+          . We share only what is necessary, and only with your consent.
+        </>
+      ),
+    },
+    {
+      icon: 'alert-triangle',
+      tone: 'coral',
+      title: 'Clear about our limits',
+      body: (
+        <>
+          We provide outpatient care for adults. We do not provide emergency or
+          inpatient services, and we do not treat children or adolescents. In a
+          crisis, call or text{' '}
+          <a
+            href="tel:988"
+            className="font-bold text-coral-deep underline underline-offset-2"
+          >
+            988
+          </a>{' '}
+          or call 911.
+        </>
+      ),
+    },
+    {
+      icon: 'external-link',
+      tone: 'navy',
+      title: 'Verify us independently',
+      body: (
+        <>
+          You can check any licence or certification we hold with the issuing
+          body, and read our full{' '}
+          <a
+            href={practice.privacyUrl}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="font-semibold text-blue-deep underline underline-offset-2"
+          >
+            Privacy Policy
+          </a>
+          .
+        </>
+      ),
+    },
+  ]
+
   return (
-    <section className="border-y border-navy-100 bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-20 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+    <Section tone="calm">
+      <Container>
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
             <SectionHeading
-              script="What we stand for"
+              eyebrow="What we stand for"
               title="Care designed around the person, not the paperwork"
             />
             <p className="mt-6 text-[1.02rem] leading-relaxed text-body">
@@ -135,102 +220,62 @@ function Facts() {
           </div>
 
           <div className="space-y-5">
-            <Card className="border-l-4 border-l-cyan">
-              <h3 className="flex items-center gap-2 font-medium text-navy">
-                <Icon name="shield" size={18} className="text-cyan-deep" />
-                Privacy and confidentiality
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-body">
-                Your information is handled in line with HIPAA and our{' '}
-                <a
-                  href={practice.privacyUrl}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="font-semibold text-blue-deep underline underline-offset-2"
-                >
-                  Privacy Policy
-                </a>
-                . We share only what is necessary, and only with your consent.
-              </p>
-            </Card>
-
-            <Card className="border-l-4 border-l-coral">
-              <h3 className="flex items-center gap-2 font-medium text-navy">
-                <Icon name="alert-triangle" size={18} className="text-coral-deep" />
-                Clear about our limits
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-body">
-                We provide outpatient care for adults. We do not provide
-                emergency or inpatient services, and we do not treat children or
-                adolescents. In a crisis, call or text{' '}
-                <a
-                  href="tel:988"
-                  className="font-bold text-coral-deep underline underline-offset-2"
-                >
-                  988
-                </a>{' '}
-                or call 911.
-              </p>
-            </Card>
-
-            <Card className="border-l-4 border-l-navy">
-              <h3 className="flex items-center gap-2 font-medium text-navy">
-                <Icon name="external-link" size={18} className="text-navy-400" />
-                Verify us independently
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-body">
-                You can check any licence or certification we hold with the
-                issuing body, and read our full{' '}
-                <a
-                  href={practice.privacyUrl}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="font-semibold text-blue-deep underline underline-offset-2"
-                >
-                  Privacy Policy
-                </a>
-                .
-              </p>
-            </Card>
+            {cards.map((c) => (
+              <Card key={c.title} className="flex gap-5">
+                <IconBadge name={c.icon} tone={c.tone} />
+                <div>
+                  <h3 className="font-sans text-base font-semibold text-navy">
+                    {c.title}
+                  </h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-body">
+                    {c.body}
+                  </p>
+                </div>
+              </Card>
+            ))}
           </div>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   )
 }
 
 function Cta() {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-16 lg:px-8 lg:py-20">
-      <div className="rounded-clinical-lg bg-navy p-8 sm:p-12">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
-          <div className="max-w-2xl">
-            <p className="font-script text-4xl leading-none text-cyan">
-              Ready when you are
-            </p>
-            <h2 className="mt-2 text-2xl font-medium text-white sm:text-3xl">
-              Let&rsquo;s take the next step together
-            </h2>
-            <p className="mt-3 leading-relaxed text-navy-100">
-              Book an appointment, or reach out with any question you have before
-              you do.
-            </p>
-          </div>
-          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row lg:shrink-0">
-            <Button to="/book" variant="accent" size="lg" icon="calendar">
-              Book Now
-            </Button>
-            <Button
-              href={practice.phoneHref}
-              variant="onDark"
-              size="lg"
-              icon="phone"
-            >
-              {practice.phoneDisplay}
-            </Button>
+    <Section tone="white" tight>
+      <Container>
+        <div className="relative overflow-hidden rounded-clinical-xl bg-mesh-navy p-8 sm:p-12">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-24 -top-32 h-80 w-80 rounded-full bg-cyan/25 blur-[120px]"
+          />
+          <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+            <div className="max-w-2xl">
+              <Eyebrow light>Ready when you are</Eyebrow>
+              <h2 className="mt-4 text-2xl font-medium text-white sm:text-[2rem]">
+                Let&rsquo;s take the next step together
+              </h2>
+              <p className="mt-4 leading-relaxed text-navy-100">
+                Book an appointment, or reach out with any question you have
+                before you do.
+              </p>
+            </div>
+            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row lg:shrink-0">
+              <Button to="/book" variant="accent" size="lg" icon="calendar">
+                Book Now
+              </Button>
+              <Button
+                href={practice.phoneHref}
+                variant="onDark"
+                size="lg"
+                icon="phone"
+              >
+                {practice.phoneDisplay}
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   )
 }

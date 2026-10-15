@@ -2,6 +2,7 @@ import { useId, useRef, useState } from 'react'
 import { insurances, practice, services } from '../data/site.js'
 import Button from './Button.jsx'
 import Icon from './Icon.jsx'
+import { Eyebrow } from './Ui.jsx'
 
 /**
  * Config-driven lead form. Powers Book Now, Contact, Refer a Loved One,
@@ -284,14 +285,14 @@ export default function LeadForm({ form, id }) {
   if (status === 'sent') {
     return (
       <div
-        className="rounded-clinical-lg border border-cyan-200 bg-white p-8 text-center shadow-clinical"
+        className="rounded-clinical-xl bg-white p-8 text-center shadow-clinical ring-1 ring-cyan-200 sm:p-10"
         role="status"
         aria-live="polite"
       >
-        <span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-cyan-50 text-cyan-deep">
-          <Icon name="check" size={28} strokeWidth={2.4} />
+        <span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-cyan-50 text-cyan-deep">
+          <Icon name="check" size={30} strokeWidth={2.4} />
         </span>
-        <h3 className="mt-5 text-xl font-medium text-navy">
+        <h3 className="mt-6 text-2xl font-medium text-navy">
           Thank you — your message is with us.
         </h3>
         <p className="mx-auto mt-3 max-w-md text-[0.95rem] leading-relaxed text-body">
@@ -299,7 +300,7 @@ export default function LeadForm({ form, id }) {
           speak to someone now, call{' '}
           <a
             href={practice.phoneHref}
-            className="font-bold text-cyan-deep underline underline-offset-2"
+            className="font-bold text-blue-deep underline underline-offset-2"
           >
             {practice.phoneDisplay}
           </a>
@@ -307,7 +308,7 @@ export default function LeadForm({ form, id }) {
         </p>
 
         {demoMode && (
-          <p className="mx-auto mt-5 max-w-md rounded-clinical border border-coral/40 bg-coral-50 px-4 py-3 text-xs leading-relaxed text-coral-deep">
+          <p className="mx-auto mt-6 max-w-md rounded-clinical border border-coral/40 bg-coral-50 px-4 py-3 text-xs leading-relaxed text-coral-deep">
             <strong>Demo mode:</strong> this build has no intake endpoint
             configured, so your details were validated but{' '}
             <strong>not transmitted or stored</strong>. See README.md to connect
@@ -327,28 +328,26 @@ export default function LeadForm({ form, id }) {
       noValidate
       aria-labelledby={`${id}-heading-${uid}`}
       aria-busy={status === 'sending' ? 'true' : undefined}
-      className="rounded-clinical-lg border border-navy-100 bg-white p-6 shadow-clinical sm:p-8"
+      className="rounded-clinical-xl bg-white p-6 shadow-clinical ring-1 ring-navy-100/70 sm:p-8"
     >
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="font-script text-2xl leading-none text-blue-deep">
-            {form.script}
-          </p>
+          <Eyebrow>{form.script}</Eyebrow>
           <h2
             id={`${id}-heading-${uid}`}
-            className="mt-1 text-xl font-medium text-navy sm:text-2xl"
+            className="mt-3 text-2xl font-medium text-navy sm:text-[1.75rem]"
           >
             {form.eyebrow}
           </h2>
         </div>
-        <span className="hidden shrink-0 items-center gap-1.5 rounded-full bg-cyan-50 px-3 py-1 text-[0.7rem] font-bold text-cyan-deep ring-1 ring-inset ring-cyan-200 sm:inline-flex">
+        <span className="hidden shrink-0 items-center gap-1.5 rounded-full bg-cyan-50 px-3 py-1 text-[0.7rem] font-bold text-cyan-ink ring-1 ring-inset ring-cyan-200 sm:inline-flex">
           <Icon name="lock" size={13} strokeWidth={2.2} />
           Encrypted
         </span>
       </div>
 
       {demoMode && (
-        <p className="mt-5 rounded-clinical border border-navy-100 bg-navy-50 px-4 py-3 text-xs leading-relaxed text-navy-600">
+        <p className="mt-6 rounded-clinical border border-navy-100 bg-navy-50 px-4 py-3 text-xs leading-relaxed text-navy-600">
           <strong className="text-navy">Developer notice:</strong> running
           without <code className="font-mono">VITE_INTAKE_ENDPOINT</code>.
           Submissions are validated in the browser and discarded.
@@ -360,7 +359,7 @@ export default function LeadForm({ form, id }) {
           ref={summaryRef}
           tabIndex={-1}
           role="alert"
-          className="mt-5 rounded-clinical border border-coral/40 bg-coral-50 px-4 py-3"
+          className="mt-6 rounded-clinical border border-coral/40 bg-coral-50 px-4 py-3.5"
         >
           <p className="flex items-center gap-2 text-sm font-bold text-coral-deep">
             <Icon name="alert-triangle" size={16} />
@@ -384,7 +383,7 @@ export default function LeadForm({ form, id }) {
         <span className="sr-only"> with an asterisk</span> are required.
       </p>
 
-      <div className="mt-3 grid gap-5 sm:grid-cols-6">
+      <div className="mt-4 grid gap-5 sm:grid-cols-6">
         {form.fields.map((key) => {
           const def = FIELD_DEFS[key]
           const wide =
@@ -441,15 +440,12 @@ export default function LeadForm({ form, id }) {
                   ))}
                 </select>
               ) : def.type === 'radio' ? (
-                <div
-                  id={fid(key)}
-                  className="flex flex-wrap gap-x-6 gap-y-2.5"
-                >
+                <div className="flex flex-wrap gap-x-6 gap-y-2.5">
                   {def.options.map((o, i) => (
                     <label
                       key={o}
                       htmlFor={`${fid(key)}-${i}`}
-                      className="inline-flex cursor-pointer items-center gap-2 text-[0.95rem] text-body"
+                      className="inline-flex cursor-pointer items-center gap-2.5 text-[0.95rem] text-body"
                     >
                       <input
                         id={`${fid(key)}-${i}`}
@@ -470,8 +466,10 @@ export default function LeadForm({ form, id }) {
               ) : def.type === 'checkbox' ? (
                 <label
                   htmlFor={fid(key)}
-                  className={`flex cursor-pointer gap-3 rounded-clinical border p-4 ${
-                    errors[key] ? 'border-coral bg-coral-50' : 'border-navy-100 bg-calm'
+                  className={`flex cursor-pointer gap-3 rounded-clinical border p-4 transition-colors ${
+                    errors[key]
+                      ? 'border-coral bg-coral-50'
+                      : 'border-navy-100 bg-calm hover:border-navy-200'
                   }`}
                 >
                   <input
@@ -529,14 +527,14 @@ export default function LeadForm({ form, id }) {
       {status === 'error' && (
         <p
           role="alert"
-          className="mt-5 rounded-clinical border border-coral/40 bg-coral-50 px-4 py-3 text-sm font-semibold text-coral-deep"
+          className="mt-6 rounded-clinical border border-coral/40 bg-coral-50 px-4 py-3 text-sm font-semibold text-coral-deep"
         >
           We could not send that just now. Please call us instead — we would
           rather hear from you.
         </p>
       )}
 
-      <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+      <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
         <Button
           type="submit"
           size="lg"
@@ -557,7 +555,7 @@ export default function LeadForm({ form, id }) {
         </Button>
       </div>
 
-      <p className="mt-4 text-xs leading-relaxed text-navy-400">
+      <p className="mt-5 text-xs leading-relaxed text-navy-400">
         {form.disclaimer}{' '}
         {!form.fields.includes('privacyConsent') && (
           <>
@@ -581,13 +579,29 @@ export default function LeadForm({ form, id }) {
 
 function inputCls(error) {
   return [
-    'w-full rounded-clinical border-2 bg-white px-3.5 py-2.5 text-[0.95rem] text-navy',
-    'placeholder:text-navy-400 transition-colors',
-    error ? 'border-coral focus:border-coral' : 'border-navy-100 focus:border-blue',
+    'w-full rounded-clinical border bg-white px-4 py-3 text-[0.95rem] text-navy',
+    'placeholder:text-navy-300 transition-colors',
+    error ? 'border-coral' : 'border-navy-100 hover:border-navy-200 focus:border-blue-deep',
   ].join(' ')
 }
 
 function Field({ id, def, error, errorId, children, className = '' }) {
+  const label = (
+    <>
+      {def.label}
+      {def.required ? (
+        <>
+          <span className="ml-1 text-coral" aria-hidden="true">
+            *
+          </span>
+          <span className="sr-only"> (required)</span>
+        </>
+      ) : (
+        <span className="ml-2 text-xs font-medium text-navy-400">optional</span>
+      )}
+    </>
+  )
+
   if (def.type === 'checkbox') {
     return (
       <div className={className}>
@@ -609,30 +623,20 @@ function Field({ id, def, error, errorId, children, className = '' }) {
     return (
       <div className={className}>
         <fieldset>
-          <legend className="mb-1.5 block text-sm font-bold text-navy">
-            {def.label}
-            {def.required ? (
-              <>
-                <span className="ml-1 text-coral" aria-hidden="true">
-                  *
-                </span>
-                <span className="sr-only"> (required)</span>
-              </>
-            ) : (
-              <span className="ml-1.5 text-xs font-medium text-navy-400">optional</span>
-            )}
+          <legend className="mb-2 block text-sm font-semibold text-navy">
+            {label}
           </legend>
           {children}
         </fieldset>
         {def.hint && (
-          <p id={`${id}-hint`} className="mt-1.5 text-xs leading-relaxed text-navy-400">
+          <p id={`${id}-hint`} className="mt-2 text-xs leading-relaxed text-navy-400">
             {def.hint}
           </p>
         )}
         {error && (
           <p
             id={errorId}
-            className="mt-1.5 flex items-center gap-1.5 text-sm font-semibold text-coral-deep"
+            className="mt-2 flex items-center gap-1.5 text-sm font-semibold text-coral-deep"
           >
             <Icon name="alert-triangle" size={14} />
             {error}
@@ -644,29 +648,19 @@ function Field({ id, def, error, errorId, children, className = '' }) {
 
   return (
     <div className={className}>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-bold text-navy">
-        {def.label}
-        {def.required ? (
-          <>
-            <span className="ml-1 text-coral" aria-hidden="true">
-              *
-            </span>
-            <span className="sr-only"> (required)</span>
-          </>
-        ) : (
-          <span className="ml-1.5 text-xs font-medium text-navy-400">optional</span>
-        )}
+      <label htmlFor={id} className="mb-2 block text-sm font-semibold text-navy">
+        {label}
       </label>
       {children}
       {def.hint && (
-        <p id={`${id}-hint`} className="mt-1.5 text-xs leading-relaxed text-navy-400">
+        <p id={`${id}-hint`} className="mt-2 text-xs leading-relaxed text-navy-400">
           {def.hint}
         </p>
       )}
       {error && (
         <p
           id={errorId}
-          className="mt-1.5 flex items-center gap-1.5 text-sm font-semibold text-coral-deep"
+          className="mt-2 flex items-center gap-1.5 text-sm font-semibold text-coral-deep"
         >
           <Icon name="alert-triangle" size={14} />
           {error}

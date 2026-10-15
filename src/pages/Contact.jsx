@@ -1,10 +1,16 @@
 import { Link } from 'react-router-dom'
-import { practice } from '../data/site.js'
+import { forms, practice } from '../data/site.js'
 import Icon from '../components/Icon.jsx'
 import LocationMap from '../components/LocationMap.jsx'
 import LeadForm from '../components/LeadForm.jsx'
-import { Card } from '../components/Ui.jsx'
-import { forms } from '../data/site.js'
+import {
+  Card,
+  Container,
+  Eyebrow,
+  IconBadge,
+  Section,
+  SectionHeading,
+} from '../components/Ui.jsx'
 
 /**
  * Contact Us. Matches the PRD's combined "Contact & Book Now" screen: contact
@@ -20,42 +26,31 @@ export default function Contact() {
 
   return (
     <>
-      <section className="relative overflow-hidden border-b border-navy-100 bg-mesh-calm">
+      <Section tone="calm" className="relative overflow-hidden">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -left-40 top-[-12%] h-[32rem] w-[32rem] rounded-full bg-cyan-50/70 blur-[120px]"
+          className="pointer-events-none absolute -right-40 -top-56 h-[42rem] w-[42rem] rounded-full bg-brand-bloom blur-3xl"
         />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -bottom-40 right-[-10%] h-[32rem] w-[32rem] rounded-full bg-blue-50/60 blur-[120px]"
-        />
-        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:py-20 lg:px-8 lg:py-24">
-          <div className="max-w-3xl">
-            <p className="font-script text-4xl leading-none text-blue-deep sm:text-[2.75rem]">
-              {form.script}
-            </p>
-            <h1 className="mt-2 text-3xl font-medium text-navy sm:text-4xl lg:text-[2.75rem]">
-              {form.title}
-            </h1>
-            <p className="mt-5 text-[1.05rem] leading-relaxed text-body">
-              {form.lede}
-            </p>
-          </div>
+        <Container className="relative">
+          <SectionHeading
+            as="h1"
+            size="xl"
+            eyebrow={form.script}
+            title={form.title}
+            body={form.lede}
+          />
 
-          {/* Contact channels */}
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             <a
               href={practice.phoneHref}
-              className="flex items-start gap-3 rounded-clinical-lg border border-navy-100 bg-calm p-5 transition-colors hover:border-blue"
+              className="flex items-start gap-4 rounded-clinical-lg bg-white p-5 shadow-clinical ring-1 ring-navy-100/70 transition hover:-translate-y-0.5 hover:shadow-clinical-lg"
             >
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-clinical bg-cyan-50 text-cyan-deep">
-                <Icon name="phone" size={19} />
-              </span>
+              <IconBadge name="phone" tone="cyan" />
               <span>
-                <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-navy-400">
+                <span className="block text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-navy-400">
                   Phone
                 </span>
-                <span className="mt-1 block font-bold text-navy">
+                <span className="mt-1 block font-semibold text-navy">
                   {practice.phoneDisplay}
                 </span>
               </span>
@@ -63,30 +58,26 @@ export default function Contact() {
 
             <a
               href={`mailto:${practice.email}`}
-              className="flex items-start gap-3 rounded-clinical-lg border border-navy-100 bg-calm p-5 transition-colors hover:border-blue"
+              className="flex items-start gap-4 rounded-clinical-lg bg-white p-5 shadow-clinical ring-1 ring-navy-100/70 transition hover:-translate-y-0.5 hover:shadow-clinical-lg"
             >
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-clinical bg-blue-50 text-blue-deep">
-                <Icon name="document" size={19} />
-              </span>
+              <IconBadge name="document" tone="blue" />
               <span className="min-w-0">
-                <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-navy-400">
+                <span className="block text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-navy-400">
                   Email
                 </span>
-                <span className="mt-1 block break-all font-bold text-navy">
+                <span className="mt-1 block break-all font-semibold text-navy">
                   {practice.email}
                 </span>
               </span>
             </a>
 
-            <div className="flex items-start gap-3 rounded-clinical-lg border border-navy-100 bg-calm p-5 sm:col-span-2 lg:col-span-1">
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-clinical bg-navy-50 text-navy-600">
-                <Icon name="map-pin" size={19} />
-              </span>
+            <div className="flex items-start gap-4 rounded-clinical-lg bg-white p-5 shadow-clinical ring-1 ring-navy-100/70 sm:col-span-2 lg:col-span-1">
+              <IconBadge name="map-pin" tone="navy" />
               <span>
-                <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-navy-400">
+                <span className="block text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-navy-400">
                   Office
                 </span>
-                <address className="mt-1 not-italic font-bold leading-snug text-navy">
+                <address className="mt-1 not-italic font-semibold leading-snug text-navy">
                   {practice.address.line1} {practice.address.line2}
                   <br />
                   {practice.address.city}, {practice.address.stateLong}{' '}
@@ -95,107 +86,93 @@ export default function Contact() {
               </span>
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
-      {/* Map + form */}
-      <section className="relative overflow-hidden bg-mesh-white">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -top-40 left-1/2 h-[32rem] w-[32rem] -translate-x-1/2 rounded-full bg-cyan-50/70 blur-[120px]"
-        />
-        <div className="relative mx-auto max-w-7xl px-4 py-20 sm:py-24 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-14">
-          <div>
-            <LocationMap height="h-[20rem]" />
+      <Section tone="white">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-14">
+            <div>
+              <LocationMap height="h-[20rem]" />
 
-            <Card className="mt-6">
-              <p className="font-script text-3xl leading-none text-blue-deep">
-                Appointments
-              </p>
-              <h2 className="mt-1 text-base font-medium text-navy">
-                How we schedule
-              </h2>
-              <p className="mt-2 text-sm leading-relaxed text-body">
-                Visits are by appointment. Send a request using the form and a
-                member of our team will contact you to confirm a time that works.
-                If you would rather book a slot yourself, our full availability
-                is also listed on Zocdoc.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <a
-                  href={practice.zocdocUrl}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="inline-flex items-center gap-2 rounded-clinical bg-navy px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-navy-600"
-                >
-                  Book on Zocdoc
-                  <Icon name="external-link" size={15} />
-                </a>
-                <a
-                  href={practice.url}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="inline-flex items-center gap-2 rounded-clinical border-2 border-navy-200 px-4 py-2.5 text-sm font-semibold text-navy transition-colors hover:border-blue hover:text-blue-deep"
-                >
-                  {practice.domain}
-                  <Icon name="external-link" size={15} />
-                </a>
-              </div>
-            </Card>
+              <Card className="mt-6">
+                <Eyebrow>Appointments</Eyebrow>
+                <h2 className="mt-3 font-sans text-base font-semibold text-navy">
+                  How we schedule
+                </h2>
+                <p className="mt-2 text-sm leading-relaxed text-body">
+                  Visits are by appointment. Send a request using the form and a
+                  member of our team will contact you to confirm a time that
+                  works. If you would rather book a slot yourself, our full
+                  availability is also listed on Zocdoc.
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2.5">
+                  <a
+                    href={practice.zocdocUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="inline-flex items-center gap-2 rounded-full bg-navy px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-navy-600"
+                  >
+                    Book on Zocdoc
+                    <Icon name="external-link" size={15} />
+                  </a>
+                  <a
+                    href={practice.url}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="inline-flex items-center gap-2 rounded-full border border-navy-200 px-4 py-2.5 text-sm font-semibold text-navy transition-colors hover:border-blue-deep hover:text-blue-deep"
+                  >
+                    {practice.domain}
+                    <Icon name="external-link" size={15} />
+                  </a>
+                </div>
+              </Card>
 
-            {/* PRD anchor: referrals */}
-            <Card id="refer" className="mt-6 scroll-mt-32 border-l-4 border-l-cyan">
-              <p className="font-script text-3xl leading-none text-blue-deep">
-                For referrers
-              </p>
-              <h2 className="mt-1 text-base font-medium text-navy">
-                Referring a patient
-              </h2>
-              <p className="mt-2 text-sm leading-relaxed text-body">
-                Physicians, therapists and community organisations can refer a
-                patient directly. Use the{' '}
-                <Link
-                  to="/refer-a-loved-one"
-                  className="font-semibold text-blue-deep underline underline-offset-2"
-                >
-                  Refer a Loved One
-                </Link>{' '}
-                form, or call us to discuss a case before sending it.
-              </p>
-            </Card>
+              {/* PRD anchor: referrals */}
+              <Card id="refer" className="mt-6 scroll-mt-32">
+                <Eyebrow>For referrers</Eyebrow>
+                <h2 className="mt-3 font-sans text-base font-semibold text-navy">
+                  Referring a patient
+                </h2>
+                <p className="mt-2 text-sm leading-relaxed text-body">
+                  Physicians, therapists and community organisations can refer a
+                  patient directly. Use the{' '}
+                  <Link
+                    to="/refer-a-loved-one"
+                    className="font-semibold text-blue-deep underline underline-offset-2"
+                  >
+                    Refer a Loved One
+                  </Link>{' '}
+                  form, or call us to discuss a case before sending it.
+                </p>
+              </Card>
 
-            {/* PRD anchor: providers */}
-            <Card
-              id="providers"
-              className="mt-6 scroll-mt-32 border-l-4 border-l-navy"
-            >
-              <p className="font-script text-3xl leading-none text-cyan-deep">
-                Our clinicians
-              </p>
-              <h2 className="mt-1 text-base font-medium text-navy">
-                Who you will see
-              </h2>
-              <p className="mt-2 text-sm leading-relaxed text-body">
-                You will be seen by a licensed psychiatric provider at
-                CORNERSTONE HEALTH SERVICES INC. To protect our clinicians from
-                unsolicited contact, individual biographies are shared at your
-                first appointment rather than published here — but if you would
-                like to know who you will be seeing before you book, just ask.
-              </p>
-              <p className="mt-3 text-xs leading-relaxed text-navy-400">
-                Credentials and licence numbers can be verified with the issuing
-                board on request.
-              </p>
-            </Card>
+              {/* PRD anchor: providers */}
+              <Card id="providers" className="mt-6 scroll-mt-32">
+                <Eyebrow>Our clinicians</Eyebrow>
+                <h2 className="mt-3 font-sans text-base font-semibold text-navy">
+                  Who you will see
+                </h2>
+                <p className="mt-2 text-sm leading-relaxed text-body">
+                  You will be seen by a licensed psychiatric provider at
+                  CORNERSTONE HEALTH SERVICES INC. To protect our clinicians from
+                  unsolicited contact, individual biographies are shared at your
+                  first appointment rather than published here — but if you would
+                  like to know who you will be seeing before you book, just ask.
+                </p>
+                <p className="mt-3 text-xs leading-relaxed text-navy-400">
+                  Credentials and licence numbers can be verified with the
+                  issuing board on request.
+                </p>
+              </Card>
+            </div>
+
+            <div>
+              <LeadForm form={form} id="contact" />
+            </div>
           </div>
-
-          <div>
-            <LeadForm form={form} id="contact" />
-          </div>
-        </div>
-      </div>
-      </section>
+        </Container>
+      </Section>
     </>
   )
 }
