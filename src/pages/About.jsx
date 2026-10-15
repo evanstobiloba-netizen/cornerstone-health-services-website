@@ -16,34 +16,45 @@ export default function About() {
 
 function Intro() {
   return (
-    <section className="relative overflow-hidden border-b border-navy-100 bg-white">
+    <section className="relative isolate overflow-hidden border-b border-navy-100 bg-white">
+      <img
+        src="/about-hero.jpg"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover object-center lg:left-auto lg:right-0 lg:w-[58%]"
+        loading="eager"
+        decoding="async"
+      />
+      <div aria-hidden="true" className="absolute inset-0 bg-hero-scrim" />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-32 -top-40 h-[30rem] w-[30rem] rounded-full bg-cyan-50 blur-3xl"
+        className="pointer-events-none absolute -left-40 top-[-12%] h-[40rem] w-[40rem] rounded-full bg-cyan-50/70 blur-[120px]"
       />
-      <div className="relative mx-auto max-w-7xl px-4 py-14 lg:px-8 lg:py-20">
-        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-16">
-          <div>
-            <SectionHeading
-              as="h1"
-              script="About Us"
-              title={`About ${practice.legalName}`}
-            />
-            <p className="mt-6 text-[1.05rem] leading-relaxed text-body">
-              {about.intro}
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button to="/book" size="lg" icon="calendar">
-                Book Now
-              </Button>
-              <Button to="/services" variant="outline" size="lg">
-                Our services
-              </Button>
-            </div>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-60 -left-20 h-[32rem] w-[32rem] rounded-full bg-blue-50/60 blur-[120px]"
+      />
+      <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-20 lg:px-8 lg:py-24">
+        <div>
+          <SectionHeading
+            as="h1"
+            script="About Us"
+            title={`About ${practice.legalName}`}
+          />
+          <p className="mt-6 text-[1.05rem] leading-relaxed text-body">
+            {about.intro}
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button to="/book" size="lg" icon="calendar">
+              Book Now
+            </Button>
+            <Button to="/services" variant="outline" size="lg">
+              Our services
+            </Button>
           </div>
 
-          <Card className="bg-navy">
-            <p className="font-script text-3xl leading-none text-cyan">
+          <div className="mt-10 rounded-clinical-lg border border-navy-100/80 bg-white/90 p-6 shadow-clinical backdrop-blur">
+            <p className="font-script text-3xl leading-none text-blue-deep">
               At a glance
             </p>
             <dl className="mt-5 space-y-4 text-sm">
@@ -56,15 +67,17 @@ function Intro() {
               ].map(([k, v]) => (
                 <div
                   key={k}
-                  className="flex items-start justify-between gap-4 border-b border-white/10 pb-3.5 last:border-0 last:pb-0"
+                  className="flex items-start justify-between gap-4 border-b border-navy-100/60 pb-3.5 last:border-0 last:pb-0"
                 >
-                  <dt className="text-navy-200">{k}</dt>
-                  <dd className="text-right font-bold text-white">{v}</dd>
+                  <dt className="text-navy-600">{k}</dt>
+                  <dd className="text-right font-bold text-navy">{v}</dd>
                 </div>
               ))}
             </dl>
-          </Card>
+          </div>
         </div>
+
+        <div aria-hidden="true" className="hidden lg:block" />
       </div>
     </section>
   )
