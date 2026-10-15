@@ -11,6 +11,7 @@ import {
 } from '../data/site.js'
 import Accordion from '../components/Accordion.jsx'
 import Button from '../components/Button.jsx'
+import HeroSlideshow from '../components/HeroSlideshow.jsx'
 import Icon from '../components/Icon.jsx'
 import LocationMap from '../components/LocationMap.jsx'
 import { Card, CheckList, SectionHeading } from '../components/Ui.jsx'
@@ -43,17 +44,10 @@ function Hero() {
 
   return (
     <section className="relative isolate overflow-hidden border-b border-navy-100 bg-white">
-      {/* Photographic backdrop, held back so it reads as texture, not subject. */}
-      <img
-        src="/hero.jpg"
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover object-center lg:left-auto lg:right-0 lg:w-[58%]"
-        loading="eager"
-        decoding="async"
-        fetchPriority="high"
-      />
-      <div aria-hidden="true" className="absolute inset-0 bg-hero-scrim" />
+      {/* Photographic backdrop — a slow cross-fade, held back so it reads as
+          texture rather than subject. */}
+      <HeroSlideshow className="absolute inset-0 h-full w-full lg:left-auto lg:right-0 lg:w-[58%]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-hero-scrim" />
 
       <div
         aria-hidden="true"
