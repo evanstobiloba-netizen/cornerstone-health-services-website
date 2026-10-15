@@ -86,6 +86,7 @@ export default function Faqs() {
             .
           </p>
         </div>
+      </div>
       </section>
     </>
   )
