@@ -93,54 +93,16 @@ function Hero() {
           </ul>
         </div>
 
-        <div className="space-y-5">
-          <div className="overflow-hidden rounded-clinical-lg shadow-clinical-lg ring-1 ring-navy-100">
-            <div className="bg-navy px-6 py-5">
-              <p className="font-script text-2xl leading-none text-cyan">
-                Here when you need us
-              </p>
-              <p className="mt-1 text-lg font-medium text-white">
-                24/7 crisis support
-              </p>
-            </div>
-            <div className="bg-white p-6">
-              <p className="text-sm leading-relaxed text-body">
-                If you or someone you care about is in crisis, help is available
-                right now — free and confidential.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <a
-                  href={crisis.lifelineHref}
-                  className="inline-flex items-center gap-2 rounded-clinical bg-coral px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-coral-deep"
-                >
-                  <Icon name="heart-pulse" size={16} />
-                  Call or text {crisis.lifeline}
-                </a>
-                <Button to="/get-help" variant="outline" size="sm">
-                  Get help?
-                </Button>
-              </div>
-            </div>
+        <div className="space-y-5 lg:self-stretch">
+          <div className="relative overflow-hidden rounded-clinical-lg shadow-clinical-lg ring-1 ring-navy-100 lg:h-full">
+            <img
+              src="/hero.jpg"
+              alt="Compassionate psychiatric care in Quincy, MA"
+              className="h-72 w-full object-cover sm:h-80 lg:h-full"
+              loading="eager"
+            />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white/90 via-white/40 to-transparent lg:h-32" />
           </div>
-
-          <Card className="border-t-4 border-t-cyan">
-            <p className="font-script text-2xl leading-none text-blue-deep">
-              Start your healing journey
-            </p>
-            <p className="mt-2 text-sm leading-relaxed text-body">
-              Request an appointment online and our team will contact you to
-              confirm a time.
-            </p>
-            <Button
-              to="/book"
-              size="md"
-              icon="arrow"
-              iconRight
-              className="mt-4 w-full"
-            >
-              Request an appointment
-            </Button>
-          </Card>
         </div>
       </div>
     </section>
