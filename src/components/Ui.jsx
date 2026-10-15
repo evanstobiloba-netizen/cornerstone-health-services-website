@@ -99,7 +99,7 @@ export function Badge({ children, tone = 'cyan', icon }) {
 export function Card({ children, className = '', as: As = 'div', ...rest }) {
   return (
     <As
-      className={`rounded-clinical-lg border border-navy-100 bg-white p-6 shadow-clinical ${className}`}
+      className={`rounded-clinical-lg border border-navy-100/80 bg-white/95 p-6 shadow-clinical backdrop-blur ${className}`}
       {...rest}
     >
       {children}

@@ -13,18 +13,20 @@ import Icon from './Icon.jsx'
  */
 const variants = {
   accent:
-    'bg-brand-gradient text-navy hover:brightness-105 shadow-clinical font-semibold',
-  primary: 'bg-navy text-white hover:bg-navy-600 shadow-clinical',
-  coral: 'bg-coral text-white hover:bg-coral-deep shadow-clinical',
+    'bg-brand-gradient text-navy font-semibold shadow-clinical-lg hover:brightness-[1.06] hover:shadow-clinical-lg',
+  primary:
+    'bg-navy text-white shadow-clinical-lg hover:bg-navy-600 hover:shadow-clinical-lg',
+  coral: 'bg-coral text-white shadow-clinical hover:bg-coral-deep',
   outline:
-    'border-2 border-navy-200 bg-white text-navy hover:border-blue hover:text-blue-deep',
+    'border-2 border-navy-200 bg-white/90 text-navy backdrop-blur hover:border-blue hover:bg-white hover:text-blue-deep hover:shadow-clinical',
   ghost: 'text-cyan-deep hover:bg-cyan-50',
-  onDark: 'bg-white/10 text-white hover:bg-white/20 border border-white/20',
+  onDark:
+    'border border-white/25 bg-white/10 text-white backdrop-blur hover:bg-white/20 hover:border-white/40',
 }
 
 const sizes = {
   sm: 'px-4 py-2 text-sm',
-  md: 'px-5 py-2.5 text-[0.95rem]',
+  md: 'px-5 py-2.5 text-[0.98rem]',
   lg: 'px-7 py-3.5 text-base',
 }
 
@@ -40,8 +42,10 @@ export default function Button({
   ...rest
 }) {
   const cls = [
-    'inline-flex items-center justify-center gap-2 rounded-clinical font-semibold',
-    'transition-all duration-150 whitespace-nowrap',
+    'inline-flex items-center justify-center gap-2.5 rounded-clinical font-semibold',
+    'transition-all duration-200 whitespace-nowrap',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
+    'active:translate-y-px',
     variants[variant],
     sizes[size],
     className,
