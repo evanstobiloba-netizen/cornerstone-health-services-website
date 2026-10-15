@@ -242,54 +242,58 @@ for capitalisation) from the live site. Real figures:
   BCBS, Aetna, Humana, Tufts, Harvard Pilgrim, United Behavioral Health, Cigna,
   Carelon, Fallon, Magellan, Multiplan, ComPsych, Unicare, First Health)
 
-### Insurance logos (drop-in)
+### Insurance logos
 
-Insurer artwork was **not** copied from anywhere, because the live site has none
-and third-party trademarks need a legitimate source. Instead the site has a
-drop-in slot per plan, wired end to end.
+All **16** plans ship with real artwork in `public/insurance/`, named after the
+plan's `slug` in `src/data/site.js`. The homepage ticker and the `/insurance`
+cards both render the files; each logo has a `title` tooltip (the tiles are
+logo-only, so hovering reveals the plan name).
 
-Add a file to `public/insurance/` named after the plan's `slug` in
-`src/data/site.js`, then rebuild. `vite.config.js` scans that directory and
-inlines a `{ slug: "/insurance/<file>" }` map into **both** the client and the
-SSR bundle (`__INSURANCE_LOGOS__`), so the artwork appears everywhere the plan is
-shown — the homepage ticker and the `/insurance` cards — with no other change.
+`vite.config.js` scans the directory and inlines a `{ slug: "/insurance/<file>" }`
+map into **both** the client and the SSR bundle (`__INSURANCE_LOGOS__`), so the
+map is identical during prerender and hydration (no mismatch).
 
-| Plan | File to drop in |
-| --- | --- |
-| Medicare | `medicare.svg` |
-| MassHealth | `masshealth.svg` |
-| Blue Cross Blue Shield | `blue-cross-blue-shield.svg` |
-| Aetna | `aetna.svg` |
-| Humana | `humana.svg` |
-| Tufts Health Plan | `tufts-health-plan.svg` |
-| Harvard Pilgrim | `harvard-pilgrim.svg` |
-| United Behavioral Health | `united-behavioral-health.svg` |
-| Cigna | `cigna.svg` |
-| Fallon Health | `fallon-health.svg` |
-| Unicare | `unicare.svg` |
-| Carelon | `carelon.svg` |
-| Magellan | `magellan.svg` |
-| ComPsych | `compsych.svg` |
-| MultiPlan | `multiplan.svg` |
-| First Health | `first-health.svg` |
+| Plan | File | Source |
+| --- | --- | --- |
+| Medicare | `medicare.svg` | Wikimedia Commons (`Medicare_logo.svg`) |
+| MassHealth | `masshealth.png` | mass.gov brand asset (`masshealth_brand_01.png`, 2400×1220) |
+| Blue Cross Blue Shield | `blue-cross-blue-shield.svg` | Wikipedia (`Blue Cross Blue Shield Association logo.svg`) |
+| Aetna | `aetna.svg` | Wikimedia Commons (`Aetna_logo.svg`) |
+| Humana | `humana.svg` | Wikimedia Commons (`Humana_logo.svg`) |
+| Tufts Health Plan | `tufts-health-plan.png` | Wikimedia Commons (`Tufts_Health_Plan_Logo.png`) |
+| Harvard Pilgrim | `harvard-pilgrim.svg` | harvardpilgrim.org CDN (colour logo + Point32Health endorsement) |
+| United Behavioral Health | `united-behavioral-health.svg` | Wikimedia Commons (`UnitedHealthcare (logo).svg`) |
+| Cigna | `cigna.svg` | Wikipedia (`Cigna_logo.svg`) |
+| Fallon Health | `fallon-health.png` | Wikipedia (`Fallon Health corporate logo.png`) |
+| Unicare | `unicare.svg` | unicare.com header logo (inline SVG, extracted) |
+| Carelon | `carelon.svg` | carelon.com brand asset (`crl_sm_h_rgb_cN.svg`) |
+| Magellan | `magellan.png` | Wikimedia Commons (`Magellan_Health_Logo.png`) |
+| ComPsych | `compsych.png` | compsych.com CMS (`cropped-CPLogo541_..._Worldwide.png`) |
+| Multiplan | `multiplan.svg` | claritev.com brand asset — see rebrand note below |
+| First Health | `first-health.png` | firsthealth.com header logo (inline PNG, extracted) |
 
 Notes:
 
-- **Format** — `.svg` is preferred (crisp at any size); `.webp`, `.png`, `.jpg`
-  also work. If a slug has several files the highest-ranked format wins, so a
-  later `.svg` supersedes an earlier `.png`.
-- **Sizing** — render at roughly **24–32 px tall**. The slot is 48 px
-  (`h-12`) on the homepage ticker and 56 px (`h-14`) on `/insurance`; artwork is
-  contained, so supply SVGs on a transparent background with a little padding.
-- **Colour** — full-colour artwork is expected; the tiles are white so logos read
-  as they do on the insurers' own sites.
+- **MultiPlan → Claritev.** MultiPlan rebranded to **Claritev** in 2025 and
+  publishes no MultiPlan-era logo any more, so the tile uses the current Claritev
+  wordmark. The list text still reads "Multiplan" to match insurance cards;
+  relabel the entry (e.g. "Multiplan (Claritev)") if you prefer.
+- **Raster files** are provided at ~160 px tall even though the slot renders at
+  **24 px** (`h-6`), which keeps them crisp on 2×/3× screens.
+- **Changing artwork** — drop a replacement in with the same slug filename and
+  rebuild. `.svg` is preferred; `.webp`/`.png`/`.jpg` also work, and if a slug
+  has several files the highest-ranked format wins.
+- **Sizing** — the slot is 48 px (`h-12`) on the homepage ticker and 56 px
+  (`h-14`) on `/insurance`; artwork is contained, so supply SVGs on a transparent
+  background with a little padding.
 - **Fallback** — a plan with no file renders a wordmark lockup (monogram + short
-  name) in the same footprint, so the layout is never broken or half-empty while
-  artwork is outstanding. `short` in `site.js` controls that label.
+  name) in the same footprint, so the layout is never broken or half-empty.
+  `short` in `site.js` controls that label.
 - **Renaming** — the `slug` is the only link between data and file. Rename one
   and you must rename the other.
-- **Licence** — confirm brand-usage rights before publishing. Insurer logo use is
-  usually governed by your provider agreements.
+- **Licence** — logos are trademarks of their owners, used here to identify the
+  plans the practice accepts. Confirm brand-usage rights before publishing;
+  insurer logo use is usually governed by your provider agreements.
 
 ---
 

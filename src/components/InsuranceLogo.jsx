@@ -32,6 +32,7 @@ export default function InsuranceLogo({
       <img
         src={src}
         alt={item.name}
+        title={item.name}
         loading="lazy"
         decoding="async"
         className={[imgClassName, 'w-auto object-contain', className]
