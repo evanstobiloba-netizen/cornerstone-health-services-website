@@ -62,9 +62,9 @@ export default function Insurance() {
                 {g.items.map((i) => (
                   <li
                     key={i.slug}
-                    className="flex h-14 items-center rounded-clinical border border-navy-100 bg-white px-4"
+                    className="flex h-20 items-center rounded-clinical border border-navy-100 bg-white px-4"
                   >
-                    <InsuranceLogo item={i} imgClassName="h-6" />
+                    <InsuranceLogo item={i} imgClassName="h-10" />
                   </li>
                 ))}
               </ul>

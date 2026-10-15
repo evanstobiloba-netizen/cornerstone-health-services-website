@@ -347,9 +347,9 @@ function InsuranceMarquee() {
       {insurances.map((i) => (
         <li
           key={i.slug}
-          className="flex h-12 items-center justify-center rounded-clinical border border-navy-100 bg-white px-5"
+          className="flex h-16 items-center justify-center rounded-clinical border border-navy-100 bg-white px-6"
         >
-          <InsuranceLogo item={i} imgClassName="h-6" />
+          <InsuranceLogo item={i} imgClassName="h-9" />
         </li>
       ))}
     </ul>
