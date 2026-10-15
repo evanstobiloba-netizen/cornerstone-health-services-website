@@ -242,6 +242,55 @@ for capitalisation) from the live site. Real figures:
   BCBS, Aetna, Humana, Tufts, Harvard Pilgrim, United Behavioral Health, Cigna,
   Carelon, Fallon, Magellan, Multiplan, ComPsych, Unicare, First Health)
 
+### Insurance logos (drop-in)
+
+Insurer artwork was **not** copied from anywhere, because the live site has none
+and third-party trademarks need a legitimate source. Instead the site has a
+drop-in slot per plan, wired end to end.
+
+Add a file to `public/insurance/` named after the plan's `slug` in
+`src/data/site.js`, then rebuild. `vite.config.js` scans that directory and
+inlines a `{ slug: "/insurance/<file>" }` map into **both** the client and the
+SSR bundle (`__INSURANCE_LOGOS__`), so the artwork appears everywhere the plan is
+shown — the homepage ticker and the `/insurance` cards — with no other change.
+
+| Plan | File to drop in |
+| --- | --- |
+| Medicare | `medicare.svg` |
+| MassHealth | `masshealth.svg` |
+| Blue Cross Blue Shield | `blue-cross-blue-shield.svg` |
+| Aetna | `aetna.svg` |
+| Humana | `humana.svg` |
+| Tufts Health Plan | `tufts-health-plan.svg` |
+| Harvard Pilgrim | `harvard-pilgrim.svg` |
+| United Behavioral Health | `united-behavioral-health.svg` |
+| Cigna | `cigna.svg` |
+| Fallon Health | `fallon-health.svg` |
+| Unicare | `unicare.svg` |
+| Carelon | `carelon.svg` |
+| Magellan | `magellan.svg` |
+| ComPsych | `compsych.svg` |
+| MultiPlan | `multiplan.svg` |
+| First Health | `first-health.svg` |
+
+Notes:
+
+- **Format** — `.svg` is preferred (crisp at any size); `.webp`, `.png`, `.jpg`
+  also work. If a slug has several files the highest-ranked format wins, so a
+  later `.svg` supersedes an earlier `.png`.
+- **Sizing** — render at roughly **24–32 px tall**. The slot is 48 px
+  (`h-12`) on the homepage ticker and 56 px (`h-14`) on `/insurance`; artwork is
+  contained, so supply SVGs on a transparent background with a little padding.
+- **Colour** — full-colour artwork is expected; the tiles are white so logos read
+  as they do on the insurers' own sites.
+- **Fallback** — a plan with no file renders a wordmark lockup (monogram + short
+  name) in the same footprint, so the layout is never broken or half-empty while
+  artwork is outstanding. `short` in `site.js` controls that label.
+- **Renaming** — the `slug` is the only link between data and file. Rename one
+  and you must rename the other.
+- **Licence** — confirm brand-usage rights before publishing. Insurer logo use is
+  usually governed by your provider agreements.
+
 ---
 
 ## Design system and accessibility

@@ -13,6 +13,7 @@ import Accordion from '../components/Accordion.jsx'
 import Button from '../components/Button.jsx'
 import HeroSlideshow from '../components/HeroSlideshow.jsx'
 import Icon from '../components/Icon.jsx'
+import InsuranceLogo from '../components/InsuranceLogo.jsx'
 import LocationMap from '../components/LocationMap.jsx'
 import { Card, CheckList, SectionHeading } from '../components/Ui.jsx'
 
@@ -21,10 +22,10 @@ export default function Home() {
     <>
       <Hero />
       <StatsBand />
+      <InsuranceMarquee />
       <Welcome />
       <ServicesGrid />
       <PathToHealing />
-      <InsuranceStrip />
       <GetSupport />
       <FaqPreview />
       <Location />
@@ -326,46 +327,65 @@ function PathToHealing() {
   )
 }
 
-/* -------------------------------------------------------- Insurance strip */
+/* ---------------------------------------------------- Insurance marquee */
 
-function InsuranceStrip() {
+/**
+ * Slim auto-scrolling ticker of the accepted plans, sitting between the stats
+ * band and the welcome copy.
+ *
+ * The track holds the same list twice. Each copy carries a trailing `pr-2.5`
+ * equal to the internal item gap, so one copy's width is exactly one period and
+ * a `-50%` translate loops with no visible seam.
+ *
+ * The first copy stays in the accessibility tree; the second is a clone marked
+ * `aria-hidden` and is removed entirely under `prefers-reduced-motion`, where
+ * the ticker becomes a plain wrapped row instead of moving.
+ */
+function InsuranceMarquee() {
+  const track = (
+    <ul className="flex items-center gap-2.5 pr-2.5">
+      {insurances.map((i) => (
+        <li
+          key={i.slug}
+          className="flex h-12 items-center justify-center rounded-clinical border border-navy-100 bg-white px-5"
+        >
+          <InsuranceLogo item={i} imgClassName="h-6" />
+        </li>
+      ))}
+    </ul>
+  )
+
   return (
-    <section className="relative overflow-hidden border-y border-navy-100/80 bg-mesh-white">
+    <section
+      aria-label="Insurance plans accepted"
+      className="relative overflow-hidden border-b border-navy-100/80 bg-white"
+    >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 pattern-dots text-navy-200 opacity-40"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan/60 to-transparent"
       />
-      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:py-20 lg:px-8">
-        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-14">
-          <div>
-            <SectionHeading
-              script="Insurance Accepted"
-              title="We work with most major plans"
-              body="Coverage is verified before your first appointment so there are no surprises about what you owe."
-              size="md"
-            />
-            <Button
-              to="/insurance"
-              variant="primary"
-              size="md"
-              icon="arrow"
-              iconRight
-              className="mt-6"
-            >
-              See all {insurances.length} plans
-            </Button>
+      <div className="mx-auto flex max-w-7xl items-center gap-5 px-4 py-5 lg:px-8">
+        <p className="hidden shrink-0 items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-navy-400 sm:flex">
+          <Icon name="shield" size={15} className="text-cyan-deep" />
+          Insurance accepted
+        </p>
+
+        <div className="marquee-mask group relative min-w-0 flex-1 overflow-hidden">
+          <div className="marquee-track flex w-max items-center [--marquee-duration:64s] group-hover:[animation-play-state:paused]">
+            {track}
+            <div aria-hidden="true" data-marquee-clone="" className="flex">
+              {track}
+            </div>
           </div>
-          <ul className="flex flex-wrap gap-2">
-            {insurances.map((i) => (
-              <li
-                key={i.name}
-                className="rounded-full border border-navy-100 bg-white/90 px-3.5 py-1.5 text-[0.82rem] font-semibold text-navy-600 shadow-clinical transition-colors hover:border-cyan hover:text-navy"
-              >
-                {i.name}
-              </li>
-            ))}
-          </ul>
         </div>
+
+        <Link
+          to="/insurance"
+          className="inline-flex shrink-0 items-center gap-1.5 text-sm font-bold text-blue-deep underline-offset-4 hover:underline"
+        >
+          All {insurances.length} plans
+          <Icon name="arrow" size={15} />
+        </Link>
       </div>
     </section>
   )

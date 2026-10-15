@@ -65,23 +65,50 @@ export const stats = [
 ]
 
 /** All 16 plans listed on the practice's Insurance Accepted page. */
+/**
+ * Accepted plans.
+ *
+ * `slug` is the contract for optional logo artwork: a file placed at
+ * `public/insurance/<slug>.(svg|png|webp) ` is picked up automatically at build
+ * time (see `vite.config.js`) and used everywhere the plan is shown. Without a
+ * file, the UI falls back to a wordmark lockup built from `short`/`name`, so the
+ * layout never breaks while artwork is outstanding.
+ *
+ * Do not rename a `slug` without also renaming the matching file — that is the
+ * only link between the two.
+ */
 export const insurances = [
-  { name: 'Medicare', group: 'Federal' },
-  { name: 'MassHealth', group: 'Federal' },
-  { name: 'Blue Cross Blue Shield (BCBS)', group: 'Commercial' },
-  { name: 'Aetna', group: 'Commercial' },
-  { name: 'Humana', group: 'Commercial' },
-  { name: 'Tufts Health Plan', group: 'Commercial' },
-  { name: 'Harvard Pilgrim Health Care', group: 'Commercial' },
-  { name: 'United Behavioral Health', group: 'Commercial' },
-  { name: 'Cigna', group: 'Commercial' },
-  { name: 'Fallon Health', group: 'Commercial' },
-  { name: 'Unicare', group: 'Commercial' },
-  { name: 'Carelon', group: 'Behavioral health' },
-  { name: 'Magellan', group: 'Behavioral health' },
-  { name: 'ComPsych', group: 'Behavioral health' },
-  { name: 'Multiplan', group: 'Network' },
-  { name: 'First Health', group: 'Network' },
+  { name: 'Medicare', group: 'Federal', slug: 'medicare' },
+  { name: 'MassHealth', group: 'Federal', slug: 'masshealth' },
+  {
+    name: 'Blue Cross Blue Shield (BCBS)',
+    short: 'BCBS',
+    group: 'Commercial',
+    slug: 'blue-cross-blue-shield',
+  },
+  { name: 'Aetna', group: 'Commercial', slug: 'aetna' },
+  { name: 'Humana', group: 'Commercial', slug: 'humana' },
+  { name: 'Tufts Health Plan', group: 'Commercial', slug: 'tufts-health-plan' },
+  {
+    name: 'Harvard Pilgrim Health Care',
+    short: 'Harvard Pilgrim',
+    group: 'Commercial',
+    slug: 'harvard-pilgrim',
+  },
+  {
+    name: 'United Behavioral Health',
+    short: 'United Behavioral',
+    group: 'Commercial',
+    slug: 'united-behavioral-health',
+  },
+  { name: 'Cigna', group: 'Commercial', slug: 'cigna' },
+  { name: 'Fallon Health', group: 'Commercial', slug: 'fallon-health' },
+  { name: 'Unicare', group: 'Commercial', slug: 'unicare' },
+  { name: 'Carelon', group: 'Behavioral health', slug: 'carelon' },
+  { name: 'Magellan', group: 'Behavioral health', slug: 'magellan' },
+  { name: 'ComPsych', group: 'Behavioral health', slug: 'compsych' },
+  { name: 'Multiplan', short: 'MultiPlan', group: 'Network', slug: 'multiplan' },
+  { name: 'First Health', group: 'Network', slug: 'first-health' },
 ]
 
 /** The four services, with the practice's own copy verbatim. */

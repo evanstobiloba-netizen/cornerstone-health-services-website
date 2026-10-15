@@ -1,6 +1,7 @@
 import { insurances, practice } from '../data/site.js'
 import Button from '../components/Button.jsx'
 import Icon from '../components/Icon.jsx'
+import InsuranceLogo from '../components/InsuranceLogo.jsx'
 import { Card, SectionHeading } from '../components/Ui.jsx'
 
 const ORDER = ['Federal', 'Commercial', 'Behavioral health', 'Network']
@@ -57,19 +58,13 @@ export default function Insurance() {
                 {g.group}
               </h2>
               <p className="mt-1.5 text-sm text-body">{BLURB[g.group]}</p>
-              <ul className="mt-5 flex flex-wrap gap-2">
+              <ul className="mt-5 grid grid-cols-2 gap-2.5">
                 {g.items.map((i) => (
                   <li
-                    key={i.name}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-navy-100 bg-calm px-3.5 py-1.5 text-[0.85rem] font-semibold text-navy-600"
+                    key={i.slug}
+                    className="flex h-14 items-center rounded-clinical border border-navy-100 bg-white px-4"
                   >
-                    <Icon
-                      name="check"
-                      size={13}
-                      strokeWidth={2.8}
-                      className="text-cyan-deep"
-                    />
-                    {i.name}
+                    <InsuranceLogo item={i} imgClassName="h-6" />
                   </li>
                 ))}
               </ul>
