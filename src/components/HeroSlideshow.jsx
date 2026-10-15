@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { asset } from '../lib/asset.js'
 
 /**
  * Hero background slideshow.
@@ -16,9 +17,9 @@ import { useEffect, useState } from 'react'
  *     aria-hidden with empty alt text.
  */
 export const HERO_SLIDES = [
-  { src: '/hero/slide-1.jpg' },
-  { src: '/hero/slide-2.jpg' },
-  { src: '/hero/slide-3.jpg' },
+  { src: asset('hero/slide-1.jpg') },
+  { src: asset('hero/slide-2.jpg') },
+  { src: asset('hero/slide-3.jpg') },
 ]
 
 export default function HeroSlideshow({

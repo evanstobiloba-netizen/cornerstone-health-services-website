@@ -13,10 +13,21 @@ import { renderToString } from 'react-dom/server'
 import { createElement } from 'react'
 import { MemoryRouter } from 'react-router-dom'
 import App from './App.jsx'
+import { ROUTER_BASENAME } from './lib/asset.js'
 
 export function render(url) {
+  // The client mounts <BrowserRouter basename={ROUTER_BASENAME}>, so the router
+  // has to see the same basename here. Otherwise every <Link> would render a
+  // bare "/about" into the static HTML while the hydrated client renders
+  // "/<base>/about", which React reports as a hydration mismatch.
+  const entry = ROUTER_BASENAME === '/' ? url : `${ROUTER_BASENAME}${url}`
+
   return renderToString(
-    createElement(MemoryRouter, { initialEntries: [url] }, createElement(App)),
+    createElement(
+      MemoryRouter,
+      { basename: ROUTER_BASENAME, initialEntries: [entry] },
+      createElement(App),
+    ),
   )
 }
 

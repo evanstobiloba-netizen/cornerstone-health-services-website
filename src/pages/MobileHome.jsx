@@ -11,6 +11,7 @@ import Icon from '../components/Icon.jsx'
 import LeadForm from '../components/LeadForm.jsx'
 import MobileTabBar from '../components/MobileTabBar.jsx'
 import Button from '../components/Button.jsx'
+import { asset } from '../lib/asset.js'
 
 /**
  * Dedicated mobile home screen from the PRD inventory.
@@ -48,7 +49,7 @@ export default function MobileHome() {
           <div className="mx-auto flex max-w-lg items-center justify-between gap-3 px-4 py-3">
             <Link to="/" aria-label="Cornerstone Health Services Inc — home">
               <img
-                src="/brand/logo-primary.png"
+                src={asset('brand/logo-primary.png')}
                 alt="Cornerstone Health Services Inc"
                 height={32}
                 style={{ height: 32, width: 'auto' }}

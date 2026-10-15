@@ -2,6 +2,7 @@ import { about, practice } from '../data/site.js'
 import Button from '../components/Button.jsx'
 import Icon from '../components/Icon.jsx'
 import { Card, CheckList, SectionHeading } from '../components/Ui.jsx'
+import { asset } from '../lib/asset.js'
 
 export default function About() {
   return (
@@ -18,7 +19,7 @@ function Intro() {
   return (
     <section className="relative isolate overflow-hidden border-b border-navy-100 bg-white">
       <img
-        src="/about-hero.jpg"
+        src={asset('about-hero.jpg')}
         alt=""
         aria-hidden="true"
         className="absolute inset-0 h-full w-full object-cover object-center lg:left-auto lg:right-0 lg:w-[58%]"

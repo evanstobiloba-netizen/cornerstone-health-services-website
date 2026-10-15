@@ -172,6 +172,44 @@ The output uses directory-style URLs, so the host must:
 
 After deploying, submit `https://<domain>/sitemap.xml` in Google Search Console.
 
+### Client preview on GitHub Pages
+
+For a shareable preview before the real domain is pointed, the site publishes to
+the `gh-pages` branch:
+
+```bash
+npm run deploy:pages
+```
+
+The script derives the deploy base and canonical origin from the `origin`
+remote, so it needs no editing:
+
+| | value |
+|---|---|
+| URL | `https://<owner>.github.io/<repo>/` |
+| `VITE_BASE` | `/<repo>/` (a user page, `<owner>.github.io`, correctly becomes `/`) |
+| `VITE_SITE_URL` | the same GitHub Pages URL |
+
+Two things make a subpath deploy work, and both are handled in the code:
+
+- every `public/` asset reference goes through `asset()` in
+  `src/lib/asset.js`, which prefixes `import.meta.env.BASE_URL` (Vite rewrites
+  the URLs it bundles, but not these);
+- the router runs with `basename={ROUTER_BASENAME}` on both the client
+  (`src/main.jsx`) and the prerenderer (`src/entry-server.jsx`), so the static
+  HTML and the hydrated app produce identical `href`s.
+
+> **Preview only.** `deploy:pages` bakes the GitHub Pages URL into the canonical,
+> Open Graph and sitemap tags. The production build (plain `npm run build`) keeps
+> the practice's real domain and is the artifact to ship to the final host.
+
+After the first push, enable Pages once:
+
+```bash
+gh api -X POST repos/<owner>/<repo>/pages \
+  -f 'source[branch]=gh-pages' -f 'source[path]=/'
+```
+
 ---
 
 ## Brand fidelity — what was sourced from the live site
@@ -454,12 +492,14 @@ public/
   site.webmanifest         name, theme colour, icons
 scripts/
   prerender.mjs            writes dist/<route>/index.html, sitemap.xml, robots.txt
+  deploy-pages.sh          builds + publishes the client preview to gh-pages
   generate-social-images.py regenerates the OG image + icons (needs Pillow)
 src/
   App.jsx                  all routes + <Seo />
   main.jsx                 entry; hydrates prerendered markup, else mounts
   entry-server.jsx         MemoryRouter render entry used by the prerenderer
   index.css                Tailwind import + real brand tokens + base layer
+  lib/asset.js             deploy base + asset() for public/ URLs
   data/site.js             ALL content, single source of truth
   data/seo.js              per-route title/description/canonical/JSON-LD
   components/

@@ -1,6 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
@@ -19,7 +19,20 @@ import tailwindcss from '@tailwindcss/vite'
  */
 const LOGO_EXTENSION_RANK = { svg: 0, webp: 1, png: 2, jpg: 3, jpeg: 3 }
 
-function insuranceLogoManifest() {
+/**
+ * Deploy base. `/` for production (custom domain); set VITE_BASE to a subpath
+ * such as `/cornerstone-health-services-website/` for a GitHub Pages project
+ * site. Normalised here so the value baked into the insurance manifest matches
+ * the one Vite uses for bundled assets.
+ */
+function normalizeBase(value) {
+  let base = value || '/'
+  if (!base.startsWith('/')) base = `/${base}`
+  if (!base.endsWith('/')) base += '/'
+  return base
+}
+
+function insuranceLogoManifest(base) {
   const dir = path.resolve(process.cwd(), 'public/insurance')
   const winners = new Map()
 
@@ -43,7 +56,7 @@ function insuranceLogoManifest() {
 
     const current = winners.get(slug)
     if (!current || rank < current.rank) {
-      winners.set(slug, { rank, src: `/insurance/${entry.name}` })
+      winners.set(slug, { rank, src: `${base}insurance/${entry.name}` })
     }
   }
 
@@ -57,13 +70,22 @@ function insuranceLogoManifest() {
  * evaluated on the server at build time and again in the browser, which is a
  * hydration mismatch across a year boundary.
  */
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  server: {
-    port: 5173,
-  },
-  define: {
-    __BUILD_YEAR__: JSON.stringify(new Date().getFullYear()),
-    __INSURANCE_LOGOS__: JSON.stringify(insuranceLogoManifest()),
-  },
+export default defineConfig(({ mode }) => {
+  // `.env` files are not injected into `process.env` for the config file, so
+  // read VITE_BASE through loadEnv. Real environment variables still win, which
+  // is what `npm run deploy:pages` relies on.
+  const env = loadEnv(mode, process.cwd(), 'VITE_')
+  const base = normalizeBase(env.VITE_BASE || process.env.VITE_BASE)
+
+  return {
+    base,
+    plugins: [react(), tailwindcss()],
+    server: {
+      port: 5173,
+    },
+    define: {
+      __BUILD_YEAR__: JSON.stringify(new Date().getFullYear()),
+      __INSURANCE_LOGOS__: JSON.stringify(insuranceLogoManifest(base)),
+    },
+  }
 })

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import Icon from './Icon.jsx'
+import { asset } from '../lib/asset.js'
 
 /**
  * Real brand lockup, supplied as the practice's own PNG assets:
@@ -15,7 +16,7 @@ export function Logo({ light = false, className = '', height = 38 }) {
       aria-label="Cornerstone Health Services Inc — home"
     >
       <img
-        src={light ? '/brand/logo-inverse.png' : '/brand/logo-primary.png'}
+        src={asset(light ? 'brand/logo-inverse.png' : 'brand/logo-primary.png')}
         alt="Cornerstone Health Services Inc"
         width={Math.round(height * 3.586)}
         height={height}
