@@ -50,8 +50,8 @@ function Hero() {
         className="pointer-events-none absolute -bottom-56 -left-24 h-[26rem] w-[26rem] rounded-full bg-blue-50 blur-3xl"
       />
 
-      <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-16 lg:px-8 lg:py-24">
-        <div>
+      <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-16 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-16 lg:px-8 lg:py-24">
+        <div className="relative z-10">
           <p className="font-script text-4xl leading-none text-blue-deep sm:text-[2.75rem]">
             Mental Wellness, Within Reach
           </p>
@@ -93,16 +93,15 @@ function Hero() {
           </ul>
         </div>
 
-        <div className="space-y-5 lg:self-stretch">
-          <div className="relative overflow-hidden rounded-clinical-lg shadow-clinical-lg ring-1 ring-navy-100 lg:h-full">
-            <img
-              src="/hero.jpg"
-              alt="Compassionate psychiatric care in Quincy, MA"
-              className="h-72 w-full object-cover sm:h-80 lg:h-full"
-              loading="eager"
-            />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white/90 via-white/40 to-transparent lg:h-32" />
-          </div>
+        <div className="relative">
+          <div className="absolute inset-0 -right-6 -top-6 hidden rounded-clinical-lg bg-white/70 blur-2xl lg:block" aria-hidden="true" />
+          <div className="absolute inset-y-0 right-0 hidden w-1/2 bg-gradient-to-r from-white via-white/80 to-transparent lg:block" aria-hidden="true" />
+          <img
+            src="/hero.jpg"
+            alt="Compassionate psychiatric care in Quincy, MA"
+            className="h-64 w-full rounded-clinical-lg object-cover shadow-clinical-lg ring-1 ring-navy-100 sm:h-72 lg:absolute lg:-right-24 lg:top-1/2 lg:h-[28rem] lg:w-[38rem] lg:-translate-y-1/2"
+            loading="eager"
+          />
         </div>
       </div>
     </section>
