@@ -97,6 +97,7 @@ export default function Resources() {
             {practice.phoneDisplay}
           </Button>
         </div>
+      </div>
       </section>
     </>
   )
