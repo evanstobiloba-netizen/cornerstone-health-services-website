@@ -15,32 +15,10 @@ function Social({ href, label, children }) {
       target="_blank"
       rel="noreferrer noopener"
       aria-label={label}
-      className="grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white ring-1 ring-inset ring-white/15 transition-colors hover:bg-white/20"
+      className="grid h-9 w-9 place-items-center rounded-clinical border border-white/20 text-white transition-colors hover:border-white/50 hover:bg-white/10"
     >
       {children}
     </a>
-  )
-}
-
-function ContactTile({ icon, label, tone, children }) {
-  const tones = {
-    cyan: 'bg-cyan/15 text-cyan',
-    blue: 'bg-blue/15 text-blue',
-  }
-  return (
-    <div className="flex items-start gap-3">
-      <span
-        className={`grid h-10 w-10 shrink-0 place-items-center rounded-clinical ${tones[tone]}`}
-      >
-        <Icon name={icon} size={18} />
-      </span>
-      <span className="min-w-0">
-        <span className="block text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-navy-200">
-          {label}
-        </span>
-        <span className="mt-1 block font-semibold text-white">{children}</span>
-      </span>
-    </div>
   )
 }
 
@@ -61,26 +39,21 @@ export default function SiteFooter() {
     <footer className="mt-auto bg-mesh-navy text-navy-100">
       <div aria-hidden="true" className="h-px w-full rule-brand" />
 
-      <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-8 lg:py-20">
-        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div className="mx-auto max-w-[84rem] px-5 pt-16 sm:px-7 lg:px-10 lg:pt-20">
+        <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-10">
           <div>
-            <Logo light height={40} />
+            <Logo light height={38} />
             <p className="mt-6 max-w-sm text-[0.95rem] leading-relaxed text-navy-200">
               Compassionate, evidence-based psychiatric care for adults 18–80.
               In person in Quincy, or by telehealth across Massachusetts.
             </p>
 
-            <div className="mt-6 flex gap-2.5">
+            <div className="mt-7 flex gap-2.5">
               <Social
                 href={practice.social.facebook}
                 label="Cornerstone Health Services on Facebook"
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="h-4 w-4"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
                   <path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5h1.65V3.6A22 22 0 0 0 14.3 3.5c-2.4 0-4 1.45-4 4.1v2.3H7.6V13h2.7v8h3.2Z" />
                 </svg>
               </Social>
@@ -88,14 +61,7 @@ export default function SiteFooter() {
                 href={practice.social.instagram}
                 label="Cornerstone Health Services on Instagram"
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="h-4 w-4"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  aria-hidden="true"
-                >
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
                   <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
                   <circle cx="12" cy="12" r="3.8" />
                   <circle cx="17" cy="7" r="1.1" fill="currentColor" stroke="none" />
@@ -103,14 +69,14 @@ export default function SiteFooter() {
               </Social>
             </div>
 
-            <p className="mt-7 text-xs leading-relaxed text-navy-200">
+            <p className="t-kicker mt-8 text-navy-200">
               Founded {practice.founded} · {practice.serves}
             </p>
           </div>
 
           {footerNav.map((col) => (
             <nav key={col.heading} aria-label={col.heading}>
-              <h2 className="font-sans text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-cyan">
+              <h2 className="t-kicker border-b border-white/15 pb-3 text-cyan">
                 {col.heading}
               </h2>
               <ul className="mt-5 space-y-3 text-[0.95rem]">
@@ -118,7 +84,7 @@ export default function SiteFooter() {
                   <li key={l.to}>
                     <Link
                       to={l.to}
-                      className="text-navy-200 underline-offset-4 transition-colors hover:text-white hover:underline"
+                      className="link-rule text-navy-200 transition-colors hover:text-white"
                     >
                       {l.label}
                     </Link>
@@ -129,37 +95,46 @@ export default function SiteFooter() {
           ))}
         </div>
 
-        {/* Contact block */}
-        <div className="mt-14 grid gap-7 rounded-clinical-lg border border-white/10 bg-white/[0.04] p-7 sm:grid-cols-3">
-          <a href={practice.phoneHref} className="group">
-            <ContactTile icon="phone" label="Talk to us" tone="cyan">
-              <span className="group-hover:underline">{practice.phoneDisplay}</span>
-            </ContactTile>
+        {/* Contact, set as ruled columns rather than tiles. */}
+        <div className="mt-16 grid border-t border-white/15 sm:grid-cols-3">
+          <a
+            href={practice.phoneHref}
+            className="group border-b border-white/15 py-6 sm:border-b-0 sm:border-r sm:pr-8"
+          >
+            <span className="t-kicker text-navy-200">Talk to us</span>
+            <span className="mt-3 block font-display text-xl text-white group-hover:text-cyan">
+              {practice.phoneDisplay}
+            </span>
           </a>
 
-          <a href={`mailto:${practice.email}`} className="group">
-            <ContactTile icon="document" label="Message us at" tone="blue">
-              <span className="break-all group-hover:underline">{practice.email}</span>
-            </ContactTile>
+          <a
+            href={`mailto:${practice.email}`}
+            className="group border-b border-white/15 py-6 sm:border-b-0 sm:border-r sm:px-8"
+          >
+            <span className="t-kicker text-navy-200">Message us</span>
+            <span className="mt-3 block break-all font-display text-xl text-white group-hover:text-cyan">
+              {practice.email}
+            </span>
           </a>
 
-          <ContactTile icon="map-pin" label="Visit us" tone="cyan">
-            <address className="not-italic leading-relaxed">
+          <div className="py-6 sm:pl-8">
+            <span className="t-kicker text-navy-200">Visit us</span>
+            <address className="mt-3 not-italic text-[0.95rem] leading-relaxed text-white">
               {practice.address.line1} {practice.address.line2}
               <br />
               {practice.address.city}, {practice.address.stateLong}{' '}
               {practice.address.zip}
             </address>
-          </ContactTile>
+          </div>
         </div>
 
         {/* Crisis block - always present in the footer as well as the ribbon. */}
-        <div className="mt-7 rounded-clinical-lg border border-coral/40 bg-coral/15 p-6">
-          <p className="flex items-center gap-2 font-semibold text-white">
-            <Icon name="alert-triangle" size={17} />
+        <div className="mt-8 border border-coral/40 bg-coral/15 p-6">
+          <p className="t-kicker flex items-center gap-2 text-white">
+            <Icon name="alert-triangle" size={15} aria-hidden="true" />
             24/7 crisis support
           </p>
-          <p className="mt-2 text-[0.95rem] leading-relaxed text-navy-100">
+          <p className="mt-3 text-[0.95rem] leading-relaxed text-navy-100">
             Call or text{' '}
             <a
               href={crisis.lifelineHref}
@@ -172,7 +147,7 @@ export default function SiteFooter() {
           </p>
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-7">
+        <div className="mt-12 border-t border-white/15 pt-7">
           <p className="max-w-4xl text-xs leading-relaxed text-navy-200">
             This website is for general information and is not a substitute for
             individual medical advice, diagnosis, or treatment. Contacting
@@ -187,7 +162,7 @@ export default function SiteFooter() {
             <p className="flex flex-wrap items-center gap-x-5 gap-y-1">
               <Link
                 to="/privacy-policy"
-                className="underline-offset-4 transition-colors hover:text-white hover:underline"
+                className="link-rule transition-colors hover:text-white"
               >
                 Privacy Policy
               </Link>
@@ -195,15 +170,24 @@ export default function SiteFooter() {
                 href={practice.url}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="inline-flex items-center gap-1.5 underline-offset-4 transition-colors hover:text-white hover:underline"
+                className="inline-flex items-center gap-1.5 transition-colors hover:text-white"
               >
                 {practice.domain}
-                <Icon name="external-link" size={12} />
+                <Icon name="external-link" size={12} aria-hidden="true" />
               </a>
             </p>
           </div>
           <p className="sr-only">{addressOneLine}</p>
         </div>
+
+        {/* Colophon wordmark: a masthead sign-off, hidden from assistive tech
+            because the practice name is already announced above. */}
+        <p
+          aria-hidden="true"
+          className="mt-14 select-none overflow-hidden text-center font-display text-[clamp(2.2rem,11vw,9rem)] font-medium leading-[0.86] tracking-[-0.04em] text-white/[0.07]"
+        >
+          Cornerstone
+        </p>
       </div>
     </footer>
   )

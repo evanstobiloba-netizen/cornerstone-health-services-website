@@ -1,15 +1,14 @@
 import { Link } from 'react-router-dom'
 import { forms, practice } from '../data/site.js'
+import Button from '../components/Button.jsx'
 import Icon from '../components/Icon.jsx'
 import LocationMap from '../components/LocationMap.jsx'
 import LeadForm from '../components/LeadForm.jsx'
 import {
-  Card,
   Container,
-  Eyebrow,
   IconBadge,
+  Kicker,
   Section,
-  SectionHeading,
 } from '../components/Ui.jsx'
 
 /**
@@ -26,31 +25,21 @@ export default function Contact() {
 
   return (
     <>
-      <Section tone="calm" className="relative overflow-hidden">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-40 -top-56 h-[42rem] w-[42rem] rounded-full bg-brand-bloom blur-3xl"
-        />
-        <Container className="relative">
-          <SectionHeading
-            as="h1"
-            size="xl"
-            eyebrow={form.script}
-            title={form.title}
-            body={form.lede}
-          />
+      <Section tone="white" rule>
+        <Container>
+          <Kicker>{form.script}</Kicker>
+          <h1 className="t-display mt-6 max-w-4xl text-navy">{form.title}</h1>
+          <p className="t-lead mt-7 max-w-2xl">{form.lede}</p>
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-14 grid border-t border-[rgba(14,15,59,0.12)] sm:grid-cols-2 lg:grid-cols-3">
             <a
               href={practice.phoneHref}
-              className="flex items-start gap-4 rounded-clinical-lg bg-white p-5 shadow-clinical ring-1 ring-navy-100/70 transition hover:-translate-y-0.5 hover:shadow-clinical-lg"
+              className="flex items-start gap-4 border-b border-[rgba(14,15,59,0.12)] py-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:border-b-0 lg:border-r lg:pr-7"
             >
               <IconBadge name="phone" tone="cyan" />
               <span>
-                <span className="block text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-navy-400">
-                  Phone
-                </span>
-                <span className="mt-1 block font-semibold text-navy">
+                <span className="t-kicker block text-navy-400">Phone</span>
+                <span className="mt-2 block font-medium text-navy">
                   {practice.phoneDisplay}
                 </span>
               </span>
@@ -58,26 +47,22 @@ export default function Contact() {
 
             <a
               href={`mailto:${practice.email}`}
-              className="flex items-start gap-4 rounded-clinical-lg bg-white p-5 shadow-clinical ring-1 ring-navy-100/70 transition hover:-translate-y-0.5 hover:shadow-clinical-lg"
+              className="flex items-start gap-4 border-b border-[rgba(14,15,59,0.12)] py-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:border-b-0 lg:border-r lg:px-7"
             >
               <IconBadge name="document" tone="blue" />
               <span className="min-w-0">
-                <span className="block text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-navy-400">
-                  Email
-                </span>
-                <span className="mt-1 block break-all font-semibold text-navy">
+                <span className="t-kicker block text-navy-400">Email</span>
+                <span className="mt-2 block break-all font-medium text-navy">
                   {practice.email}
                 </span>
               </span>
             </a>
 
-            <div className="flex items-start gap-4 rounded-clinical-lg bg-white p-5 shadow-clinical ring-1 ring-navy-100/70 sm:col-span-2 lg:col-span-1">
+            <div className="flex items-start gap-4 border-b border-[rgba(14,15,59,0.12)] py-6 sm:col-span-2 lg:col-span-1 lg:border-b-0 lg:pl-7">
               <IconBadge name="map-pin" tone="navy" />
               <span>
-                <span className="block text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-navy-400">
-                  Office
-                </span>
-                <address className="mt-1 not-italic font-semibold leading-snug text-navy">
+                <span className="t-kicker block text-navy-400">Office</span>
+                <address className="mt-2 not-italic font-medium leading-snug text-navy">
                   {practice.address.line1} {practice.address.line2}
                   <br />
                   {practice.address.city}, {practice.address.stateLong}{' '}
@@ -89,52 +74,52 @@ export default function Contact() {
         </Container>
       </Section>
 
-      <Section tone="white">
+      <Section tone="calm" rule>
         <Container>
-          <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-14">
+          <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-14">
             <div>
               <LocationMap height="h-[20rem]" />
 
-              <Card className="mt-6">
-                <Eyebrow>Appointments</Eyebrow>
-                <h2 className="mt-3 font-sans text-base font-semibold text-navy">
-                  How we schedule
-                </h2>
-                <p className="mt-2 text-sm leading-relaxed text-body">
+              <div id="appointments" className="mt-10 scroll-mt-32 border-t-2 border-navy pt-6">
+                <Kicker>Appointments</Kicker>
+                <h2 className="t-subtitle mt-5 text-navy">How we schedule</h2>
+                <p className="mt-4 text-[0.97rem] leading-relaxed text-body">
                   Visits are by appointment. Send a request using the form and a
                   member of our team will contact you to confirm a time that
                   works. If you would rather book a slot yourself, our full
                   availability is also listed on Zocdoc.
                 </p>
-                <div className="mt-5 flex flex-wrap gap-2.5">
-                  <a
+                <div className="mt-6 flex flex-wrap gap-2.5">
+                  <Button
                     href={practice.zocdocUrl}
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="inline-flex items-center gap-2 rounded-full bg-navy px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-navy-600"
+                    variant="primary"
+                    size="sm"
+                    icon="external-link"
                   >
                     Book on Zocdoc
-                    <Icon name="external-link" size={15} />
-                  </a>
-                  <a
+                  </Button>
+                  <Button
                     href={practice.url}
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="inline-flex items-center gap-2 rounded-full border border-navy-200 px-4 py-2.5 text-sm font-semibold text-navy transition-colors hover:border-blue-deep hover:text-blue-deep"
+                    variant="outline"
+                    size="sm"
+                    icon="external-link"
                   >
                     {practice.domain}
-                    <Icon name="external-link" size={15} />
-                  </a>
+                  </Button>
                 </div>
-              </Card>
+              </div>
 
               {/* PRD anchor: referrals */}
-              <Card id="refer" className="mt-6 scroll-mt-32">
-                <Eyebrow>For referrers</Eyebrow>
-                <h2 className="mt-3 font-sans text-base font-semibold text-navy">
+              <div id="refer" className="mt-10 scroll-mt-32 border-t border-[rgba(14,15,59,0.12)] pt-6">
+                <Kicker>For referrers</Kicker>
+                <h2 className="t-subtitle mt-5 text-navy">
                   Referring a patient
                 </h2>
-                <p className="mt-2 text-sm leading-relaxed text-body">
+                <p className="mt-4 text-[0.97rem] leading-relaxed text-body">
                   Physicians, therapists and community organisations can refer a
                   patient directly. Use the{' '}
                   <Link
@@ -145,15 +130,13 @@ export default function Contact() {
                   </Link>{' '}
                   form, or call us to discuss a case before sending it.
                 </p>
-              </Card>
+              </div>
 
               {/* PRD anchor: providers */}
-              <Card id="providers" className="mt-6 scroll-mt-32">
-                <Eyebrow>Our clinicians</Eyebrow>
-                <h2 className="mt-3 font-sans text-base font-semibold text-navy">
-                  Who you will see
-                </h2>
-                <p className="mt-2 text-sm leading-relaxed text-body">
+              <div id="providers" className="mt-10 scroll-mt-32 border-t border-[rgba(14,15,59,0.12)] pt-6">
+                <Kicker>Our clinicians</Kicker>
+                <h2 className="t-subtitle mt-5 text-navy">Who you will see</h2>
+                <p className="mt-4 text-[0.97rem] leading-relaxed text-body">
                   You will be seen by a licensed psychiatric provider at
                   CORNERSTONE HEALTH SERVICES INC. To protect our clinicians from
                   unsolicited contact, individual biographies are shared at your
@@ -164,10 +147,10 @@ export default function Contact() {
                   Credentials and licence numbers can be verified with the
                   issuing board on request.
                 </p>
-              </Card>
+              </div>
             </div>
 
-            <div>
+            <div className="lg:pt-1">
               <LeadForm form={form} id="contact" />
             </div>
           </div>

@@ -1,59 +1,58 @@
 import { practice, resources } from '../data/site.js'
 import Button from '../components/Button.jsx'
 import Icon from '../components/Icon.jsx'
-import {
-  Container,
-  IconBadge,
-  Section,
-  SectionHeading,
-} from '../components/Ui.jsx'
+import { Container, Kicker, Section } from '../components/Ui.jsx'
 
+/**
+ * Resources, set as a numbered index — the most editorial way to present a
+ * directory. Each organisation is a ruled row rather than a card, so the
+ * names read as a list you can scan.
+ */
 export default function Resources() {
   return (
     <>
-      <Section tone="calm" className="relative overflow-hidden">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-40 -top-56 h-[42rem] w-[42rem] rounded-full bg-brand-bloom blur-3xl"
-        />
-        <Container className="relative">
-          <SectionHeading
-            as="h1"
-            size="xl"
-            eyebrow="Mental Health Resources"
-            title="Trusted organisations and information"
-            body="These are the national organisations we point people to most often. They are independent of this practice, and their guidance is free to read."
-          />
+      <Section tone="white" rule>
+        <Container>
+          <Kicker>Mental Health Resources</Kicker>
+          <h1 className="t-display mt-6 max-w-4xl text-navy">
+            Trusted organisations and information
+          </h1>
+          <p className="t-lead mt-7 max-w-2xl">
+            These are the national organisations we point people to most often.
+            They are independent of this practice, and their guidance is free to
+            read.
+          </p>
         </Container>
       </Section>
 
-      <Section tone="white">
+      <Section tone="calm" rule>
         <Container>
-          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {resources.map((r) => (
-              <li key={r.url}>
+          <ul className="border-b border-[rgba(14,15,59,0.12)]">
+            {resources.map((r, i) => (
+              <li key={r.url} className="border-t border-[rgba(14,15,59,0.12)]">
                 <a
                   href={r.url}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="group flex h-full flex-col rounded-clinical-lg bg-white p-6 shadow-clinical ring-1 ring-navy-100/70 transition duration-200 hover:-translate-y-1 hover:shadow-clinical-lg hover:ring-navy-200"
+                  className="group grid grid-cols-[auto_1fr_auto] items-center gap-5 py-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
                 >
-                  <IconBadge
-                    name="globe"
-                    tone="cyan"
-                    className="transition-colors group-hover:bg-brand-gradient group-hover:text-navy"
-                  />
-                  <h2 className="mt-5 font-sans text-[1.02rem] font-semibold leading-snug text-navy">
-                    {r.name}
-                  </h2>
-                  <span className="mt-2 flex-1 text-sm font-semibold text-blue-deep">
-                    {r.display}
+                  <span className="tnum t-kicker text-navy-300">
+                    {String(i + 1).padStart(2, '0')}
                   </span>
-                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-navy-400 transition-colors group-hover:text-blue-deep">
-                    Visit site
+                  <span className="min-w-0">
+                    <span className="t-subtitle block text-navy transition-colors group-hover:text-blue-deep">
+                      {r.name}
+                    </span>
+                    <span className="mt-1.5 block break-words text-sm font-semibold text-blue-deep">
+                      {r.display}
+                    </span>
+                  </span>
+                  <span className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-navy-400 transition-colors group-hover:text-blue-deep">
+                    <span className="hidden sm:inline">Visit site</span>
                     <Icon
                       name="external-link"
-                      size={15}
+                      size={16}
+                      aria-hidden="true"
                       className="transition-transform duration-200 group-hover:translate-x-0.5"
                     />
                   </span>
@@ -62,18 +61,15 @@ export default function Resources() {
             ))}
           </ul>
 
-          <div className="mt-10 rounded-clinical-lg border border-coral/40 bg-coral-50 p-6">
-            <h2 className="flex items-center gap-2 font-sans text-base font-semibold text-coral-deep">
-              <Icon name="alert-triangle" size={18} />
+          <div className="mt-12 border-t-2 border-coral pt-6">
+            <p className="t-kicker flex items-center gap-2 text-coral-deep">
+              <Icon name="alert-triangle" size={15} aria-hidden="true" />
               If you need help right now
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-coral-deep">
+            </p>
+            <p className="mt-4 max-w-3xl text-[0.97rem] leading-relaxed text-coral-deep">
               These resources are for reading, not for emergencies. If you are in
               crisis, call or text{' '}
-              <a
-                href="tel:988"
-                className="font-bold underline underline-offset-2"
-              >
+              <a href="tel:988" className="font-bold underline underline-offset-2">
                 988
               </a>{' '}
               to reach the Suicide &amp; Crisis Lifeline, free and confidential,
@@ -88,7 +84,7 @@ export default function Resources() {
             </p>
           </div>
 
-          <div className="mt-10 flex flex-col items-start gap-3 sm:flex-row">
+          <div className="mt-12 flex flex-col items-start gap-3 sm:flex-row">
             <Button to="/book" size="lg" icon="calendar">
               Book Now
             </Button>

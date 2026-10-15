@@ -6,11 +6,13 @@ import Button from './Button.jsx'
 import Icon from './Icon.jsx'
 
 /**
- * Sticky primary navigation.
+ * The masthead.
  *
- * The bar stays opaque white so it always reads cleanly against the light page
- * surfaces; only its bottom hairline and shadow fade in once the page scrolls,
- * which is what separates it from the content sliding underneath.
+ * A publication's masthead is always there, always ruled off, and never
+ * shouts. So: a hairline under the bar at all times, a frosted surface so the
+ * page slides beneath it, and a shadow that only appears once you have scrolled
+ * away from the top. The standfirst ("Psychiatric care · Quincy, MA") sits
+ * beside the logo on wide screens the way a paper puts its beat under its name.
  */
 export default function SiteHeader() {
   const [open, setOpen] = useState(false)
@@ -39,29 +41,34 @@ export default function SiteHeader() {
 
   return (
     <header
-      className={`border-b bg-white/85 backdrop-blur-md transition-[box-shadow,border-color] duration-200 ${
-        scrolled ? 'border-navy-100 shadow-clinical' : 'border-transparent'
+      className={`border-b border-[rgba(14,15,59,0.12)] bg-white/85 backdrop-blur-md transition-shadow duration-200 ${
+        scrolled ? 'shadow-clinical' : ''
       }`}
     >
-      <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between gap-5 px-5 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-3">
-          <Logo height={34} />
+      <div className="mx-auto flex h-16 max-w-[84rem] items-center justify-between gap-6 px-5 sm:px-7 lg:px-10">
+        <div className="flex items-center gap-5">
+          <Logo height={30} />
           <span
             aria-hidden="true"
-            className="hidden h-8 w-px bg-navy-100 xl:block"
+            className="hidden h-7 w-px bg-[rgba(14,15,59,0.12)] lg:block"
           />
+          <span className="t-kicker hidden text-navy-400 lg:block">
+            Psychiatric care · Quincy, MA
+          </span>
         </div>
 
-        <nav aria-label="Primary" className="hidden xl:block">
-          <ul className="flex items-center gap-0.5">
+        <nav aria-label="Primary" className="hidden lg:block">
+          <ul className="flex items-center gap-7">
             {nav.map((item) => (
               <li key={item.to}>
                 <NavLink
                   to={item.to}
                   end={item.to === '/'}
                   className={({ isActive }) =>
-                    `group relative block px-3 py-2 text-[0.9rem] font-medium transition-colors ${
-                      isActive ? 'text-navy' : 'text-navy-600 hover:text-navy'
+                    `t-kicker relative block py-1.5 transition-colors ${
+                      isActive
+                        ? 'text-navy'
+                        : 'text-navy-500 hover:text-navy'
                     }`
                   }
                 >
@@ -70,10 +77,8 @@ export default function SiteHeader() {
                       {item.label}
                       <span
                         aria-hidden="true"
-                        className={`absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-brand-gradient transition-transform duration-200 ${
-                          isActive
-                            ? 'scale-x-100'
-                            : 'scale-x-0 group-hover:scale-x-100'
+                        className={`absolute inset-x-0 -bottom-0.5 h-px origin-left bg-navy transition-transform duration-200 ${
+                          isActive ? 'scale-x-100' : 'scale-x-0'
                         }`}
                       />
                     </>
@@ -84,26 +89,25 @@ export default function SiteHeader() {
           </ul>
         </nav>
 
-        <div className="hidden items-center gap-2 lg:flex">
-          <a
-            href={practice.phoneHref}
-            className="inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-[0.9rem] font-semibold text-navy transition-colors hover:bg-navy-50"
-          >
-            <Icon name="phone" size={16} />
-            <span className="whitespace-nowrap">{practice.phoneDisplay}</span>
-          </a>
-          <Button to="/book" size="md" icon="calendar">
-            Book Now
-          </Button>
-        </div>
-
         <div className="flex items-center gap-2">
           <a
             href={practice.phoneHref}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-navy text-white transition-colors hover:bg-navy-600 lg:hidden"
+            className="t-kicker hidden items-center gap-2 py-2 text-navy transition-colors hover:text-blue-deep xl:inline-flex"
+          >
+            <Icon name="phone" size={14} aria-hidden="true" />
+            {practice.phoneDisplay}
+          </a>
+
+          <Button to="/book" size="sm" className="hidden sm:inline-flex">
+            Book Now
+          </Button>
+
+          <a
+            href={practice.phoneHref}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-clinical border border-navy-200 text-navy transition-colors hover:bg-navy-50 xl:hidden"
             aria-label={`Call Cornerstone Health Services at ${practice.phoneDisplay}`}
           >
-            <Icon name="phone" size={18} />
+            <Icon name="phone" size={17} aria-hidden="true" />
           </a>
           <button
             type="button"
@@ -111,9 +115,9 @@ export default function SiteHeader() {
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? 'Close menu' : 'Open menu'}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-navy-200 text-navy transition-colors hover:bg-navy-50 xl:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-clinical border border-navy-200 text-navy transition-colors hover:bg-navy-50 lg:hidden"
           >
-            <Icon name={open ? 'close' : 'menu'} size={20} />
+            <Icon name={open ? 'close' : 'menu'} size={19} aria-hidden="true" />
           </button>
         </div>
       </div>
@@ -121,48 +125,54 @@ export default function SiteHeader() {
       <div
         id="mobile-menu"
         hidden={!open}
-        className="border-t border-navy-100 bg-white xl:hidden"
+        className="border-t border-[rgba(14,15,59,0.12)] bg-white lg:hidden"
       >
-        <nav aria-label="Mobile" className="mx-auto max-w-7xl px-5 py-4 sm:px-6 lg:px-8">
-          <ul className="flex flex-col">
-            {nav.map((item) => (
+        <nav
+          aria-label="Mobile"
+          className="mx-auto max-w-[84rem] px-5 py-2 sm:px-7 lg:px-10"
+        >
+          <ul>
+            {nav.map((item, i) => (
               <li key={item.to}>
                 <NavLink
                   to={item.to}
                   end={item.to === '/'}
                   className={({ isActive }) =>
-                    `flex items-center justify-between border-b border-navy-100/70 py-3.5 text-lg font-medium transition-colors ${
-                      isActive ? 'text-blue-deep' : 'text-navy hover:text-blue-deep'
+                    `group flex items-baseline gap-5 border-b border-[rgba(14,15,59,0.12)] py-4 transition-colors ${
+                      isActive ? 'text-navy' : 'text-navy-600 hover:text-navy'
                     }`
                   }
                 >
-                  <span>{item.label}</span>
-                  <Icon name="arrow" size={18} className="text-navy-300" />
+                  <span
+                    aria-hidden="true"
+                    className="tnum t-kicker text-navy-300"
+                  >
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span className="t-subtitle">{item.label}</span>
+                  <Icon
+                    name="arrow"
+                    size={17}
+                    aria-hidden="true"
+                    className="ml-auto self-center text-navy-300 transition-transform duration-200 group-hover:translate-x-1"
+                  />
                 </NavLink>
               </li>
             ))}
           </ul>
 
-          <div className="mt-5 grid gap-2.5">
-            <Button to="/book" size="lg" icon="calendar" className="w-full">
+          <div className="mt-6 mb-4 grid gap-2.5 sm:grid-cols-2">
+            <Button to="/book" size="lg" className="w-full">
               Book Now
             </Button>
             <Button
               to="/get-help"
               variant="outline"
               size="lg"
-              icon="heart-pulse"
               className="w-full"
             >
               Get help?
             </Button>
-            <a
-              href={practice.phoneHref}
-              className="mt-1 inline-flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-base font-bold text-navy"
-            >
-              <Icon name="phone" size={18} />
-              {practice.phoneDisplay}
-            </a>
           </div>
         </nav>
       </div>

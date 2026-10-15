@@ -27,36 +27,42 @@ export function Logo({ light = false, className = '', height = 36 }) {
   )
 }
 
-/** Horizontal page gutter. Every band's content sits inside one of these. */
-export function Container({ children, className = '', size = 'wide' }) {
+/** Page gutter and measure. Every band's content sits inside one of these. */
+export function Container({
+  children,
+  className = '',
+  size = 'wide',
+  as: As = 'div',
+}) {
   const sizes = {
-    wide: 'max-w-7xl',
+    wide: 'max-w-[84rem]',
     default: 'max-w-6xl',
     narrow: 'max-w-4xl',
-    prose: 'max-w-3xl',
+    prose: 'max-w-[68ch]',
   }
   return (
-    <div
-      className={`mx-auto w-full ${sizes[size]} px-5 sm:px-6 lg:px-8 ${className}`}
+    <As
+      className={`mx-auto w-full ${sizes[size]} px-5 sm:px-7 lg:px-10 ${className}`}
     >
       {children}
-    </div>
+    </As>
   )
 }
 
 /**
- * A full-width content band with the standard vertical rhythm.
+ * A full-width content band.
  *
- * `tone` picks the surface; `navy` flips the text colours for a dark band.
- * Anything that needs to bleed to the edge (a bloom, a pattern) belongs in the
- * child markup with `absolute`, so pass `relative overflow-hidden` via
- * `className` when you add one.
+ * `tone` picks the surface; `navy` flips the text colours for the one dark
+ * band a page is allowed. `rule` draws the hairline that separates editorial
+ * sections. Anything that bleeds to the edge belongs in the child markup with
+ * `absolute`, so pass `relative overflow-hidden` via `className` then.
  */
 const SECTION_TONES = {
   none: '',
   white: 'bg-white',
   calm: 'bg-calm',
   mist: 'bg-mist',
+  paper: 'bg-white bg-paper',
   navy: 'bg-mesh-navy text-white',
 }
 
@@ -65,14 +71,15 @@ export function Section({
   className = '',
   tone = 'none',
   tight = false,
+  rule = false,
   as: As = 'section',
   ...rest
 }) {
   return (
     <As
       className={`${SECTION_TONES[tone]} ${
-        tight ? 'py-14 sm:py-16' : 'py-20 sm:py-24 lg:py-28'
-      } ${className}`}
+        tight ? 'py-12 sm:py-14 lg:py-16' : 'py-16 sm:py-20 lg:py-24'
+      } ${rule ? 'rule-top' : ''} ${className}`}
       {...rest}
     >
       {children}
@@ -81,39 +88,78 @@ export function Section({
 }
 
 /**
- * Small uppercase kicker that opens a section. Replaces the live site's
- * handwritten script line: the same "small label above a big heading" pairing,
- * restated in the new type system.
+ * The editorial kicker: a small uppercase label that opens a section. Pass
+ * `index` to number it ("01 — Services"), which is how the numbered spine of
+ * each page is built. `Eyebrow` is kept as an alias for older call sites.
  */
-export function Eyebrow({ children, light = false, icon, className = '' }) {
+export function Kicker({
+  children,
+  index,
+  light = false,
+  icon,
+  className = '',
+}) {
   return (
     <p
-      className={`inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.2em] ${
+      className={`t-kicker inline-flex items-center gap-3 ${
         light ? 'text-cyan' : 'text-blue-deep'
       } ${className}`}
     >
-      {icon ? (
-        <Icon name={icon} size={14} strokeWidth={2.2} />
-      ) : (
+      {index && (
         <span
           aria-hidden="true"
-          className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-gradient"
-        />
+          className={`tnum ${light ? 'text-navy-200' : 'text-navy-300'}`}
+        >
+          {index}
+        </span>
+      )}
+      {icon && !index && (
+        <Icon name={icon} size={14} strokeWidth={2.2} aria-hidden="true" />
       )}
       {children}
     </p>
   )
 }
 
+export const Eyebrow = Kicker
+
+/** Opening paragraph of a piece. Larger, more open, meant to be read first. */
+export function Deck({ children, light = false, className = '' }) {
+  return (
+    <p
+      className={`t-lead ${light ? 'text-navy-100' : ''} ${className}`}
+    >
+      {children}
+    </p>
+  )
+}
+
+/** A hairline. The system's default way of dividing anything. */
+export function Rule({ className = '', heavy = false, light = false }) {
+  return (
+    <div
+      role="presentation"
+      className={`h-px w-full ${
+        light
+          ? 'bg-white/15'
+          : heavy
+            ? 'bg-navy'
+            : 'bg-[rgba(14,15,59,0.12)]'
+      } ${className}`}
+    />
+  )
+}
+
 /**
- * Section heading: eyebrow + display heading + optional lede.
+ * Section heading: kicker + display heading + optional deck.
  *
- * `as` lets a page hero render the document's single <h1>. `script` is accepted
- * as an alias for `eyebrow` so older call sites keep working.
+ * `as` lets a page hero render the document's single <h1>. `script` and
+ * `eyebrow` are both accepted so every existing call site keeps working.
  */
 export function SectionHeading({
   eyebrow,
   script,
+  index,
   title,
   body,
   align = 'left',
@@ -124,55 +170,53 @@ export function SectionHeading({
 }) {
   const label = eyebrow ?? script
   const sizes = {
-    xl: 'text-[2.5rem] leading-[1.05] sm:text-[3.4rem] lg:text-[4.25rem]',
-    lg: 'text-[2rem] leading-[1.08] sm:text-[2.6rem] lg:text-[3.2rem]',
-    md: 'text-[1.6rem] leading-[1.12] sm:text-[2rem]',
-    sm: 'text-xl leading-snug sm:text-2xl',
+    xl: 't-display',
+    lg: 't-title',
+    md: 't-subtitle',
+    sm: 'text-xl sm:text-2xl',
   }
   return (
     <div
       className={`${
-        align === 'center' ? 'mx-auto max-w-3xl text-center' : 'max-w-2xl'
+        align === 'center' ? 'mx-auto max-w-3xl text-center' : 'max-w-3xl'
       } ${className}`}
     >
-      {label && <Eyebrow light={light}>{label}</Eyebrow>}
+      {label && (
+        <Kicker light={light} index={index}>
+          {label}
+        </Kicker>
+      )}
       <As
-        className={`${label ? 'mt-4' : ''} ${sizes[size]} font-medium ${
+        className={`${label ? 'mt-5' : ''} ${sizes[size]} ${
           light ? 'text-white' : 'text-navy'
         }`}
       >
         {title}
       </As>
       {body && (
-        <p
-          className={`mt-5 text-[1.05rem] leading-relaxed ${
-            light ? 'text-navy-100' : 'text-body'
-          }`}
-        >
+        <Deck light={light} className="mt-5 max-w-2xl">
           {body}
-        </p>
+        </Deck>
       )}
     </div>
   )
 }
 
-/** Small pill label. `tone` matches the surface it sits on. */
+/** Small tag. Rectangular and uppercase — a label, not a chip. */
 export function Badge({ children, tone = 'cyan', icon, className = '' }) {
   const tones = {
-    cyan: 'bg-cyan-50 text-cyan-ink ring-cyan-200',
-    blue: 'bg-blue-50 text-blue-ink ring-blue-200',
-    navy: 'bg-navy-50 text-navy-600 ring-navy-200',
-    coral: 'bg-coral-50 text-coral-deep ring-coral-100',
-    white: 'bg-white text-navy ring-navy-100 shadow-clinical',
-    light: 'bg-white/10 text-white ring-white/25',
+    cyan: 'bg-cyan-50 text-cyan-ink border-cyan-200',
+    blue: 'bg-blue-50 text-blue-ink border-blue-200',
+    navy: 'bg-navy-50 text-navy-600 border-navy-200',
+    coral: 'bg-coral-50 text-coral-deep border-coral-100',
+    white: 'bg-white text-navy border-navy-200',
+    light: 'bg-white/10 text-white border-white/25',
   }
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[0.72rem] font-semibold ring-1 ring-inset ${
-        tones[tone]
-      } ${className}`}
+      className={`t-kicker inline-flex items-center gap-2 rounded-clinical-sm border px-2.5 py-1 tracking-[0.14em] ${tones[tone]} ${className}`}
     >
-      {icon && <Icon name={icon} size={13} strokeWidth={2.2} />}
+      {icon && <Icon name={icon} size={12} strokeWidth={2.4} aria-hidden="true" />}
       {children}
     </span>
   )
@@ -180,22 +224,22 @@ export function Badge({ children, tone = 'cyan', icon, className = '' }) {
 
 export const Pill = Badge
 
-/**
- * The single surface used across the site: soft white, hairline ring, soft
- * shadow. `interactive` adds the lift used by clickable cards.
- */
+/** A block with the hairline that replaces the old softened card. */
 export function Card({
   children,
   className = '',
   as: As = 'div',
   interactive = false,
+  bordered = true,
   ...rest
 }) {
   return (
     <As
-      className={`rounded-clinical-lg bg-white p-6 shadow-clinical ring-1 ring-navy-100/70 sm:p-7 ${
+      className={`bg-white p-6 sm:p-7 ${
+        bordered ? 'border border-[rgba(14,15,59,0.12)]' : ''
+      } ${
         interactive
-          ? 'transition duration-200 hover:-translate-y-1 hover:shadow-clinical-lg hover:ring-navy-200'
+          ? 'group transition duration-200 hover:border-navy-300 hover:shadow-clinical'
           : ''
       } ${className}`}
       {...rest}
@@ -205,22 +249,27 @@ export function Card({
   )
 }
 
-/** Small check-list used across services, timeline and about sections. */
+/** A ruled list. Separators, not bullets — this is the editorial default. */
 export function CheckList({ items, light = false, className = '' }) {
+  const line = light ? 'border-white/15' : 'border-[rgba(14,15,59,0.12)]'
   return (
-    <ul className={`space-y-3 ${className}`}>
-      {items.map((item) => (
-        <li key={item} className="flex gap-3">
-          <span
+    <ul className={`${className}`}>
+      {items.map((item, i) => (
+        <li
+          key={item}
+          className={`flex gap-4 py-3.5 ${
+            i === 0 ? 'border-t' : 'border-t'
+          } ${line} ${i === items.length - 1 ? 'border-b' : ''}`}
+        >
+          <Icon
+            name="check"
+            size={15}
+            strokeWidth={2.6}
+            className={`mt-1 shrink-0 ${light ? 'text-cyan' : 'text-cyan-deep'}`}
             aria-hidden="true"
-            className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full ${
-              light ? 'bg-cyan/20 text-cyan' : 'bg-cyan-50 text-cyan-deep'
-            }`}
-          >
-            <Icon name="check" size={12} strokeWidth={2.8} />
-          </span>
+          />
           <span
-            className={`text-[0.95rem] leading-relaxed ${
+            className={`text-[0.97rem] leading-relaxed ${
               light ? 'text-navy-100' : 'text-body'
             }`}
           >
@@ -233,54 +282,193 @@ export function CheckList({ items, light = false, className = '' }) {
 }
 
 /** Square icon tile. `tone="gradient"` uses the brand gradient behind navy. */
-export function IconBadge({
-  name,
-  tone = 'cyan',
-  size = 'md',
-  className = '',
-}) {
+export function IconBadge({ name, tone = 'cyan', size = 'md', className = '' }) {
   const tones = {
     cyan: 'bg-cyan-50 text-cyan-deep',
     blue: 'bg-blue-50 text-blue-deep',
     coral: 'bg-coral-50 text-coral-deep',
     navy: 'bg-navy text-white',
-    gradient: 'bg-brand-gradient text-navy shadow-clinical',
-    light: 'bg-white/10 text-cyan ring-1 ring-inset ring-white/15',
+    gradient: 'bg-brand-gradient text-navy',
+    light: 'bg-white/10 text-cyan border border-white/15',
   }
   const sizes = {
-    sm: 'h-10 w-10 rounded-clinical-sm',
-    md: 'h-12 w-12 rounded-clinical',
-    lg: 'h-14 w-14 rounded-clinical',
+    sm: 'h-9 w-9',
+    md: 'h-11 w-11',
+    lg: 'h-13 w-13',
   }
-  const glyph = { sm: 19, md: 22, lg: 26 }[size]
+  const glyph = { sm: 17, md: 20, lg: 24 }[size]
   return (
     <span
-      className={`grid shrink-0 place-items-center ${sizes[size]} ${tones[tone]} ${className}`}
+      className={`grid shrink-0 place-items-center rounded-clinical ${sizes[size]} ${tones[tone]} ${className}`}
     >
-      <Icon name={name} size={glyph} />
+      <Icon name={name} size={glyph} aria-hidden="true" />
     </span>
   )
 }
 
-/** A single figure in the stats band. */
+/** A single figure in a stats band: big numeral over its label. */
 export function Stat({ value, label, light = false }) {
   return (
-    <div className="text-center">
+    <div className="pt-5 rule-top" style={{ borderColor: light ? 'rgba(255,255,255,0.2)' : undefined }}>
       <span
-        className={`block font-display text-4xl font-medium leading-none tracking-tight sm:text-5xl ${
+        className={`tnum block font-display leading-none tracking-tight ${
           light ? 'text-cyan' : 'text-navy'
-        }`}
+        } text-[2.6rem] sm:text-[3.2rem]`}
       >
         {value}
       </span>
       <span
-        className={`mt-3 block text-[0.78rem] font-semibold uppercase leading-snug tracking-[0.14em] ${
+        className={`t-kicker mt-4 block ${
           light ? 'text-navy-200' : 'text-navy-400'
         }`}
       >
         {label}
       </span>
     </div>
+  )
+}
+
+/**
+ * A numbered row for an index or a table of contents. Rendered as the whole
+ * clickable row when `to` is given, so the whole line is a target.
+ */
+export function IndexRow({
+  index,
+  title,
+  meta,
+  body,
+  to,
+  href,
+  trailing = 'arrow',
+  className = '',
+}) {
+  const label = (
+    <>
+      <span className="tnum w-8 shrink-0 pt-1 text-[0.78rem] font-semibold text-navy-300">
+        {index}
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+          <span className="t-subtitle text-navy">{title}</span>
+          {meta && <span className="t-kicker text-navy-400">{meta}</span>}
+        </span>
+        {body && (
+          <span className="mt-2 block max-w-2xl text-[0.97rem] leading-relaxed text-body">
+            {body}
+          </span>
+        )}
+      </span>
+      <Icon
+        name={trailing}
+        size={18}
+        aria-hidden="true"
+        className="mt-1.5 hidden shrink-0 text-navy-300 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-navy sm:block"
+      />
+    </>
+  )
+
+  const rowCls = `group flex gap-5 border-t border-[rgba(14,15,59,0.12)] py-6 ${className}`
+
+  if (to) {
+    return (
+      <Link to={to} className={rowCls}>
+        {label}
+      </Link>
+    )
+  }
+  if (href) {
+    return (
+      <a href={href} target="_blank" rel="noreferrer noopener" className={rowCls}>
+        {label}
+      </a>
+    )
+  }
+  return <div className={rowCls}>{label}</div>
+}
+
+/** A pull quote. The one place the italic serif is allowed to be large. */
+export function PullQuote({ children, attribution, light = false }) {
+  return (
+    <figure className="max-w-3xl">
+      <blockquote
+        className={`font-display text-[1.5rem] italic leading-[1.35] tracking-[-0.02em] sm:text-[2rem] ${
+          light ? 'text-white' : 'text-navy'
+        }`}
+      >
+        {children}
+      </blockquote>
+      {attribution && (
+        <figcaption
+          className={`t-kicker mt-6 ${
+            light ? 'text-navy-200' : 'text-navy-400'
+          }`}
+        >
+          {attribution}
+        </figcaption>
+      )}
+    </figure>
+  )
+}
+
+/**
+ * A captioned figure. Editorial images always carry a caption or are purely
+ * decorative; this component is for the former.
+ */
+export function Figure({
+  src,
+  alt = '',
+  caption,
+  aspect = 'aspect-[3/2]',
+  className = '',
+  eager = false,
+}) {
+  return (
+    <figure className={className}>
+      <div
+        className={`relative overflow-hidden rounded-clinical-lg bg-navy-50 ${aspect}`}
+      >
+        <img
+          src={src}
+          alt={alt}
+          loading={eager ? 'eager' : 'lazy'}
+          decoding="async"
+          className="h-full w-full object-cover object-center"
+        />
+      </div>
+      {caption && (
+        <figcaption className="mt-3 border-t border-[rgba(14,15,59,0.12)] pt-3 text-[0.82rem] leading-relaxed text-navy-400">
+          {caption}
+        </figcaption>
+      )}
+    </figure>
+  )
+}
+
+/** A ruled key/value list — masthead metadata, office details, opening facts. */
+export function MetaList({ items, light = false, className = '' }) {
+  const line = light ? 'border-white/15' : 'border-[rgba(14,15,59,0.12)]'
+  return (
+    <dl className={`${className}`}>
+      {items.map(([k, v]) => (
+        <div
+          key={k}
+          className={`flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t py-3.5 ${line}`}
+        >
+          <dt
+            className={`t-kicker ${light ? 'text-navy-200' : 'text-navy-400'}`}
+          >
+            {k}
+          </dt>
+          <dd
+            className={`text-[0.95rem] font-medium ${
+              light ? 'text-white' : 'text-navy'
+            }`}
+          >
+            {v}
+          </dd>
+        </div>
+      ))}
+    </dl>
   )
 }
 

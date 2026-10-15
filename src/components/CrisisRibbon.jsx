@@ -9,6 +9,9 @@ import Icon from './Icon.jsx'
  *
  * Deliberately NOT dismissible. It is the first thing in the accessibility
  * tree and the first thing in the tab order on every page.
+ *
+ * Editorial treatment: a flat coral band with a hairline beneath it, laid out
+ * on the same grid as everything else rather than as a centred marketing bar.
  */
 export default function CrisisRibbon() {
   return (
@@ -17,25 +20,25 @@ export default function CrisisRibbon() {
       role="region"
       aria-label="Crisis support resources"
     >
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-4 gap-y-1.5 px-5 py-2.5 text-center text-[0.8rem] leading-tight sm:px-6 sm:text-[0.85rem] lg:px-8">
-        <span className="inline-flex items-center gap-2 font-semibold">
-          <Icon name="heart-pulse" size={16} strokeWidth={2.1} />
+      <div className="mx-auto flex max-w-[84rem] flex-wrap items-center justify-center gap-x-5 gap-y-1 px-5 py-2.5 text-center text-[0.82rem] leading-tight sm:px-7 lg:justify-start lg:px-10">
+        <span className="t-kicker inline-flex items-center gap-2 text-white">
+          <Icon name="heart-pulse" size={15} strokeWidth={2.2} aria-hidden="true" />
           <span className="sm:hidden">{crisis.label}</span>
           <span className="hidden sm:inline">
-            In a crisis? The {crisis.lifelineText} is available 24/7.
+            In a crisis? {crisis.lifelineText}, 24/7
           </span>
         </span>
 
-        <span className="flex items-center gap-3">
+        <span className="flex items-center gap-4">
           <a
             href={crisis.lifelineHref}
-            className="rounded-full bg-white px-3.5 py-1 font-bold text-coral-deep ring-1 ring-inset ring-white/40 transition-colors hover:bg-coral-50"
+            className="inline-flex items-center gap-1.5 rounded-clinical bg-white px-2.5 py-1 font-bold text-coral-deep transition-colors hover:bg-coral-50"
           >
             Call or text {crisis.lifeline}
           </a>
           <a
             href="tel:911"
-            className="font-semibold text-white underline decoration-white/50 underline-offset-4 transition-colors hover:decoration-white"
+            className="link-rule font-semibold text-white"
           >
             Emergency: 911
           </a>

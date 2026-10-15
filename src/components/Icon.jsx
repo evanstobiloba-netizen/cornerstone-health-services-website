@@ -97,6 +97,8 @@ const paths = {
     </>
   ),
   'chevron-down': <path d="m6 9.5 6 6 6-6" />,
+  plus: <path d="M12 5v14M5 12h14" />,
+  minus: <path d="M5 12h14" />,
   menu: <path d="M4 7h16M4 12h16M4 17h16" />,
   close: <path d="m6 6 12 12M18 6 6 18" />,
   'external-link': (

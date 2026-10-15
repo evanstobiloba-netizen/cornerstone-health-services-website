@@ -3,13 +3,21 @@
 /* ===========================================================================
    CORNERSTONE HEALTH SERVICES INC — design system
    ---------------------------------------------------------------------------
-   "Calm clinical-modern": airy layout, a warm display serif over a clean
-   clinical sans, soft depth instead of hard borders, and one restrained brand
-   bloom per section rather than an all-over gradient wash.
+   Concept: "THE JOURNAL" — an editorial, publication-grade system.
 
-   COLOUR IS THE BRAND AND IS UNCHANGED. It is taken from the live site's own
-   theme stylesheet (style.min.css :root block), so the palette still matches
-   the logo and the practice's existing material:
+   This is not a magazine pastiche. The site is treated the way a serious
+   publication is typeset: a masthead, numbered sections, kickers, decks, pull
+   quotes, figures with captions, and hairline rules doing the structural work
+   that boxes and shadows used to do. The craft signals that the practice is
+   careful — without ever making mental-health care look like fashion.
+
+   Execution borrows from Framer's school of web design: a sticky frosted
+   masthead, very large confident display type with tight tracking, restrained
+   radii on media, quiet hover motion, and one dark inverted band per page.
+
+   COLOUR IS THE BRAND AND IS UNCHANGED. Taken from the live site's own theme
+   stylesheet (style.min.css :root block), so it still matches the logo and the
+   practice's existing material:
 
      --priColor:  #0e0f3b   primary  (deep navy / indigo)
      --secColor:  #27d4ed   secondary (cyan)
@@ -20,11 +28,12 @@
 
    The live site also uses #f9f9ff for its main content background.
 
-   WHAT CHANGED IN THIS REVISION: only the design layer. Typography (display
-   serif + Inter replacing Jost + the Allison script), the radius and elevation
-   scales, the component set, the page layouts and the navigation. Every piece
-   of copy, the routes, the SEO/prerender pipeline and the palette are
-   unchanged.
+   WHAT CHANGED IN THIS REVISION: the whole design layer and the page
+   structures. Type is Fraunces (display) over Inter (body/UI); corners are
+   near-square; depth comes from hairlines and the grid rather than shadows;
+   sections are numbered; the home page is a front page rather than a stack of
+   feature bands. Every piece of copy, the routes, the SEO/prerender pipeline
+   and the palette are unchanged.
 
    CONTRAST NOTES (WCAG 2.1 AA: 4.5:1 normal text, 3:1 large text and UI):
      measured against white —
@@ -48,16 +57,19 @@
      2. Nothing white sits on cyan or blue. The signature gradient button uses
         NAVY text (min 6.62:1 across the whole gradient).
      3. cyan/blue as large display text or as fills behind navy text is fine.
+     4. Hairlines are rgba(14,15,59,α): structure, not content, so they are
+        exempt from the 3:1 non-text rule.
    =========================================================================== */
 
 @theme {
-  /* ----- Type: a calm display serif over a clinical sans ----- */
+  /* ----- Type: editorial display serif over a clinical sans ----- */
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
     Roboto, Helvetica, Arial, sans-serif;
   --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Palatino,
     Georgia, serif;
-  /* Retained only so a stray `font-script` never falls back to a system
-     cursive face; the script accent is no longer part of the design. */
+  /* Kept so a stray `font-script` never falls back to a system cursive face;
+     the old handwriting accent is gone, so this now resolves to the italic
+     serif, which is what type switches to for emphasis in this system. */
   --font-script: 'Fraunces', 'Iowan Old Style', Palatino, Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
@@ -103,19 +115,22 @@
   /* ----- Focus ring: passes 3:1 against BOTH white (5.49:1) and navy (3.33:1) ----- */
   --color-focus: #0b6fa4;
 
-  /* ----- Radius scale: softer than the previous 10px system ----- */
-  --radius-clinical-sm: 10px;
-  --radius-clinical: 16px;
-  --radius-clinical-lg: 24px;
-  --radius-clinical-xl: 32px;
+  /* ----- Radius scale: near-square. Editorial pages are built from rules and
+     the grid, so a printed-page corner is right and a pill is wrong. Media
+     frames get a touch more, which is the one Framer-ish concession. ----- */
+  --radius-clinical-sm: 2px;
+  --radius-clinical: 3px;
+  --radius-clinical-lg: 5px;
+  --radius-clinical-xl: 8px;
 
-  /* ----- Elevation: low-contrast, navy-tinted, layered ----- */
-  --shadow-clinical: 0 1px 2px rgba(14, 15, 59, 0.04),
-    0 10px 24px -12px rgba(14, 15, 59, 0.14);
-  --shadow-clinical-lg: 0 2px 6px rgba(14, 15, 59, 0.05),
-    0 28px 56px -20px rgba(14, 15, 59, 0.22);
-  --shadow-clinical-xl: 0 4px 10px rgba(14, 15, 59, 0.06),
-    0 48px 80px -28px rgba(14, 15, 59, 0.28);
+  /* ----- Elevation: almost flat. Depth is the hairline's job now; these exist
+     so components that ask for a shadow read as a whisper, not a drop. ----- */
+  --shadow-clinical: 0 1px 1px rgba(14, 15, 59, 0.03),
+    0 4px 14px -10px rgba(14, 15, 59, 0.1);
+  --shadow-clinical-lg: 0 1px 2px rgba(14, 15, 59, 0.04),
+    0 18px 36px -22px rgba(14, 15, 59, 0.16);
+  --shadow-clinical-xl: 0 2px 6px rgba(14, 15, 59, 0.05),
+    0 34px 60px -30px rgba(14, 15, 59, 0.2);
 }
 
 @layer base {
@@ -129,14 +144,14 @@
     color: var(--color-body);
     font-family: var(--font-sans);
     font-size: 16px;
-    line-height: 1.65;
+    line-height: 1.68;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
   :target {
-    scroll-margin-top: 7rem;
+    scroll-margin-top: 8rem;
   }
 
   h1,
@@ -147,9 +162,41 @@
     font-family: var(--font-display);
     font-optical-sizing: auto;
     font-weight: 500;
-    letter-spacing: -0.02em;
-    line-height: 1.08;
+    letter-spacing: -0.022em;
+    line-height: 1.04;
     text-wrap: balance;
+    /* An unbreakable word (a legal name, a long organisation) must never push
+       the layout wider than the viewport. Break only when it cannot fit. */
+    overflow-wrap: break-word;
+  }
+
+  /* Grid items default to a min-content minimum, so ONE wide descendant — a
+     long unbreakable word, a <select> as wide as its longest option, a media
+     element with an intrinsic size — can force a whole track wider than the
+     viewport. Let grid children shrink below their content's min-content size;
+     anything that genuinely cannot fit then wraps or breaks inside its own
+     column instead of pushing the page sideways. */
+  .grid > * {
+    min-width: 0;
+  }
+
+  /* Form controls have content-based intrinsic widths (a <select> is as wide as
+     its longest option), which can force a grid or flex track wider than the
+     screen. Allow them to shrink. */
+  input,
+  select,
+  textarea,
+  button {
+    min-width: 0;
+  }
+
+  /* Editorial emphasis: the italic serif is the accent that replaced the old
+     handwriting script. It is for a word or a phrase inside a headline. */
+  em,
+  .italic-serif {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
   }
 
   p {
@@ -171,6 +218,94 @@
 }
 
 @layer utilities {
+  /* ---------------------------------------------------------------------
+     Type scale. Clamp-driven so every heading is fluid without per-page
+     breakpoint soup, and so the display sizes stay genuinely large on
+     desktop the way a masthead should.
+     --------------------------------------------------------------------- */
+  .t-display {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 6.4vw, 5.4rem);
+    line-height: 0.96;
+    letter-spacing: -0.032em;
+    font-weight: 500;
+    overflow-wrap: break-word;
+  }
+
+  .t-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 3.8vw, 3.1rem);
+    line-height: 1.03;
+    letter-spacing: -0.026em;
+    font-weight: 500;
+    overflow-wrap: break-word;
+  }
+
+  .t-subtitle {
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2vw, 1.75rem);
+    line-height: 1.12;
+    letter-spacing: -0.018em;
+    font-weight: 500;
+    overflow-wrap: break-word;
+  }
+
+  .t-lead {
+    font-size: clamp(1.12rem, 1.5vw, 1.4rem);
+    line-height: 1.5;
+    letter-spacing: -0.006em;
+    color: var(--color-body);
+  }
+
+  .t-kicker {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  /* Numbers in stats and indexes must not jitter between values. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+  }
+
+  /* ---------------------------------------------------------------------
+     Rules. The structural device of the whole system.
+     --------------------------------------------------------------------- */
+  .rule-hair {
+    border-color: rgba(14, 15, 59, 0.12);
+  }
+
+  .rule-top {
+    border-top: 1px solid rgba(14, 15, 59, 0.12);
+  }
+
+  .rule-bottom {
+    border-bottom: 1px solid rgba(14, 15, 59, 0.12);
+  }
+
+  .rule-brand {
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      rgba(39, 212, 237, 0.8) 40%,
+      rgba(20, 165, 235, 0.8) 60%,
+      transparent
+    );
+  }
+
+  /* A hard 2px rule used to open a numbered section. */
+  .rule-heavy {
+    background-color: var(--color-navy);
+  }
+
+  /* ---------------------------------------------------------------------
+     Surfaces and textures.
+     --------------------------------------------------------------------- */
+
   /* The brand's signature gradient, straight from --gradientColor. */
   .bg-brand-gradient {
     background-image: linear-gradient(180deg, #27d4ed 0%, #14a5eb 100%);
@@ -183,15 +318,16 @@
     color: transparent;
   }
 
-  /* A 1px brand hairline, used as a top rule on feature bands. */
-  .rule-brand {
+  /* Faint grid paper. Gives large light bands the texture of a printed page
+     without reading as a pattern. */
+  .bg-paper {
     background-image: linear-gradient(
-      90deg,
-      transparent,
-      rgba(39, 212, 237, 0.75) 35%,
-      rgba(20, 165, 235, 0.75) 65%,
-      transparent
-    );
+        to right,
+        rgba(14, 15, 59, 0.035) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(14, 15, 59, 0.035) 1px, transparent 1px);
+    background-size: 30px 30px;
   }
 
   /* Very low-contrast dot texture, used behind the dark brand bands so large
@@ -212,26 +348,24 @@
     );
   }
 
-  /* Soft multi-point mesh washes. These set their own background-color, so do
-     not combine them with a Tailwind bg-<colour> utility on the same element. */
   .bg-mesh-calm {
     background-color: #f9f9ff;
     background-image: radial-gradient(
         at 14% -4%,
-        rgba(39, 212, 237, 0.14) 0%,
+        rgba(39, 212, 237, 0.1) 0%,
         transparent 52%
       ),
-      radial-gradient(at 88% 2%, rgba(20, 165, 235, 0.12) 0%, transparent 52%);
+      radial-gradient(at 88% 2%, rgba(20, 165, 235, 0.09) 0%, transparent 52%);
   }
 
   .bg-mesh-white {
     background-color: #ffffff;
     background-image: radial-gradient(
         at 0% 0%,
-        rgba(39, 212, 237, 0.09) 0%,
+        rgba(39, 212, 237, 0.07) 0%,
         transparent 46%
       ),
-      radial-gradient(at 100% 0%, rgba(20, 165, 235, 0.09) 0%, transparent 46%);
+      radial-gradient(at 100% 0%, rgba(20, 165, 235, 0.07) 0%, transparent 46%);
   }
 
   .bg-mesh-navy {
@@ -245,27 +379,34 @@
       radial-gradient(at 50% 120%, rgba(39, 212, 237, 0.14) 0%, transparent 60%);
   }
 
-  /* Keeps a headline deeply legible over a photographic hero. */
-  .bg-hero-scrim {
-    background-image: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.96) 0%,
-      rgba(255, 255, 255, 0.92) 45%,
-      rgba(255, 255, 255, 0.8) 100%
-    );
+  /* ---------------------------------------------------------------------
+     Editorial devices.
+     --------------------------------------------------------------------- */
+
+  /* A drop cap for the opening paragraph of a long-form piece. */
+  .drop-cap::first-letter {
+    float: left;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 3.5em;
+    line-height: 0.8;
+    padding-right: 0.08em;
+    padding-top: 0.06em;
+    color: var(--color-navy);
   }
 
-  @media (min-width: 64rem) {
-    .bg-hero-scrim {
-      background-image: linear-gradient(
-        100deg,
-        #ffffff 0%,
-        rgba(255, 255, 255, 0.99) 34%,
-        rgba(255, 255, 255, 0.9) 52%,
-        rgba(255, 255, 255, 0.42) 76%,
-        rgba(255, 255, 255, 0) 100%
-      );
-    }
+  /* Link that draws its own rule on hover — the Framer-ish micro-motion. */
+  .link-rule {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 1px;
+    transition: background-size 0.25s ease;
+  }
+
+  .link-rule:hover,
+  .link-rule:focus-visible {
+    background-size: 100% 1px;
   }
 
   /* Screen-reader-only, but focusable (skip links). */
@@ -281,15 +422,13 @@
     border-width: 0;
   }
 
-  /* Auto-scrolling insurance ticker. The track holds the list twice and slides
-     by exactly half its own width, so the second copy hands off to the first
-     with no visible seam. Duration is tunable per instance via
-     --marquee-duration. */
+  /* ---------------------------------------------------------------------
+     Insurance ticker.
+     --------------------------------------------------------------------- */
   .marquee-track {
     animation: cornerstone-marquee var(--marquee-duration, 44s) linear infinite;
   }
 
-  /* Feathers both edges so names fade in and out instead of being clipped. */
   .marquee-mask {
     -webkit-mask-image: linear-gradient(
       90deg,

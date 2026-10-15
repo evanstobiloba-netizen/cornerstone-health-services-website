@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import {
   about,
+  addressOneLine,
   crisis,
   faqs,
   insurances,
@@ -17,26 +18,40 @@ import InsuranceLogo from '../components/InsuranceLogo.jsx'
 import LocationMap from '../components/LocationMap.jsx'
 import {
   Badge,
-  Card,
   CheckList,
   Container,
-  Eyebrow,
   IconBadge,
+  Kicker,
+  MetaList,
+  PullQuote,
   Section,
   SectionHeading,
   Stat,
 } from '../components/Ui.jsx'
 import { asset } from '../lib/asset.js'
 
+/**
+ * The front page.
+ *
+ * Built like the opening spread of a publication rather than a stack of
+ * feature bands: a dark cover carrying the single <h1>, then a numbered spine
+ * of sections (01 Welcome, 02 Offerings, 03 Journey, 04 Support, 05 Questions,
+ * 06 Contact) separated by hairlines, with the interstitials — the insurance
+ * ticker, the figures band, the vision pull quote — carrying no number.
+ *
+ * Every word of copy is unchanged from the previous build. Only the order,
+ * the grouping and the setting are new.
+ */
 export default function Home() {
   return (
     <>
-      <Hero />
+      <Cover />
       <InsuranceMarquee />
       <Welcome />
-      <ServicesGrid />
+      <ServicesIndex />
       <PathToHealing />
       <StatsBand />
+      <VisionQuote />
       <GetSupport />
       <FaqPreview />
       <Location />
@@ -45,9 +60,9 @@ export default function Home() {
   )
 }
 
-/* ------------------------------------------------------------------ Hero */
+/* ------------------------------------------------------------------ Cover */
 
-function Hero() {
+function Cover() {
   const trust = [
     { icon: 'map-pin', text: practice.serves },
     { icon: 'video', text: 'In person & telehealth' },
@@ -55,16 +70,24 @@ function Hero() {
   ]
 
   return (
-    <Section className="relative overflow-hidden bg-mesh-calm">
+    <Section tone="navy" className="relative overflow-hidden">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-52 top-[-18rem] h-[46rem] w-[46rem] rounded-full bg-brand-bloom blur-3xl"
+        className="pointer-events-none absolute inset-0 pattern-dots text-white/[0.07]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-40 -top-44 h-[36rem] w-[36rem] rounded-full bg-cyan/20 blur-[150px]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-48 right-0 h-[30rem] w-[30rem] rounded-full bg-blue/20 blur-[150px]"
       />
 
       <Container className="relative">
-        <div className="grid items-center gap-14 lg:grid-cols-[1.04fr_0.96fr] lg:gap-16">
-          <div>
-            <Badge tone="white" className="mb-6">
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-7">
+            <Badge tone="light">
               <span className="relative flex h-2 w-2" aria-hidden="true">
                 <span className="absolute inline-flex h-full w-full rounded-full bg-cyan opacity-70" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-gradient" />
@@ -72,14 +95,15 @@ function Hero() {
               Accepting new patients
             </Badge>
 
-            <SectionHeading
-              as="h1"
-              size="xl"
-              eyebrow="Mental Wellness, Within Reach"
-              title="Compassionate psychiatric care for adults across Massachusetts"
-            />
+            <p className="t-kicker mt-8 text-cyan">
+              Mental Wellness, Within Reach
+            </p>
 
-            <p className="mt-6 max-w-xl text-[1.05rem] leading-relaxed text-body">
+            <h1 className="mt-5 font-display text-[clamp(2.3rem,5vw,4.3rem)] font-medium leading-[0.99] tracking-[-0.03em] text-white">
+              Compassionate psychiatric care for adults across Massachusetts
+            </h1>
+
+            <p className="t-lead mt-7 max-w-xl text-navy-100">
               {about.homepageWelcome}
             </p>
 
@@ -89,7 +113,7 @@ function Hero() {
               </Button>
               <Button
                 href={practice.phoneHref}
-                variant="outline"
+                variant="onDark"
                 size="lg"
                 icon="phone"
               >
@@ -97,28 +121,31 @@ function Hero() {
               </Button>
             </div>
 
-            <ul className="mt-10 flex flex-wrap gap-x-7 gap-y-3 border-t border-navy-100 pt-7">
+            <ul className="mt-12 flex flex-wrap gap-x-7 gap-y-3 border-t border-white/15 pt-7">
               {trust.map((t) => (
                 <li
                   key={t.text}
-                  className="inline-flex items-center gap-2 text-[0.9rem] font-medium text-navy-600"
+                  className="inline-flex items-center gap-2.5 text-[0.9rem] font-medium text-navy-100"
                 >
-                  <Icon name={t.icon} size={17} className="text-cyan-deep" />
+                  <Icon name={t.icon} size={17} className="text-cyan" />
                   {t.text}
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="relative">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-clinical-xl shadow-clinical-xl ring-1 ring-navy-100/70 sm:aspect-[5/4] lg:aspect-[4/5]">
+          <div className="lg:col-span-5">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-clinical-lg ring-1 ring-white/15">
               <HeroSlideshow className="absolute inset-0 h-full w-full" />
               {/* Sits at the top so it never collides with the slide dots. */}
-              <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-white/90 px-3.5 py-1.5 text-[0.72rem] font-semibold text-navy shadow-clinical backdrop-blur">
+              <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-clinical-sm bg-white/90 px-3 py-1.5 text-[0.72rem] font-semibold text-navy shadow-clinical backdrop-blur">
                 <Icon name="video" size={14} className="text-cyan-deep" />
                 In person &amp; telehealth
               </span>
             </div>
+            <p className="t-kicker mt-3 text-navy-200">
+              Cornerstone Health Services Inc — Quincy, Massachusetts
+            </p>
           </div>
         </div>
       </Container>
@@ -131,7 +158,7 @@ function Hero() {
 /**
  * Slim auto-scrolling ticker of the accepted plans.
  *
- * The track holds the same list twice. Each copy carries a trailing `pr-2.5`
+ * The track holds the same list twice. Each copy carries a trailing `pr-3`
  * equal to the internal item gap, so one copy's width is exactly one period and
  * a `-50%` translate loops with no visible seam.
  *
@@ -145,7 +172,7 @@ function InsuranceMarquee() {
       {insurances.map((i) => (
         <li
           key={i.slug}
-          className="flex h-16 items-center justify-center rounded-clinical border border-navy-100 bg-white px-6"
+          className="flex h-16 items-center justify-center rounded-clinical-sm border border-[rgba(14,15,59,0.12)] bg-white px-6"
         >
           <InsuranceLogo item={i} imgClassName="h-9" />
         </li>
@@ -156,14 +183,10 @@ function InsuranceMarquee() {
   return (
     <section
       aria-label="Insurance plans accepted"
-      className="relative border-y border-navy-100/80 bg-white"
+      className="relative border-b border-[rgba(14,15,59,0.12)] bg-white"
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px rule-brand"
-      />
-      <div className="mx-auto flex max-w-7xl items-center gap-6 px-5 py-6 sm:px-6 lg:px-8">
-        <p className="hidden shrink-0 items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-navy-400 sm:flex">
+      <div className="mx-auto flex max-w-[84rem] items-center gap-6 px-5 py-6 sm:px-7 lg:px-10">
+        <p className="t-kicker hidden shrink-0 items-center gap-2 text-navy-400 sm:flex">
           <Icon name="shield" size={15} className="text-cyan-deep" />
           Insurance accepted
         </p>
@@ -179,7 +202,7 @@ function InsuranceMarquee() {
 
         <Link
           to="/insurance"
-          className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-blue-deep underline-offset-4 hover:underline"
+          className="link-rule inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-blue-deep"
         >
           All {insurances.length} plans
           <Icon name="arrow" size={15} />
@@ -193,22 +216,14 @@ function InsuranceMarquee() {
 
 function Welcome() {
   return (
-    <Section tone="calm" className="relative overflow-hidden">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-40 top-[-14rem] h-[40rem] w-[40rem] rounded-full bg-brand-bloom blur-3xl"
-      />
+    <Section tone="white">
+      <Container>
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-7">
+            <Kicker index="01">{practice.welcome.script}</Kicker>
+            <h2 className="t-title mt-5 text-navy">{practice.welcome.title}</h2>
+            <p className="t-lead drop-cap mt-7 max-w-2xl">{about.intro}</p>
 
-      <Container className="relative">
-        <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16">
-          <div>
-            <SectionHeading
-              eyebrow={practice.welcome.script}
-              title={practice.welcome.title}
-            />
-            <p className="mt-6 text-[1.05rem] leading-relaxed text-body">
-              {about.intro}
-            </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Button to="/about" variant="primary" size="lg" icon="arrow" iconRight>
                 About Us
@@ -219,25 +234,26 @@ function Welcome() {
             </div>
           </div>
 
-          <div className="space-y-5">
-            <Card className="flex gap-5">
-              <IconBadge name="heart-pulse" tone="gradient" />
-              <div>
-                <h3 className="text-xl font-medium text-navy">Our Mission</h3>
-                <p className="mt-2 text-[0.95rem] leading-relaxed text-body">
-                  {about.mission}
-                </p>
-              </div>
-            </Card>
-            <Card className="flex gap-5">
-              <IconBadge name="sparkle" tone="cyan" />
-              <div>
-                <h3 className="text-xl font-medium text-navy">Our Vision</h3>
-                <p className="mt-2 text-[0.95rem] leading-relaxed text-body">
-                  {about.vision}
-                </p>
-              </div>
-            </Card>
+          <div className="lg:col-span-5 lg:pt-2">
+            <div className="border-t-2 border-navy pt-6">
+              <span className="flex items-center gap-3">
+                <IconBadge name="heart-pulse" tone="gradient" size="sm" />
+                <h3 className="t-subtitle text-navy">Our Mission</h3>
+              </span>
+              <p className="mt-4 text-[0.97rem] leading-relaxed text-body">
+                {about.mission}
+              </p>
+            </div>
+
+            <div className="mt-8 border-t border-[rgba(14,15,59,0.12)] pt-6">
+              <span className="flex items-center gap-3">
+                <IconBadge name="sparkle" tone="cyan" size="sm" />
+                <h3 className="t-subtitle text-navy">Our Vision</h3>
+              </span>
+              <p className="mt-4 text-[0.97rem] leading-relaxed text-body">
+                {about.vision}
+              </p>
+            </div>
           </div>
         </div>
       </Container>
@@ -245,70 +261,83 @@ function Welcome() {
   )
 }
 
-/* --------------------------------------------------------- Services grid */
+/* -------------------------------------------------------- Services index */
 
-function ServicesGrid() {
+function ServicesIndex() {
   return (
-    <Section tone="white" className="relative overflow-hidden">
+    <Section tone="calm" rule className="relative overflow-hidden">
       <Container className="relative">
-        <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
-          <SectionHeading
-            eyebrow="Available Services"
-            title="Our Mental Health Offerings"
-            body="Explore our wide range of services designed to promote mental wellness and personal growth."
-          />
-          <Button
-            to="/services"
-            variant="outline"
-            icon="arrow"
-            iconRight
-            className="shrink-0 self-start lg:self-auto"
-          >
-            View all services
-          </Button>
-        </div>
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-4">
+            <Kicker index="02">Available Services</Kicker>
+            <h2 className="t-title mt-5 text-navy">
+              Our Mental Health Offerings
+            </h2>
+            <p className="t-lead mt-5">
+              Explore our wide range of services designed to promote mental
+              wellness and personal growth.
+            </p>
+            <Button
+              to="/services"
+              variant="outline"
+              icon="arrow"
+              iconRight
+              className="mt-7"
+            >
+              View all services
+            </Button>
+          </div>
 
-        <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {services.map((s) => (
-            <li key={s.slug}>
-              <Link
-                to={`/services/${s.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-clinical-lg bg-white shadow-clinical ring-1 ring-navy-100/70 transition duration-200 hover:-translate-y-1 hover:shadow-clinical-lg hover:ring-navy-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
-              >
-                <div className="relative aspect-[2/1] overflow-hidden bg-navy-50">
-                  <img
-                    src={asset(`services/${s.slug}.jpg`)}
-                    alt=""
-                    aria-hidden="true"
-                    loading="lazy"
-                    decoding="async"
-                    className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.04]"
-                  />
-                  <span className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-navy/45 to-transparent" />
-                  <span className="absolute bottom-3 left-3 grid h-10 w-10 place-items-center rounded-clinical bg-white/95 text-navy shadow-clinical backdrop-blur">
-                    <Icon name={s.icon} size={20} />
-                  </span>
-                </div>
-                <div className="flex flex-1 flex-col p-6">
-                  <h3 className="font-sans text-[1.05rem] font-semibold leading-snug text-navy">
-                    {s.title}
-                  </h3>
-                  <p className="mt-2.5 flex-1 text-sm leading-relaxed text-body">
-                    {s.card}
-                  </p>
-                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep">
-                    Read more
-                    <Icon
-                      name="arrow"
-                      size={15}
-                      className="transition-transform duration-200 group-hover:translate-x-0.5"
-                    />
-                  </span>
-                </div>
-              </Link>
-            </li>
-          ))}
-        </ul>
+          <div className="lg:col-span-8">
+            <ul className="border-b border-[rgba(14,15,59,0.12)]">
+              {services.map((s, i) => (
+                <li key={s.slug} className="border-t border-[rgba(14,15,59,0.12)]">
+                  <Link
+                    to={`/services/${s.slug}`}
+                    className="group grid grid-cols-[auto_1fr] items-start gap-5 py-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 sm:grid-cols-[auto_1fr_11rem] sm:gap-7"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="tnum t-kicker pt-2 text-navy-300"
+                    >
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+
+                    <span className="min-w-0">
+                      <span className="t-subtitle block text-navy transition-colors group-hover:text-blue-deep">
+                        {s.title}
+                      </span>
+                      <span className="mt-2.5 block max-w-xl text-[0.97rem] leading-relaxed text-body">
+                        {s.card}
+                      </span>
+                      <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep">
+                        Read more
+                        <Icon
+                          name="arrow"
+                          size={15}
+                          className="transition-transform duration-200 group-hover:translate-x-0.5"
+                        />
+                      </span>
+                    </span>
+
+                    <span className="hidden sm:block">
+                      <span className="relative block aspect-[3/2] overflow-hidden rounded-clinical bg-navy-50">
+                        <img
+                          src={asset(`services/${s.slug}.jpg`)}
+                          alt=""
+                          aria-hidden="true"
+                          loading="lazy"
+                          decoding="async"
+                          className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.05]"
+                        />
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </Container>
     </Section>
   )
@@ -339,35 +368,31 @@ function PathToHealing() {
   ]
 
   return (
-    <Section tone="calm" className="relative overflow-hidden">
-      <Container className="relative">
+    <Section tone="white">
+      <Container>
         <SectionHeading
+          index="03"
           eyebrow="Your Path to Healing"
           title="Start Your Healing Journey"
           body="Take the first step toward a healthier, more balanced life. Our compassionate care team is here to guide you every step of the way."
-          align="center"
         />
 
-        <ol className="mt-14 grid gap-6 lg:grid-cols-3">
+        <ol className="mt-14 grid gap-10 sm:grid-cols-3 sm:gap-8">
           {steps.map((s) => (
-            <li key={s.step}>
-              <Card className="h-full">
-                <div className="flex items-center gap-4">
-                  <IconBadge name={s.icon} tone="navy" size="lg" />
-                  <span className="font-display text-4xl font-medium leading-none text-navy-200">
-                    {s.step}
-                  </span>
-                </div>
-                <h3 className="mt-6 text-xl font-medium text-navy">{s.title}</h3>
-                <p className="mt-2.5 text-[0.95rem] leading-relaxed text-body">
-                  {s.body}
-                </p>
-              </Card>
+            <li key={s.step} className="border-t-2 border-navy pt-6">
+              <span className="inline-flex items-center gap-3">
+                <Icon name={s.icon} size={19} className="text-cyan-deep" />
+                <span className="tnum t-kicker text-navy-400">{s.step}</span>
+              </span>
+              <h3 className="t-subtitle mt-5 text-navy">{s.title}</h3>
+              <p className="mt-3 text-[0.97rem] leading-relaxed text-body">
+                {s.body}
+              </p>
             </li>
           ))}
         </ol>
 
-        <div className="mt-12 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+        <div className="mt-12 flex flex-col gap-3 sm:flex-row">
           <Button to="/book" size="lg" icon="calendar">
             Request an appointment
           </Button>
@@ -415,6 +440,18 @@ function StatsBand() {
   )
 }
 
+/* ------------------------------------------------------- Vision pull quote */
+
+function VisionQuote() {
+  return (
+    <Section tone="paper" tight>
+      <Container size="narrow">
+        <PullQuote attribution="Our vision">{about.vision}</PullQuote>
+      </Container>
+    </Section>
+  )
+}
+
 /* ----------------------------------------------------------- Get support */
 
 function GetSupport() {
@@ -446,32 +483,42 @@ function GetSupport() {
   ]
 
   return (
-    <Section tone="white">
+    <Section tone="calm" rule>
       <Container>
         <SectionHeading
+          index="04"
           eyebrow="How you can reach us"
           title="More ways to get support"
-          align="center"
         />
-        <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {tiles.map((t) => (
-            <li key={t.to}>
+
+        <ul className="mt-12 grid border-b border-[rgba(14,15,59,0.12)] sm:grid-cols-2">
+          {tiles.map((t, i) => (
+            <li
+              key={t.to}
+              className="border-t border-[rgba(14,15,59,0.12)] sm:odd:border-r"
+            >
               <Link
                 to={t.to}
-                className="group flex h-full flex-col rounded-clinical-lg bg-white p-6 shadow-clinical ring-1 ring-navy-100/70 transition duration-200 hover:-translate-y-1 hover:shadow-clinical-lg hover:ring-navy-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
+                className="group flex h-full flex-col p-7 transition-colors hover:bg-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
               >
-                <IconBadge
-                  name={t.icon}
-                  tone="cyan"
-                  className="transition-colors group-hover:bg-brand-gradient group-hover:text-navy"
-                />
-                <h3 className="mt-5 font-sans text-[1.02rem] font-semibold text-navy">
+                <span className="flex items-center justify-between gap-4">
+                  <span className="tnum t-kicker text-navy-300">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <IconBadge
+                    name={t.icon}
+                    tone="cyan"
+                    size="sm"
+                    className="transition-colors group-hover:bg-brand-gradient group-hover:text-navy"
+                  />
+                </span>
+                <h3 className="t-subtitle mt-6 text-navy transition-colors group-hover:text-blue-deep">
                   {t.title}
                 </h3>
-                <p className="mt-2.5 flex-1 text-sm leading-relaxed text-body">
+                <p className="mt-3 flex-1 text-[0.97rem] leading-relaxed text-body">
                   {t.body}
                 </p>
-                <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep">
+                <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep">
                   Continue
                   <Icon
                     name="arrow"
@@ -492,18 +539,29 @@ function GetSupport() {
 
 function FaqPreview() {
   return (
-    <Section tone="calm" className="relative overflow-hidden">
-      <Container size="narrow" className="relative">
-        <SectionHeading
-          eyebrow="Questions"
-          title="Frequently Asked Questions"
-          align="center"
-        />
-        <Accordion items={faqs} className="mt-12" />
-        <div className="mt-9 text-center">
-          <Button to="/faqs" variant="outline" size="md" icon="arrow" iconRight>
-            All frequently asked questions
-          </Button>
+    <Section tone="white">
+      <Container>
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-4">
+            <Kicker index="05">Questions</Kicker>
+            <h2 className="t-title mt-5 text-navy">
+              Frequently Asked Questions
+            </h2>
+            <Button
+              to="/faqs"
+              variant="outline"
+              size="md"
+              icon="arrow"
+              iconRight
+              className="mt-7"
+            >
+              All frequently asked questions
+            </Button>
+          </div>
+
+          <div className="lg:col-span-8">
+            <Accordion items={faqs} />
+          </div>
         </div>
       </Container>
     </Section>
@@ -514,21 +572,49 @@ function FaqPreview() {
 
 function Location() {
   return (
-    <Section tone="white">
+    <Section tone="calm" rule>
       <Container>
         <SectionHeading
+          index="06"
           eyebrow="Keep in Touch"
           title="Contact information"
           body="Your path to better mental well-being begins with just one conversation. Connect with us today."
         />
 
-        <div className="mt-14 grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
-          <LocationMap height="h-[24rem]" />
+        <div className="mt-12 grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
+          <div>
+            <LocationMap height="h-[26rem]" />
+            <MetaList
+              className="mt-8"
+              items={[
+                ['Visit', addressOneLine],
+                [
+                  'Call',
+                  <a
+                    key="call"
+                    href={practice.phoneHref}
+                    className="link-rule text-navy"
+                  >
+                    {practice.phoneDisplay}
+                  </a>,
+                ],
+                [
+                  'Email',
+                  <a
+                    key="email"
+                    href={`mailto:${practice.email}`}
+                    className="link-rule break-all text-navy"
+                  >
+                    {practice.email}
+                  </a>,
+                ],
+              ]}
+            />
+          </div>
 
-          <div className="space-y-5">
-            <Card>
-              <h3 className="text-xl font-medium text-navy">Need assistance?</h3>
-              <p className="mt-2 text-[0.95rem] leading-relaxed text-body">
+          <div className="space-y-9">
+            <Panel title="Need assistance?">
+              <p className="text-[0.97rem] leading-relaxed text-body">
                 Reach out to our team with any questions or concerns and we will
                 provide the support and guidance you need.
               </p>
@@ -549,13 +635,10 @@ function Location() {
               >
                 Message us
               </Button>
-            </Card>
+            </Panel>
 
-            <Card>
-              <h3 className="font-sans text-base font-semibold text-navy">
-                Also listed on Zocdoc
-              </h3>
-              <p className="mt-2 text-[0.95rem] leading-relaxed text-body">
+            <Panel title="Also listed on Zocdoc">
+              <p className="text-[0.97rem] leading-relaxed text-body">
                 Prefer to see live availability and book a slot yourself?
               </p>
               <Button
@@ -569,28 +652,32 @@ function Location() {
               >
                 Book on Zocdoc
               </Button>
-            </Card>
+            </Panel>
 
-            <Card>
-              <h3 className="font-sans text-base font-semibold text-navy">
-                Resources
-              </h3>
-              <CheckList
-                items={resources.slice(0, 3).map((r) => r.name)}
-                className="mt-4"
-              />
+            <Panel title="Resources">
+              <CheckList items={resources.slice(0, 3).map((r) => r.name)} />
               <Link
                 to="/resources"
-                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep underline-offset-4 hover:underline"
+                className="link-rule mt-5 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep"
               >
                 All resources
                 <Icon name="arrow" size={15} />
               </Link>
-            </Card>
+            </Panel>
           </div>
         </div>
       </Container>
     </Section>
+  )
+}
+
+/** A ruled editorial aside block. */
+function Panel({ title, children }) {
+  return (
+    <div className="border-t-2 border-navy pt-5">
+      <h3 className="t-subtitle text-navy">{title}</h3>
+      <div className="mt-4">{children}</div>
+    </div>
   )
 }
 
@@ -620,11 +707,11 @@ function ClosingCta() {
       <Container className="relative">
         <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16">
           <div>
-            <Eyebrow light>Struggling with your mental health?</Eyebrow>
-            <h2 className="mt-4 text-[2rem] leading-[1.08] text-white sm:text-[2.6rem] lg:text-[3rem]">
+            <Kicker light>Struggling with your mental health?</Kicker>
+            <h2 className="t-title mt-5 text-white">
               We&rsquo;re here to help.
             </h2>
-            <p className="mt-5 max-w-xl text-[1.05rem] leading-relaxed text-navy-100">
+            <p className="t-lead mt-6 max-w-xl text-navy-100">
               Book now and let us guide you toward a brighter tomorrow. If you
               would rather speak to someone first, call us — a real person answers
               during office hours.
@@ -649,12 +736,12 @@ function ClosingCta() {
               </Button>
             </div>
 
-            <div className="mt-9 rounded-clinical-lg border border-coral/50 bg-coral/15 p-5 backdrop-blur">
-              <p className="flex items-center gap-2 font-semibold text-white">
-                <Icon name="alert-triangle" size={17} />
+            <div className="mt-9 border border-coral/50 bg-coral/15 p-5">
+              <p className="t-kicker flex items-center gap-2 text-white">
+                <Icon name="alert-triangle" size={15} aria-hidden="true" />
                 24/7 crisis support
               </p>
-              <p className="mt-2 text-[0.95rem] leading-relaxed text-white/95">
+              <p className="mt-3 text-[0.95rem] leading-relaxed text-white/95">
                 Call or text{' '}
                 <a
                   href={crisis.lifelineHref}
@@ -667,9 +754,9 @@ function ClosingCta() {
             </div>
           </div>
 
-          <div className="rounded-clinical-xl border border-white/15 bg-white/10 p-7 shadow-clinical-lg backdrop-blur sm:p-9">
-            <Eyebrow light>Start your healing journey</Eyebrow>
-            <h3 className="mt-4 text-2xl font-medium text-white">
+          <div className="border border-white/20 bg-white/[0.07] p-7 backdrop-blur sm:p-9">
+            <Kicker light>Start your healing journey</Kicker>
+            <h3 className="t-subtitle mt-5 text-white">
               Request an appointment
             </h3>
             <CheckList items={expectations} light className="mt-7" />

@@ -3,18 +3,19 @@ import { practice, services } from '../data/site.js'
 import Button from '../components/Button.jsx'
 import Icon from '../components/Icon.jsx'
 import {
-  Card,
   CheckList,
   Container,
-  Eyebrow,
-  IconBadge,
+  Figure,
+  Kicker,
   Section,
   SectionHeading,
 } from '../components/Ui.jsx'
 import { asset } from '../lib/asset.js'
 
 /**
- * Individual service page. The four services share one layout driven by the
+ * Individual service page, set as an article: breadcrumb, standfirst, one
+ * figure, the "what is included" list as a ruled column, and a "keep
+ * exploring" contents list. The four services share one layout driven by the
  * `services` data, matching the live site's four child pages
  * (diagnosis-of-mental-illness, medications-management, treatment-management,
  * psychotherapy).
@@ -25,52 +26,40 @@ export default function ServiceDetail() {
 
   if (!service) return <Navigate to="/services" replace />
 
+  const index = services.findIndex((s) => s.slug === slug)
   const others = services.filter((s) => s.slug !== slug)
 
   return (
     <>
-      <Section tone="white" className="relative overflow-hidden">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-40 -top-56 h-[38rem] w-[38rem] rounded-full bg-brand-bloom blur-3xl"
-        />
-        <Container className="relative">
-          <nav aria-label="Breadcrumb" className="mb-9">
-            <ol className="flex flex-wrap items-center gap-2 text-xs font-semibold text-navy-400">
+      <Section tone="white" rule>
+        <Container>
+          <nav aria-label="Breadcrumb" className="mb-10">
+            <ol className="t-kicker flex flex-wrap items-center gap-2.5 text-navy-400">
               <li>
-                <Link to="/" className="underline-offset-4 hover:underline">
+                <Link to="/" className="link-rule hover:text-navy">
                   Home
                 </Link>
               </li>
               <li aria-hidden="true">/</li>
               <li>
-                <Link
-                  to="/services"
-                  className="underline-offset-4 hover:underline"
-                >
+                <Link to="/services" className="link-rule hover:text-navy">
                   Services
                 </Link>
               </li>
               <li aria-hidden="true">/</li>
-              <li className="text-navy-600" aria-current="page">
+              <li className="text-navy" aria-current="page">
                 {service.title}
               </li>
             </ol>
           </nav>
 
-          <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16">
-            <div>
-              <IconBadge name={service.icon} tone="gradient" size="lg" />
-              <div className="mt-6">
-                <SectionHeading
-                  as="h1"
-                  eyebrow={service.tagline}
-                  title={service.title}
-                />
-              </div>
-              <p className="mt-6 text-[1.05rem] leading-relaxed text-body">
-                {service.body}
-              </p>
+          <div className="grid gap-12 lg:grid-cols-12 lg:items-start lg:gap-14">
+            <div className="lg:col-span-6">
+              <Kicker index={String(index + 1).padStart(2, '0')}>
+                {service.tagline}
+              </Kicker>
+              <h1 className="t-display mt-6 text-navy">{service.title}</h1>
+              <p className="t-lead mt-7 max-w-xl">{service.body}</p>
 
               <div className="mt-9 flex flex-wrap gap-3">
                 <Button to="/book" size="lg" icon="calendar">
@@ -87,45 +76,40 @@ export default function ServiceDetail() {
               </div>
             </div>
 
-            <div className="relative aspect-[16/10] overflow-hidden rounded-clinical-xl shadow-clinical-lg ring-1 ring-navy-100/70">
-              <img
+            <div className="lg:col-span-6">
+              <Figure
                 src={asset(`services/${service.slug}.jpg`)}
                 alt=""
-                aria-hidden="true"
-                loading="eager"
-                decoding="async"
-                className="h-full w-full object-cover object-center"
+                aspect="aspect-[3/2]"
+                eager
+                caption={service.tagline}
               />
             </div>
           </div>
         </Container>
       </Section>
 
-      <Section tone="calm">
+      <Section tone="calm" rule>
         <Container>
-          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start lg:gap-12">
-            <Card>
-              <Eyebrow>What is included</Eyebrow>
-              <CheckList items={service.includes} className="mt-6" />
-            </Card>
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
+            <div className="lg:col-span-7">
+              <h2 className="t-title text-navy">What is included</h2>
+              <CheckList items={service.includes} className="mt-8" />
+            </div>
 
-            <div className="relative overflow-hidden rounded-clinical-xl bg-mesh-navy p-8 sm:p-10">
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rounded-full bg-cyan/25 blur-[110px]"
-              />
-              <div className="relative">
-                <Eyebrow light>Still deciding?</Eyebrow>
-                <h2 className="mt-4 text-2xl font-medium text-white">
+            <div className="lg:col-span-5 lg:pt-3">
+              <div className="border-t-2 border-navy pt-6">
+                <Kicker>Still deciding?</Kicker>
+                <h3 className="t-subtitle mt-5 text-navy">
                   Not sure if this is right for you?
-                </h2>
-                <p className="mt-4 text-[0.95rem] leading-relaxed text-navy-100">
+                </h3>
+                <p className="mt-4 text-[0.97rem] leading-relaxed text-body">
                   Book an evaluation and we will work out the right approach
                   together — that is what the first visit is for.
                 </p>
                 <Button
                   to="/book"
-                  variant="accent"
+                  variant="primary"
                   size="lg"
                   icon="calendar"
                   className="mt-7 w-full"
@@ -138,46 +122,52 @@ export default function ServiceDetail() {
         </Container>
       </Section>
 
-      <Section tone="white">
+      <Section tone="white" rule>
         <Container>
           <SectionHeading
             eyebrow="Keep exploring"
             title="Other services"
             size="md"
           />
-          <ul className="mt-12 grid gap-6 sm:grid-cols-3">
-            {others.map((s) => (
-              <li key={s.slug}>
+          <ul className="mt-12 border-b border-[rgba(14,15,59,0.12)]">
+            {others.map((s, i) => (
+              <li key={s.slug} className="border-t border-[rgba(14,15,59,0.12)]">
                 <Link
                   to={`/services/${s.slug}`}
-                  className="group flex h-full flex-col overflow-hidden rounded-clinical-lg bg-white shadow-clinical ring-1 ring-navy-100/70 transition duration-200 hover:-translate-y-1 hover:shadow-clinical-lg hover:ring-navy-200"
+                  className="group flex items-start gap-5 py-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
                 >
-                  <div className="relative aspect-[2/1] overflow-hidden bg-navy-50">
-                    <img
-                      src={asset(`services/${s.slug}.jpg`)}
-                      alt=""
-                      aria-hidden="true"
-                      loading="lazy"
-                      decoding="async"
-                      className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.04]"
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    <h3 className="font-sans text-[1.02rem] font-semibold text-navy">
+                  <span className="tnum t-kicker pt-2 text-navy-300">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="t-subtitle block text-navy transition-colors group-hover:text-blue-deep">
                       {s.title}
-                    </h3>
-                    <p className="mt-2 flex-1 text-sm leading-relaxed text-body">
+                    </span>
+                    <span className="mt-2 block max-w-xl text-[0.97rem] leading-relaxed text-body">
                       {s.card}
-                    </p>
-                    <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep">
+                    </span>
+                    <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep">
                       Read more
                       <Icon
                         name="arrow"
                         size={15}
+                        aria-hidden="true"
                         className="transition-transform duration-200 group-hover:translate-x-0.5"
                       />
                     </span>
-                  </div>
+                  </span>
+                  <span className="hidden w-36 shrink-0 sm:block">
+                    <span className="relative block aspect-[3/2] overflow-hidden rounded-clinical bg-navy-50">
+                      <img
+                        src={asset(`services/${s.slug}.jpg`)}
+                        alt=""
+                        aria-hidden="true"
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.05]"
+                      />
+                    </span>
+                  </span>
                 </Link>
               </li>
             ))}

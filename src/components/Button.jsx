@@ -11,26 +11,28 @@ import Icon from './Icon.jsx'
  *
  * `primary` is solid navy with white text (18.26:1).
  *
- * Buttons are pills in this revision, and the outline variant uses a single
- * hairline ring rather than the previous 2px border — both are part of the
- * calmer, softer surface language.
+ * Buttons are near-square in this system: the editorial page is built from
+ * rules and the grid, so a pill would fight it. `link` is the text-and-arrow
+ * variant used for secondary actions inside prose, with the rule that draws
+ * itself on hover.
  */
 const variants = {
   accent:
-    'bg-brand-gradient text-navy font-semibold shadow-clinical hover:brightness-[1.05]',
-  primary: 'bg-navy text-white shadow-clinical hover:bg-navy-600',
-  coral: 'bg-coral text-white shadow-clinical hover:bg-coral-deep',
+    'bg-brand-gradient text-navy font-semibold hover:brightness-[1.06] shadow-clinical',
+  primary: 'bg-navy text-white font-semibold hover:bg-navy-600',
+  coral: 'bg-coral text-white font-semibold hover:bg-coral-deep',
   outline:
-    'border border-navy-200 bg-white text-navy hover:border-blue-deep hover:text-blue-deep hover:shadow-clinical',
-  ghost: 'text-blue-deep hover:bg-navy-50',
+    'border border-navy-200 bg-transparent text-navy font-semibold hover:border-navy hover:bg-navy-50',
+  ghost: 'text-navy font-semibold hover:bg-navy-50',
   onDark:
-    'border border-white/25 bg-white/10 text-white backdrop-blur hover:border-white/40 hover:bg-white/20',
+    'border border-white/30 bg-transparent text-white font-semibold hover:border-white hover:bg-white/10',
+  link: 'text-blue-deep font-semibold !px-0 !py-0 hover:text-navy',
 }
 
 const sizes = {
   sm: 'px-4 py-2 text-[0.85rem]',
-  md: 'px-5 py-2.5 text-[0.95rem]',
-  lg: 'px-7 py-3.5 text-base',
+  md: 'px-5 py-2.5 text-[0.92rem]',
+  lg: 'px-7 py-3.5 text-[0.97rem]',
 }
 
 export default function Button({
@@ -44,13 +46,15 @@ export default function Button({
   children,
   ...rest
 }) {
+  const isLink = variant === 'link'
   const cls = [
-    'inline-flex items-center justify-center gap-2.5 rounded-full font-semibold',
+    'inline-flex items-center justify-center gap-2.5 rounded-clinical',
     'transition duration-200 whitespace-nowrap',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
     'active:translate-y-px',
     variants[variant],
-    sizes[size],
+    isLink ? '' : sizes[size],
+    isLink ? 'link-rule' : '',
     className,
   ]
     .filter(Boolean)
@@ -58,22 +62,29 @@ export default function Button({
 
   const inner = (
     <>
-      {icon && !iconRight && <Icon name={icon} size={18} />}
+      {icon && !iconRight && <Icon name={icon} size={17} aria-hidden="true" />}
       <span>{children}</span>
-      {icon && iconRight && <Icon name="arrow" size={18} />}
+      {iconRight && (
+        <Icon
+          name={icon || 'arrow'}
+          size={16}
+          aria-hidden="true"
+          className="transition-transform duration-200 group-hover:translate-x-0.5"
+        />
+      )}
     </>
   )
 
   if (to) {
     return (
-      <Link to={to} className={cls} {...rest}>
+      <Link to={to} className={`group ${cls}`} {...rest}>
         {inner}
       </Link>
     )
   }
   if (href) {
     return (
-      <a href={href} className={cls} {...rest}>
+      <a href={href} className={`group ${cls}`} {...rest}>
         {inner}
       </a>
     )

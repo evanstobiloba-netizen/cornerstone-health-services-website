@@ -1,17 +1,22 @@
 import { about, practice } from '../data/site.js'
 import Button from '../components/Button.jsx'
-import Icon from '../components/Icon.jsx'
 import {
-  Card,
   CheckList,
   Container,
-  Eyebrow,
+  Deck,
   IconBadge,
+  Kicker,
+  MetaList,
   Section,
   SectionHeading,
 } from '../components/Ui.jsx'
 import { asset } from '../lib/asset.js'
 
+/**
+ * About, set as a profile piece: a standfirst with a drop cap, a ruled
+ * "at a glance" column, a full-bleed figure, then mission and vision as two
+ * columns under a heavy rule. Copy is unchanged.
+ */
 export default function About() {
   return (
     <>
@@ -33,24 +38,15 @@ function Intro() {
   ]
 
   return (
-    <Section tone="calm" className="relative overflow-hidden">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-52 top-[-18rem] h-[46rem] w-[46rem] rounded-full bg-brand-bloom blur-3xl"
-      />
-
-      <Container className="relative">
-        <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-start lg:gap-16">
-          <div>
-            <SectionHeading
-              as="h1"
-              size="xl"
-              eyebrow="About Us"
-              title={`About ${practice.legalName}`}
-            />
-            <p className="mt-6 text-[1.05rem] leading-relaxed text-body">
-              {about.intro}
-            </p>
+    <Section tone="white" rule>
+      <Container>
+        <div className="grid gap-12 lg:grid-cols-12 lg:items-start lg:gap-14">
+          <div className="lg:col-span-7">
+            <Kicker>About Us</Kicker>
+            <h1 className="t-display mt-6 text-navy">
+              About {practice.legalName}
+            </h1>
+            <p className="t-lead drop-cap mt-8 max-w-2xl">{about.intro}</p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Button to="/book" size="lg" icon="calendar">
                 Book Now
@@ -61,31 +57,25 @@ function Intro() {
             </div>
           </div>
 
-          <Card className="lg:mt-2">
-            <Eyebrow>At a glance</Eyebrow>
-            <dl className="mt-6 space-y-4 text-sm">
-              {atAGlance.map(([k, v]) => (
-                <div
-                  key={k}
-                  className="flex items-start justify-between gap-4 border-b border-navy-100/70 pb-3.5 last:border-0 last:pb-0"
-                >
-                  <dt className="text-navy-500">{k}</dt>
-                  <dd className="text-right font-semibold text-navy">{v}</dd>
-                </div>
-              ))}
-            </dl>
-          </Card>
+          <div className="lg:col-span-5 lg:pt-2">
+            <p className="t-kicker border-t-2 border-navy pt-5 text-navy-400">
+              At a glance
+            </p>
+            <MetaList items={atAGlance} className="mt-2" />
+          </div>
         </div>
 
-        <div className="relative mt-14 aspect-[16/9] overflow-hidden rounded-clinical-xl shadow-clinical-lg ring-1 ring-navy-100/70 sm:aspect-[2/1] lg:aspect-[3/1]">
-          <img
-            src={asset('about-hero.jpg')}
-            alt=""
-            aria-hidden="true"
-            loading="eager"
-            decoding="async"
-            className="h-full w-full object-cover object-center"
-          />
+        <div className="mt-16">
+          <div className="relative aspect-[16/9] overflow-hidden rounded-clinical-lg bg-navy-50 sm:aspect-[2/1] lg:aspect-[3/1]">
+            <img
+              src={asset('about-hero.jpg')}
+              alt=""
+              aria-hidden="true"
+              loading="eager"
+              decoding="async"
+              className="h-full w-full object-cover object-center"
+            />
+          </div>
         </div>
       </Container>
     </Section>
@@ -93,41 +83,26 @@ function Intro() {
 }
 
 function MissionVision() {
-  return (
-    <Section tone="white">
-      <Container>
-        <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
-          <Card className="relative overflow-hidden p-8 sm:p-10">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-brand-bloom blur-2xl"
-            />
-            <div className="relative">
-              <IconBadge name="heart-pulse" tone="gradient" size="lg" />
-              <h2 className="mt-6 text-2xl font-medium text-navy sm:text-[2rem]">
-                Our Mission
-              </h2>
-              <p className="mt-4 text-[1.02rem] leading-relaxed text-body">
-                {about.mission}
-              </p>
-            </div>
-          </Card>
+  const blocks = [
+    { icon: 'heart-pulse', tone: 'gradient', title: 'Our Mission', body: about.mission },
+    { icon: 'sparkle', tone: 'cyan', title: 'Our Vision', body: about.vision },
+  ]
 
-          <Card className="relative overflow-hidden p-8 sm:p-10">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-brand-bloom blur-2xl"
-            />
-            <div className="relative">
-              <IconBadge name="sparkle" tone="cyan" size="lg" />
-              <h2 className="mt-6 text-2xl font-medium text-navy sm:text-[2rem]">
-                Our Vision
-              </h2>
-              <p className="mt-4 text-[1.02rem] leading-relaxed text-body">
-                {about.vision}
+  return (
+    <Section tone="calm" rule>
+      <Container>
+        <div className="grid gap-x-14 gap-y-12 lg:grid-cols-2">
+          {blocks.map((b) => (
+            <div key={b.title} className="border-t-2 border-navy pt-6">
+              <span className="flex items-center gap-3">
+                <IconBadge name={b.icon} tone={b.tone} size="sm" />
+                <h2 className="t-subtitle text-navy">{b.title}</h2>
+              </span>
+              <p className="mt-5 text-[1.02rem] leading-relaxed text-body">
+                {b.body}
               </p>
             </div>
-          </Card>
+          ))}
         </div>
       </Container>
     </Section>
@@ -205,10 +180,10 @@ function Facts() {
   ]
 
   return (
-    <Section tone="calm">
+    <Section tone="white" rule>
       <Container>
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-          <div>
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-5">
             <SectionHeading
               eyebrow="What we stand for"
               title="Care designed around the person, not the paperwork"
@@ -219,19 +194,26 @@ function Facts() {
             <CheckList items={commitments} className="mt-8" />
           </div>
 
-          <div className="space-y-5">
-            {cards.map((c) => (
-              <Card key={c.title} className="flex gap-5">
-                <IconBadge name={c.icon} tone={c.tone} />
-                <div>
-                  <h3 className="font-sans text-base font-semibold text-navy">
-                    {c.title}
-                  </h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-body">
-                    {c.body}
-                  </p>
+          <div className="lg:col-span-7">
+            {cards.map((c, i) => (
+              <div
+                key={c.title}
+                className={`border-t border-[rgba(14,15,59,0.12)] py-7 ${
+                  i === cards.length - 1
+                    ? 'border-b border-[rgba(14,15,59,0.12)]'
+                    : ''
+                }`}
+              >
+                <div className="flex gap-5">
+                  <IconBadge name={c.icon} tone={c.tone} />
+                  <div>
+                    <h3 className="t-subtitle text-navy">{c.title}</h3>
+                    <p className="mt-2.5 text-[0.97rem] leading-relaxed text-body">
+                      {c.body}
+                    </p>
+                  </div>
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
         </div>
@@ -242,37 +224,39 @@ function Facts() {
 
 function Cta() {
   return (
-    <Section tone="white" tight>
-      <Container>
-        <div className="relative overflow-hidden rounded-clinical-xl bg-mesh-navy p-8 sm:p-12">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -right-24 -top-32 h-80 w-80 rounded-full bg-cyan/25 blur-[120px]"
-          />
-          <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
-            <div className="max-w-2xl">
-              <Eyebrow light>Ready when you are</Eyebrow>
-              <h2 className="mt-4 text-2xl font-medium text-white sm:text-[2rem]">
-                Let&rsquo;s take the next step together
-              </h2>
-              <p className="mt-4 leading-relaxed text-navy-100">
-                Book an appointment, or reach out with any question you have
-                before you do.
-              </p>
-            </div>
-            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row lg:shrink-0">
-              <Button to="/book" variant="accent" size="lg" icon="calendar">
-                Book Now
-              </Button>
-              <Button
-                href={practice.phoneHref}
-                variant="onDark"
-                size="lg"
-                icon="phone"
-              >
-                {practice.phoneDisplay}
-              </Button>
-            </div>
+    <Section tone="navy" tight className="relative overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 pattern-dots text-white/[0.08]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-24 -top-32 h-80 w-80 rounded-full bg-cyan/25 blur-[120px]"
+      />
+      <Container className="relative">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+          <div className="max-w-2xl">
+            <Kicker light>Ready when you are</Kicker>
+            <h2 className="t-subtitle mt-5 text-white">
+              Let&rsquo;s take the next step together
+            </h2>
+            <p className="mt-4 leading-relaxed text-navy-100">
+              Book an appointment, or reach out with any question you have
+              before you do.
+            </p>
+          </div>
+          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row lg:shrink-0">
+            <Button to="/book" variant="accent" size="lg" icon="calendar">
+              Book Now
+            </Button>
+            <Button
+              href={practice.phoneHref}
+              variant="onDark"
+              size="lg"
+              icon="phone"
+            >
+              {practice.phoneDisplay}
+            </Button>
           </div>
         </div>
       </Container>

@@ -285,14 +285,14 @@ export default function LeadForm({ form, id }) {
   if (status === 'sent') {
     return (
       <div
-        className="rounded-clinical-xl bg-white p-8 text-center shadow-clinical ring-1 ring-cyan-200 sm:p-10"
+        className="border border-cyan-200 bg-white p-8 text-center sm:p-10"
         role="status"
         aria-live="polite"
       >
         <span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-cyan-50 text-cyan-deep">
-          <Icon name="check" size={30} strokeWidth={2.4} />
+          <Icon name="check" size={30} strokeWidth={2.4} aria-hidden="true" />
         </span>
-        <h3 className="mt-6 text-2xl font-medium text-navy">
+        <h3 className="t-subtitle mt-6 text-navy">
           Thank you — your message is with us.
         </h3>
         <p className="mx-auto mt-3 max-w-md text-[0.95rem] leading-relaxed text-body">
@@ -328,20 +328,20 @@ export default function LeadForm({ form, id }) {
       noValidate
       aria-labelledby={`${id}-heading-${uid}`}
       aria-busy={status === 'sending' ? 'true' : undefined}
-      className="rounded-clinical-xl bg-white p-6 shadow-clinical ring-1 ring-navy-100/70 sm:p-8"
+      className="border border-[rgba(14,15,59,0.14)] bg-white p-6 sm:p-8"
     >
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex items-start justify-between gap-4 border-b border-[rgba(14,15,59,0.12)] pb-6">
         <div>
           <Eyebrow>{form.script}</Eyebrow>
           <h2
             id={`${id}-heading-${uid}`}
-            className="mt-3 text-2xl font-medium text-navy sm:text-[1.75rem]"
+            className="t-subtitle mt-4 text-navy"
           >
             {form.eyebrow}
           </h2>
         </div>
-        <span className="hidden shrink-0 items-center gap-1.5 rounded-full bg-cyan-50 px-3 py-1 text-[0.7rem] font-bold text-cyan-ink ring-1 ring-inset ring-cyan-200 sm:inline-flex">
-          <Icon name="lock" size={13} strokeWidth={2.2} />
+        <span className="t-kicker hidden shrink-0 items-center gap-1.5 border border-cyan-200 bg-cyan-50 px-2.5 py-1 text-cyan-ink sm:inline-flex">
+          <Icon name="lock" size={12} strokeWidth={2.2} aria-hidden="true" />
           Encrypted
         </span>
       </div>
@@ -604,7 +604,7 @@ function Field({ id, def, error, errorId, children, className = '' }) {
 
   if (def.type === 'checkbox') {
     return (
-      <div className={className}>
+      <div className={`min-w-0 ${className}`}>
         {children}
         {error && (
           <p
@@ -621,7 +621,7 @@ function Field({ id, def, error, errorId, children, className = '' }) {
 
   if (def.type === 'radio') {
     return (
-      <div className={className}>
+      <div className={`min-w-0 ${className}`}>
         <fieldset>
           <legend className="mb-2 block text-sm font-semibold text-navy">
             {label}
@@ -647,7 +647,7 @@ function Field({ id, def, error, errorId, children, className = '' }) {
   }
 
   return (
-    <div className={className}>
+    <div className={`min-w-0 ${className}`}>
       <label htmlFor={id} className="mb-2 block text-sm font-semibold text-navy">
         {label}
       </label>
