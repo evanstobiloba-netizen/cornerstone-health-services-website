@@ -17,12 +17,16 @@ export default function Services() {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-navy-100 bg-white">
+    <section className="relative overflow-hidden border-b border-navy-100 bg-mesh-calm">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-32 -top-40 h-[30rem] w-[30rem] rounded-full bg-cyan-50 blur-3xl"
+        className="pointer-events-none absolute -left-40 top-[-12%] h-[32rem] w-[32rem] rounded-full bg-cyan-50/70 blur-[120px]"
       />
-      <div className="relative mx-auto max-w-7xl px-4 py-14 lg:px-8 lg:py-20">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-40 right-[-10%] h-[32rem] w-[32rem] rounded-full bg-blue-50/60 blur-[120px]"
+      />
+      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:py-20 lg:px-8 lg:py-24">
         <SectionHeading
           as="h1"
           script="Services"
@@ -49,7 +53,12 @@ function Hero() {
 
 function ServiceList() {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-20 lg:px-8">
+    <section className="relative overflow-hidden bg-mesh-calm">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-32 -top-40 h-[30rem] w-[30rem] rounded-full bg-cyan-50/70 blur-[120px]"
+      />
+      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:py-24 lg:px-8">
       <SectionHeading
         script="Our Mental Health Offerings"
         title="Services We Offer"
@@ -103,14 +112,19 @@ function ServiceList() {
           </article>
         ))}
       </div>
+      </div>
     </section>
   )
 }
 
 function WhatSetsUsApart() {
   return (
-    <section className="border-y border-navy-100 bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-20 lg:px-8">
+    <section className="relative overflow-hidden border-y border-navy-100/80 bg-mesh-white">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-40 left-1/2 h-[32rem] w-[32rem] -translate-x-1/2 rounded-full bg-blue-50/60 blur-[120px]"
+      />
+      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:py-24 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
           <SectionHeading
             script="What Sets Us Apart"
