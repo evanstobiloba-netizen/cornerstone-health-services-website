@@ -29,8 +29,42 @@ const { render, ROUTES, SITE_URL, renderHeadHtml, getSeo } = await import(
 
 const shell = await readFile(join(distDir, 'index.html'), 'utf8')
 
-// Strip the placeholder <title> so each page ends up with exactly one.
-const base = shell.replace(/[ \t]*<title>[\s\S]*?<\/title>\s*/i, '')
+/**
+ * Insert the per-route head immediately before the document's closing head tag.
+ *
+ * `lastIndexOf` is deliberate. The shell is HTML, so comments in it may mention
+ * tag names; targeting the LAST occurrence lands on the real closing tag rather
+ * than a mention inside a comment. Getting this wrong once commented out the
+ * stylesheet link, the canonical link and every Open Graph tag, which left the
+ * page rendering completely unstyled.
+ */
+function injectHead(html, head) {
+  const marker = '</head>'
+  const at = html.lastIndexOf(marker)
+  if (at === -1) {
+    throw new Error('No closing head tag found in the shell HTML.')
+  }
+  return `${html.slice(0, at)}  ${head}\n  ${marker}${html.slice(at + marker.length)}`
+}
+
+/**
+ * Strip the placeholder <title> so each page ends up with exactly one.
+ *
+ * Works backwards from the last closing title tag for the same reason as
+ * `injectHead`: a regex such as /<title>[\s\S]*?<\/title>/ would start at a
+ * mention inside a comment and delete everything up to the real element.
+ */
+function stripPlaceholderTitle(html) {
+  const closeTag = '</title>'
+  const openTag = '<title>'
+  const close = html.lastIndexOf(closeTag)
+  if (close === -1) return html
+  const open = html.lastIndexOf(openTag, close)
+  if (open === -1) return html
+  return html.slice(0, open) + html.slice(close + closeTag.length)
+}
+
+const base = stripPlaceholderTitle(shell)
 
 if (base === shell) {
   throw new Error(
@@ -50,7 +84,7 @@ function buildPage(route) {
   const body = render(route)
   const head = renderHeadHtml(route)
 
-  let html = base.replace('</head>', () => `  ${head}\n  </head>`)
+  let html = injectHead(base, head)
 
   // Inject the rendered app into the mount node.
   const rootRe = /<div id="root">\s*<\/div>/
@@ -85,7 +119,7 @@ for (const route of ROUTES) {
 const notFoundHtml = (() => {
   const body = render('/this-page-does-not-exist')
   const head = renderHeadHtml('/this-page-does-not-exist')
-  let html = base.replace('</head>', () => `  ${head}\n  </head>`)
+  let html = injectHead(base, head)
   html = html.replace(
     /<div id="root">\s*<\/div>/,
     () => `<div id="root">${body}</div>`,

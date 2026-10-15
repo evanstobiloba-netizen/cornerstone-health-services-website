@@ -9,8 +9,16 @@
     <!--
       Placeholder title only. `scripts/prerender.mjs` strips this and injects a
       full per-route head (title, description, canonical, Open Graph, Twitter
-      Card, JSON-LD) before </head>. Keeping exactly one <title> here means the
-      built HTML is still valid when opened without prerendering (e.g. dev).
+      Card, JSON-LD) before the closing head tag. Keeping exactly one title here
+      means the built HTML is still valid when opened without prerendering
+      (e.g. dev).
+
+      Do NOT spell out tag names in this file's comments. Vite and the
+      prerenderer insert content by string-replacing the FIRST closing head tag,
+      so a literal copy of that tag in a comment swallows the stylesheet, the
+      canonical link and every Open Graph tag into the comment, where the
+      browser ignores them. That is not hypothetical - it is exactly what
+      happened, and it left the site rendering with no CSS at all.
     -->
     <title>Cornerstone Health Services Inc | Psychiatric Care in Quincy, MA</title>
 
