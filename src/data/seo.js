@@ -19,9 +19,10 @@
  *
  * CANONICAL ORIGIN
  * ----------------
- * Set VITE_SITE_URL in .env when deploying to a preview/staging host, otherwise
- * the canonical tags would point at production and create duplicate-content
- * signals.
+ * Set VITE_SITE_URL when deploying to a preview/staging host, otherwise the
+ * canonical tags would point at production and create duplicate-content
+ * signals. On Vercel this is resolved automatically from the deployment's own
+ * domain — see the `__SITE_URL__` define in vite.config.js.
  */
 import { faqs, insurances, practice, services } from './site.js'
 
@@ -29,9 +30,23 @@ import { faqs, insurances, practice, services } from './site.js'
 // truth. Override with VITE_SITE_URL on preview/staging deploys.
 const DEFAULT_SITE_URL = practice.url
 
-export const SITE_URL = (
-  import.meta.env?.VITE_SITE_URL || DEFAULT_SITE_URL
-).replace(/\/+$/, '')
+/**
+ * Build-time canonical override, inlined by Vite (see `define` in
+ * vite.config.js).
+ *
+ * This deliberately does NOT read `process.env` or `import.meta.env` here.
+ * This module is bundled three times — into the client app, into the SSR bundle
+ * and, through that, into the prerenderer — and the value has to be identical
+ * in all three. Reading the environment in this module would give the
+ * prerendered HTML and the hydrated client different canonicals whenever the
+ * two disagree, which React reports as a hydration mismatch.
+ */
+const OVERRIDE_SITE_URL = typeof __SITE_URL__ === 'string' ? __SITE_URL__ : ''
+
+export const SITE_URL = (OVERRIDE_SITE_URL || DEFAULT_SITE_URL).replace(
+  /\/+$/,
+  '',
+)
 
 export const SITE_NAME = practice.name
 export const OG_IMAGE = `${SITE_URL}/og-image.png`

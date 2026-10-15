@@ -11,7 +11,10 @@
     "build:ssr": "vite build --ssr src/entry-server.jsx --outDir dist-ssr",
     "prerender": "node scripts/prerender.mjs",
     "preview": "vite preview",
-    "deploy:pages": "bash scripts/deploy-pages.sh"
+    "deploy:vercel": "vercel --prod"
+  },
+  "engines": {
+    "node": ">=20.19.0"
   },
   "dependencies": {
     "react": "^19.3.1",

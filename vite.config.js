@@ -77,6 +77,30 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), 'VITE_')
   const base = normalizeBase(env.VITE_BASE || process.env.VITE_BASE)
 
+  /**
+   * Canonical origin baked into canonicals, Open Graph tags, JSON-LD, the
+   * sitemap and robots.txt.
+   *
+   * Precedence:
+   *   1. `VITE_SITE_URL` (explicit; what preview/staging deploys should use)
+   *   2. Vercel's own production domain, so a Vercel deployment resolves its
+   *      own URL with no configuration. `VERCEL_PROJECT_PRODUCTION_URL` is the
+   *      stable domain; `VERCEL_URL` is the per-deployment one and is the only
+   *      one available on a very first build.
+   *   3. `''`, which tells seo.js to fall back to the practice's real domain.
+   *
+   * Inlined into BOTH the client and SSR bundles. seo.js must never read the
+   * environment itself: the prerendered HTML and the hydrated client would then
+   * disagree on the canonical and React would report a hydration mismatch.
+   */
+  const vercelHost =
+    process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL
+  const siteUrl = (
+    env.VITE_SITE_URL ||
+    process.env.VITE_SITE_URL ||
+    (vercelHost ? `https://${vercelHost}` : '')
+  ).replace(/\/+$/, '')
+
   return {
     base,
     plugins: [react(), tailwindcss()],
@@ -85,6 +109,7 @@ export default defineConfig(({ mode }) => {
     },
     define: {
       __BUILD_YEAR__: JSON.stringify(new Date().getFullYear()),
+      __SITE_URL__: JSON.stringify(siteUrl),
       __INSURANCE_LOGOS__: JSON.stringify(insuranceLogoManifest(base)),
     },
   }

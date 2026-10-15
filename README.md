@@ -141,13 +141,16 @@ is wanted.
 
 ### Canonical origin
 
-Canonical URLs use the practice's production domain by default. On a
-preview/staging deploy, set `VITE_SITE_URL` so the tags do not tell search
-engines that the preview duplicates production:
+Canonical URLs use the practice's production domain by default:
 
 ```bash
 VITE_SITE_URL=https://staging.example.com
 ```
+
+On Vercel no configuration is needed — the deployment's own domain is exported to
+the build and becomes the canonical origin automatically. Set `VITE_SITE_URL`
+only to override that (for example to point a staging deploy at the production
+domain).
 
 ### Regenerating the share image and app icons
 
@@ -165,57 +168,54 @@ python3 scripts/generate-social-images.py --jost /tmp/Jost.ttf --allison /tmp/Al
 
 The output uses directory-style URLs, so the host must:
 
-- serve `/about/index.html` for the request `/about` — Vercel, Netlify, Cloudflare
-  Pages and GitHub Pages all do this by default; and
-- serve `dist/404.html` for unknown paths — automatic on Netlify, Cloudflare
-  Pages and GitHub Pages.
+- serve `/about/index.html` for the request `/about` — Vercel, Netlify and
+  Cloudflare Pages all do this by default; and
+- serve `dist/404.html` for unknown paths — automatic on Vercel, Netlify and
+  Cloudflare Pages.
 
 After deploying, submit `https://<domain>/sitemap.xml` in Google Search Console.
 
-### Client preview on GitHub Pages
+### Deploying to Vercel
 
-**Live preview:** <https://evanstobiloba-netizen.github.io/cornerstone-health-services-website/>
-
-> Note the account name: `evanst`**`o`**`biloba-netizen`. Trivially misspelled
-> (`evanstabiloba-…`, `evanstiloba-…`), and a wrong hostname returns *GitHub's own*
-> 404 — not this site's. If a preview link 404s with a bare GitHub page, check the
-> hostname first. The repo's own website link points at the correct URL.
-
-For a shareable preview before the real domain is pointed, the site publishes to
-the `gh-pages` branch:
+The site is hosted on Vercel. `vercel.json` in the repo root configures the
+build (`npm run build`), the output directory (`dist`), the trailing-slash
+behaviour and the response headers, so no dashboard settings are required:
 
 ```bash
-npm run deploy:pages
+npm run deploy:vercel     # vercel --prod
 ```
 
-The script derives the deploy base and canonical origin from the `origin`
-remote, so it needs no editing:
-
-| | value |
-|---|---|
-| URL | `https://<owner>.github.io/<repo>/` |
-| `VITE_BASE` | `/<repo>/` (a user page, `<owner>.github.io`, correctly becomes `/`) |
-| `VITE_SITE_URL` | the same GitHub Pages URL |
-
-Two things make a subpath deploy work, and both are handled in the code:
-
-- every `public/` asset reference goes through `asset()` in
-  `src/lib/asset.js`, which prefixes `import.meta.env.BASE_URL` (Vite rewrites
-  the URLs it bundles, but not these);
-- the router runs with `basename={ROUTER_BASENAME}` on both the client
-  (`src/main.jsx`) and the prerenderer (`src/entry-server.jsx`), so the static
-  HTML and the hydrated app produce identical `href`s.
-
-> **Preview only.** `deploy:pages` bakes the GitHub Pages URL into the canonical,
-> Open Graph and sitemap tags. The production build (plain `npm run build`) keeps
-> the practice's real domain and is the artifact to ship to the final host.
-
-After the first push, enable Pages once:
+First-time setup, once per machine:
 
 ```bash
-gh api -X POST repos/<owner>/<repo>/pages \
-  -f 'source[branch]=gh-pages' -f 'source[path]=/'
+vercel login              # device flow: approves a code in the browser
+vercel link               # links this directory to the Vercel project
 ```
+
+Two details worth knowing:
+
+- **No build-time configuration is needed.** Vercel exports the project's own
+  production domain to the build, and `vite.config.js` turns it into the
+  canonical origin, so canonicals, Open Graph tags, JSON-LD, `sitemap.xml` and
+  `robots.txt` all point at the deployment that generated them. Set
+  `VITE_SITE_URL` only to override that (e.g. to point a staging deploy at the
+  production domain).
+- **Security headers are set in `vercel.json`**, which is the reason this host
+  was chosen over GitHub Pages: `Content-Security-Policy`,
+  `Strict-Transport-Security`, `X-Content-Type-Options`, `Referrer-Policy`,
+  `Permissions-Policy` and `X-Frame-Options`. The CSP allows exactly the
+  third-party origins the site uses (Google Fonts, the OpenStreetMap embed, and
+  Vercel's own preview toolbar) and nothing else. If you add an embedded widget
+  or a form endpoint, add its origin to `connect-src`/`frame-src` there.
+
+> **Subpath deploys.** `VITE_BASE` still exists for hosts that serve the site
+> from a subdirectory. Every `public/` asset reference goes through `asset()` in
+> `src/lib/asset.js`, which prefixes `import.meta.env.BASE_URL` (Vite rewrites
+> the URLs it bundles, but not these), and the router runs with
+> `basename={ROUTER_BASENAME}` on both the client (`src/main.jsx`) and the
+> prerenderer (`src/entry-server.jsx`), so the static HTML and the hydrated app
+> produce identical `href`s. Vercel serves from the domain root, so the default
+> (`/`) is correct there.
 
 ---
 
@@ -499,7 +499,6 @@ public/
   site.webmanifest         name, theme colour, icons
 scripts/
   prerender.mjs            writes dist/<route>/index.html, sitemap.xml, robots.txt
-  deploy-pages.sh          builds + publishes the client preview to gh-pages
   generate-social-images.py regenerates the OG image + icons (needs Pillow)
 src/
   App.jsx                  all routes + <Seo />
