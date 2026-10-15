@@ -20,12 +20,16 @@ export default function Contact() {
 
   return (
     <>
-      <section className="relative overflow-hidden border-b border-navy-100 bg-white">
+      <section className="relative overflow-hidden border-b border-navy-100 bg-mesh-calm">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-32 -top-40 h-[30rem] w-[30rem] rounded-full bg-cyan-50 blur-3xl"
+          className="pointer-events-none absolute -left-40 top-[-12%] h-[32rem] w-[32rem] rounded-full bg-cyan-50/70 blur-[120px]"
         />
-        <div className="relative mx-auto max-w-7xl px-4 py-14 lg:px-8 lg:py-20">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-40 right-[-10%] h-[32rem] w-[32rem] rounded-full bg-blue-50/60 blur-[120px]"
+        />
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:py-20 lg:px-8 lg:py-24">
           <div className="max-w-3xl">
             <p className="font-script text-4xl leading-none text-blue-deep sm:text-[2.75rem]">
               {form.script}
@@ -95,7 +99,12 @@ export default function Contact() {
       </section>
 
       {/* Map + form */}
-      <section className="mx-auto max-w-7xl px-4 py-16 lg:px-8">
+      <section className="relative overflow-hidden bg-mesh-white">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-40 left-1/2 h-[32rem] w-[32rem] -translate-x-1/2 rounded-full bg-cyan-50/70 blur-[120px]"
+        />
+        <div className="relative mx-auto max-w-7xl px-4 py-20 sm:py-24 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-14">
           <div>
             <LocationMap height="h-[20rem]" />
@@ -185,6 +194,7 @@ export default function Contact() {
             <LeadForm form={form} id="contact" />
           </div>
         </div>
+      </div>
       </section>
     </>
   )
