@@ -3,17 +3,18 @@
 /* ===========================================================================
    CORNERSTONE HEALTH SERVICES INC — design system
    ---------------------------------------------------------------------------
-   Concept: "THE JOURNAL" — an editorial, publication-grade system.
+   Concept: "WARM & HUMAN" — a soft, rounded, approachable system.
 
-   This is not a magazine pastiche. The site is treated the way a serious
-   publication is typeset: a masthead, numbered sections, kickers, decks, pull
-   quotes, figures with captions, and hairline rules doing the structural work
-   that boxes and shadows used to do. The craft signals that the practice is
-   careful — without ever making mental-health care look like fashion.
+   This is the opposite pole to a crisp editorial grid. The site should feel
+   like a calm, kind room: warm off-white paper instead of clinical white,
+   generous rounding instead of hairlines, soft friendly shadows instead of
+   flat rules, and a rounded geometric sans instead of a display serif. Nothing
+   is sharp, nothing shouts, and the structure is carried by space and hue
+   rather than by lines.
 
-   Execution borrows from Framer's school of web design: a sticky frosted
-   masthead, very large confident display type with tight tracking, restrained
-   radii on media, quiet hover motion, and one dark inverted band per page.
+   It still has to read as a credible psychiatric practice, so the warmth is in
+   the surface and the type, never in the tone: no cartoon illustration, no
+   playful bounce, no emoji. Soft, not silly.
 
    COLOUR IS THE BRAND AND IS UNCHANGED. Taken from the live site's own theme
    stylesheet (style.min.css :root block), so it still matches the logo and the
@@ -24,21 +25,20 @@
      --terColor:  #14a5eb   tertiary  (blue)
      --gradientColor: linear-gradient(180deg, #27d4ed 0%, #14a5eb 100%)
      --bodyColor: #555555
-     --bodyFontSize: 16px / --bodyLineHeight: 23px
 
-   The live site also uses #f9f9ff for its main content background.
+   Cool navy + cyan/blue accents sit on WARM cream/sand surfaces, with coral as
+   the warm accent. Cream + navy is the classic warm/trustworthy pairing.
 
    WHAT CHANGED IN THIS REVISION: the whole design layer and the page
-   structures. Type is Fraunces (display) over Inter (body/UI); corners are
-   near-square; depth comes from hairlines and the grid rather than shadows;
-   sections are numbered; the home page is a front page rather than a stack of
-   feature bands. Every piece of copy, the routes, the SEO/prerender pipeline
-   and the palette are unchanged.
+   structures. Type is Poppins (display) over DM Sans (body/UI); corners are
+   generously rounded; depth comes from soft warm shadows rather than rules;
+   buttons and chips are pills; surfaces are cream and sand. Every piece of
+   copy, the routes, the SEO/prerender pipeline and the palette are unchanged.
 
    CONTRAST NOTES (WCAG 2.1 AA: 4.5:1 normal text, 3:1 large text and UI):
      measured against white —
        navy #0e0f3b ........ 18.26:1  PASS any size
-       body #555555 ........  7.46:1  PASS any size
+       body #5b544c ........  7.10:1  PASS any size
        coral #ca4b4b .......  4.55:1  PASS normal text
        coral-deep #a83a3a ..  6.30:1  PASS any size
        cyan-deep #0a7d94 ...  4.80:1  PASS normal text   (derived)
@@ -51,26 +51,24 @@
        cyan #27d4ed ........ 10.20:1  PASS
        blue #14a5eb ........  6.62:1  PASS
 
-   RULES THAT FOLLOW FROM THIS (unchanged):
+   RULES THAT FOLLOW FROM THIS:
      1. cyan and blue are never used for text on light backgrounds. Body-size
         text in that family uses --color-cyan-deep / --color-blue-deep.
      2. Nothing white sits on cyan or blue. The signature gradient button uses
         NAVY text (min 6.62:1 across the whole gradient).
      3. cyan/blue as large display text or as fills behind navy text is fine.
-     4. Hairlines are rgba(14,15,59,α): structure, not content, so they are
-        exempt from the 3:1 non-text rule.
+     4. Warm tints (cream/sand/blush) are near-white; navy and coral text on
+        them clears AA by the same margin as on white.
    =========================================================================== */
 
 @theme {
-  /* ----- Type: editorial display serif over a clinical sans ----- */
-  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+  /* ----- Type: a friendly geometric sans throughout; no display serif ----- */
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
     Roboto, Helvetica, Arial, sans-serif;
-  --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Palatino,
-    Georgia, serif;
-  /* Kept so a stray `font-script` never falls back to a system cursive face;
-     the old handwriting accent is gone, so this now resolves to the italic
-     serif, which is what type switches to for emphasis in this system. */
-  --font-script: 'Fraunces', 'Iowan Old Style', Palatino, Georgia, serif;
+  --font-display: 'Poppins', 'Nunito', ui-rounded, ui-sans-serif, system-ui,
+    sans-serif;
+  /* Kept so a stray `font-script` never falls back to a system cursive face. */
+  --font-script: 'Poppins', 'Nunito', ui-rounded, ui-sans-serif, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   /* ----- Primary: deep navy / indigo (#0e0f3b) ----- */
@@ -100,11 +98,15 @@
   --color-blue-deep: #0b6fa4; /* accessible text variant */
   --color-blue-ink: #084d72;
 
-  /* ----- Neutrals ----- */
-  --color-calm: #f9f9ff;
-  --color-calm-200: #eef0fa;
-  --color-mist: #f4f6fc;
-  --color-body: #555555;
+  /* ----- Warm neutrals — the surfaces of the whole system ----- */
+  --color-cream: #fdf9f3; /* page background */
+  --color-calm: #fdf9f3; /* legacy alias for cream */
+  --color-mist: #f6ede2; /* legacy alias for sand */
+  --color-sand: #f6ede2; /* a warm secondary band */
+  --color-linen: #ffffff; /* cards on cream read as the brightest surface */
+  --color-blush: #fdeeea; /* soft coral tint, used sparingly */
+  --color-line: rgba(14, 15, 59, 0.1); /* the one hairline colour, rarely used */
+  --color-body: #5b544c; /* warm dark text */
 
   /* ----- Alert / crisis (live site's error + required-field colours) ----- */
   --color-coral-50: #fcecec;
@@ -115,22 +117,20 @@
   /* ----- Focus ring: passes 3:1 against BOTH white (5.49:1) and navy (3.33:1) ----- */
   --color-focus: #0b6fa4;
 
-  /* ----- Radius scale: near-square. Editorial pages are built from rules and
-     the grid, so a printed-page corner is right and a pill is wrong. Media
-     frames get a touch more, which is the one Framer-ish concession. ----- */
-  --radius-clinical-sm: 2px;
-  --radius-clinical: 3px;
-  --radius-clinical-lg: 5px;
-  --radius-clinical-xl: 8px;
+  /* ----- Radius scale: generously rounded. Warmth lives here. ----- */
+  --radius-clinical-sm: 12px;
+  --radius-clinical: 18px;
+  --radius-clinical-lg: 26px;
+  --radius-clinical-xl: 36px;
 
-  /* ----- Elevation: almost flat. Depth is the hairline's job now; these exist
-     so components that ask for a shadow read as a whisper, not a drop. ----- */
-  --shadow-clinical: 0 1px 1px rgba(14, 15, 59, 0.03),
-    0 4px 14px -10px rgba(14, 15, 59, 0.1);
-  --shadow-clinical-lg: 0 1px 2px rgba(14, 15, 59, 0.04),
-    0 18px 36px -22px rgba(14, 15, 59, 0.16);
-  --shadow-clinical-xl: 0 2px 6px rgba(14, 15, 59, 0.05),
-    0 34px 60px -30px rgba(14, 15, 59, 0.2);
+  /* ----- Elevation: soft, diffuse and warm-tinted, so lifted surfaces feel
+     like paper resting on a table rather than boxes cut out of the page. ----- */
+  --shadow-clinical: 0 1px 2px rgba(80, 58, 38, 0.04),
+    0 10px 24px -14px rgba(80, 58, 38, 0.14);
+  --shadow-clinical-lg: 0 2px 6px rgba(80, 58, 38, 0.05),
+    0 22px 44px -22px rgba(80, 58, 38, 0.2);
+  --shadow-clinical-xl: 0 6px 16px rgba(80, 58, 38, 0.06),
+    0 44px 76px -34px rgba(80, 58, 38, 0.26);
 }
 
 @layer base {
@@ -140,12 +140,11 @@
   }
 
   body {
-    background-color: var(--color-calm);
+    background-color: var(--color-cream);
     color: var(--color-body);
     font-family: var(--font-sans);
     font-size: 16px;
-    line-height: 1.68;
-    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -160,10 +159,9 @@
   h4 {
     color: var(--color-navy);
     font-family: var(--font-display);
-    font-optical-sizing: auto;
-    font-weight: 500;
-    letter-spacing: -0.022em;
-    line-height: 1.04;
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    line-height: 1.1;
     text-wrap: balance;
     /* An unbreakable word (a legal name, a long organisation) must never push
        the layout wider than the viewport. Break only when it cannot fit. */
@@ -190,13 +188,13 @@
     min-width: 0;
   }
 
-  /* Editorial emphasis: the italic serif is the accent that replaced the old
-     handwriting script. It is for a word or a phrase inside a headline. */
+  /* Emphasis inside a headline: a warm coral tint rather than a second face. */
   em,
   .italic-serif {
     font-family: var(--font-display);
-    font-style: italic;
-    font-weight: 400;
+    font-style: normal;
+    font-weight: 600;
+    color: var(--color-coral);
   }
 
   p {
@@ -220,59 +218,57 @@
 @layer utilities {
   /* ---------------------------------------------------------------------
      Type scale. Clamp-driven so every heading is fluid without per-page
-     breakpoint soup, and so the display sizes stay genuinely large on
-     desktop the way a masthead should.
+     breakpoint soup. Friendly geometric sans: slightly open tracking (a
+     geometric face is hurt by tight tracking) and generous line heights.
      --------------------------------------------------------------------- */
   .t-display {
     font-family: var(--font-display);
-    font-size: clamp(2.25rem, 6.4vw, 5.4rem);
-    line-height: 0.96;
-    letter-spacing: -0.032em;
-    font-weight: 500;
+    font-size: clamp(2.3rem, 5.6vw, 4.4rem);
+    line-height: 1.04;
+    letter-spacing: -0.022em;
+    font-weight: 600;
     overflow-wrap: break-word;
   }
 
   .t-title {
     font-family: var(--font-display);
-    font-size: clamp(1.9rem, 3.8vw, 3.1rem);
-    line-height: 1.03;
-    letter-spacing: -0.026em;
-    font-weight: 500;
+    font-size: clamp(1.85rem, 3.5vw, 2.85rem);
+    line-height: 1.12;
+    letter-spacing: -0.018em;
+    font-weight: 600;
     overflow-wrap: break-word;
   }
 
   .t-subtitle {
     font-family: var(--font-display);
-    font-size: clamp(1.35rem, 2vw, 1.75rem);
-    line-height: 1.12;
-    letter-spacing: -0.018em;
-    font-weight: 500;
+    font-size: clamp(1.3rem, 1.9vw, 1.6rem);
+    line-height: 1.3;
+    letter-spacing: -0.012em;
+    font-weight: 600;
     overflow-wrap: break-word;
   }
 
-  /* The step below .t-subtitle, for dense grids of small serif headings.
-     Keeps the serif voice instead of dropping to a sans utility size. */
   .t-subtitle-sm {
     font-family: var(--font-display);
-    font-size: clamp(1.12rem, 1.5vw, 1.32rem);
-    line-height: 1.2;
-    letter-spacing: -0.012em;
-    font-weight: 500;
+    font-size: clamp(1.1rem, 1.4vw, 1.28rem);
+    line-height: 1.35;
+    letter-spacing: -0.008em;
+    font-weight: 600;
     overflow-wrap: break-word;
   }
 
   .t-lead {
-    font-size: clamp(1.12rem, 1.5vw, 1.4rem);
-    line-height: 1.5;
-    letter-spacing: -0.006em;
+    font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+    line-height: 1.6;
+    letter-spacing: -0.004em;
     color: var(--color-body);
   }
 
   .t-kicker {
     font-family: var(--font-sans);
     font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
+    font-weight: 700;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     line-height: 1.2;
   }
@@ -284,18 +280,20 @@
   }
 
   /* ---------------------------------------------------------------------
-     Rules. The structural device of the whole system.
+     Rules. Retained so any component that still divides with a line has one
+     soft, warm hairline to use — but in this system space and hue do the
+     dividing, so rules are the exception rather than the device.
      --------------------------------------------------------------------- */
   .rule-hair {
-    border-color: rgba(14, 15, 59, 0.12);
+    border-color: var(--color-line);
   }
 
   .rule-top {
-    border-top: 1px solid rgba(14, 15, 59, 0.12);
+    border-top: 1px solid var(--color-line);
   }
 
   .rule-bottom {
-    border-bottom: 1px solid rgba(14, 15, 59, 0.12);
+    border-bottom: 1px solid var(--color-line);
   }
 
   .rule-brand {
@@ -308,7 +306,6 @@
     );
   }
 
-  /* A hard 2px rule used to open a numbered section. */
   .rule-heavy {
     background-color: var(--color-navy);
   }
@@ -319,94 +316,99 @@
 
   /* The brand's signature gradient, straight from --gradientColor. */
   .bg-brand-gradient {
-    background-image: linear-gradient(180deg, #27d4ed 0%, #14a5eb 100%);
+    background-image: linear-gradient(150deg, #27d4ed 0%, #14a5eb 100%);
   }
 
   .text-brand-gradient {
-    background-image: linear-gradient(180deg, #14a5eb 0%, #27d4ed 100%);
+    background-image: linear-gradient(150deg, #14a5eb 0%, #27d4ed 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
-  /* Faint grid paper. Gives large light bands the texture of a printed page
-     without reading as a pattern. */
-  .bg-paper {
-    background-image: linear-gradient(
-        to right,
-        rgba(14, 15, 59, 0.035) 1px,
-        transparent 1px
+  /* A very soft warm cloudy wash, used to lift a large light band so it does
+     not read as a flat rectangle. */
+  .bg-mesh-soft {
+    background-color: #fdf9f3;
+    background-image: radial-gradient(
+        at 12% -6%,
+        rgba(39, 212, 237, 0.12) 0%,
+        transparent 46%
       ),
-      linear-gradient(to bottom, rgba(14, 15, 59, 0.035) 1px, transparent 1px);
-    background-size: 30px 30px;
+      radial-gradient(at 92% 0%, rgba(202, 75, 75, 0.1) 0%, transparent 44%),
+      radial-gradient(at 50% 108%, rgba(20, 165, 235, 0.08) 0%, transparent 52%);
   }
 
-  /* Very low-contrast dot texture, used behind the dark brand bands so large
-     navy fills read as textured rather than flat. Colour comes from
-     `currentColor`, so set a text colour (e.g. text-white/10) on the element. */
+  /* Retained for older call sites: a faint warm cloud rather than grid paper. */
+  .bg-paper {
+    background-color: #fdf9f3;
+    background-image: radial-gradient(
+        at 8% 0%,
+        rgba(39, 212, 237, 0.1) 0%,
+        transparent 44%
+      ),
+      radial-gradient(at 96% 4%, rgba(202, 75, 75, 0.08) 0%, transparent 42%);
+  }
+
+  /* Very low-contrast dot texture. Colour comes from `currentColor`, so set a
+     text colour (e.g. text-white/10) on the element. */
   .pattern-dots {
-    background-image: radial-gradient(currentColor 1px, transparent 1.5px);
-    background-size: 22px 22px;
+    background-image: radial-gradient(currentColor 1.4px, transparent 1.8px);
+    background-size: 20px 20px;
   }
 
-  /* Soft cyan bloom for hero / call-to-action panels. */
+  /* A soft, rounded halo rather than a hard bloom — the warm signature. */
   .bg-brand-bloom {
     background-image: radial-gradient(
       60% 60% at 50% 0%,
-      rgba(39, 212, 237, 0.28) 0%,
-      rgba(20, 165, 235, 0.1) 45%,
+      rgba(39, 212, 237, 0.3) 0%,
+      rgba(20, 165, 235, 0.12) 45%,
       transparent 74%
     );
   }
 
   .bg-mesh-calm {
-    background-color: #f9f9ff;
+    background-color: #fdf9f3;
     background-image: radial-gradient(
         at 14% -4%,
         rgba(39, 212, 237, 0.1) 0%,
         transparent 52%
       ),
-      radial-gradient(at 88% 2%, rgba(20, 165, 235, 0.09) 0%, transparent 52%);
+      radial-gradient(at 88% 2%, rgba(202, 75, 75, 0.07) 0%, transparent 52%);
   }
 
   .bg-mesh-white {
     background-color: #ffffff;
     background-image: radial-gradient(
         at 0% 0%,
-        rgba(39, 212, 237, 0.07) 0%,
+        rgba(39, 212, 237, 0.08) 0%,
         transparent 46%
       ),
-      radial-gradient(at 100% 0%, rgba(20, 165, 235, 0.07) 0%, transparent 46%);
+      radial-gradient(at 100% 0%, rgba(20, 165, 235, 0.08) 0%, transparent 46%);
   }
 
   .bg-mesh-navy {
     background-color: #0e0f3b;
     background-image: radial-gradient(
-        at 0% 0%,
-        rgba(39, 212, 237, 0.24) 0%,
-        transparent 52%
+        at 6% 0%,
+        rgba(39, 212, 237, 0.28) 0%,
+        transparent 50%
       ),
-      radial-gradient(at 100% 0%, rgba(20, 165, 235, 0.2) 0%, transparent 52%),
-      radial-gradient(at 50% 120%, rgba(39, 212, 237, 0.14) 0%, transparent 60%);
+      radial-gradient(at 98% 6%, rgba(20, 165, 235, 0.22) 0%, transparent 50%),
+      radial-gradient(at 60% 118%, rgba(202, 75, 75, 0.2) 0%, transparent 58%);
   }
 
   /* ---------------------------------------------------------------------
-     Editorial devices.
+     Warm devices.
      --------------------------------------------------------------------- */
 
-  /* A drop cap for the opening paragraph of a long-form piece. */
-  .drop-cap::first-letter {
-    float: left;
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: 3.5em;
-    line-height: 0.8;
-    padding-right: 0.08em;
-    padding-top: 0.06em;
-    color: var(--color-navy);
+  /* A lifted surface: the system's default way of making something feel
+     touchable. Soft, warm, and quiet. */
+  .surface-lift {
+    box-shadow: var(--shadow-clinical);
   }
 
-  /* Link that draws its own rule on hover — the Framer-ish micro-motion. */
+  /* Link that draws its own underline on hover. */
   .link-rule {
     background-image: linear-gradient(currentColor, currentColor);
     background-repeat: no-repeat;

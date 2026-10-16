@@ -1,7 +1,7 @@
 import { insurances, practice } from '../data/site.js'
 import Button from '../components/Button.jsx'
 import InsuranceLogo from '../components/InsuranceLogo.jsx'
-import { Container, IconBadge, Kicker, Section } from '../components/Ui.jsx'
+import { Card, Container, IconBadge, Kicker, Section } from '../components/Ui.jsx'
 
 const ORDER = ['Federal', 'Commercial', 'Behavioral health', 'Network']
 
@@ -21,7 +21,7 @@ export default function Insurance() {
 
   return (
     <>
-      <Section tone="white" rule spacing="opening">
+      <Section tone="soft" spacing="opening">
         <Container>
           <Kicker>Insurance Accepted</Kicker>
           <h1 className="t-display mt-6 max-w-4xl text-navy">
@@ -47,37 +47,36 @@ export default function Insurance() {
         </Container>
       </Section>
 
-      <Section tone="calm" rule>
+      <Section tone="cream">
         <Container>
-          {groups.map((g) => (
-            <div
-              key={g.group}
-              className="border-t border-[rgba(14,15,59,0.12)] pt-8 pb-12 last:pb-0"
-            >
-              <div className="grid gap-3 lg:grid-cols-12 lg:items-baseline lg:gap-10">
-                <div className="lg:col-span-4">
-                  <h2 className="t-subtitle text-navy">{g.group}</h2>
+          <div className="space-y-4">
+            {groups.map((g) => (
+              <Card key={g.group}>
+                <div className="grid gap-2 lg:grid-cols-12 lg:items-baseline lg:gap-10">
+                  <div className="lg:col-span-4">
+                    <h2 className="t-subtitle text-navy">{g.group}</h2>
+                  </div>
+                  <p className="text-[0.97rem] leading-relaxed text-body lg:col-span-8">
+                    {BLURB[g.group]}
+                  </p>
                 </div>
-                <p className="text-[0.97rem] leading-relaxed text-body lg:col-span-8">
-                  {BLURB[g.group]}
-                </p>
-              </div>
 
-              <ul className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-                {g.items.map((i) => (
-                  <li
-                    key={i.slug}
-                    className="flex h-20 items-center rounded-clinical-sm border border-[rgba(14,15,59,0.12)] bg-white px-4"
-                  >
-                    <InsuranceLogo item={i} imgClassName="h-10" />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+                <ul className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+                  {g.items.map((i) => (
+                    <li
+                      key={i.slug}
+                      className="flex h-20 items-center rounded-clinical bg-cream px-4"
+                    >
+                      <InsuranceLogo item={i} imgClassName="h-10" />
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            ))}
+          </div>
 
-          <div className="mt-6 grid gap-10 lg:grid-cols-2 lg:gap-14">
-            <div className="border-t-2 border-coral pt-6">
+          <div className="mt-6 grid gap-6 lg:grid-cols-2 lg:gap-8">
+            <div className="rounded-clinical-lg border border-coral/30 bg-coral-50 p-6 sm:p-7">
               <div className="flex gap-5">
                 <IconBadge name="alert-triangle" tone="coral" />
                 <div className="min-w-0">
@@ -102,7 +101,7 @@ export default function Insurance() {
               </div>
             </div>
 
-            <div className="border-t-2 border-navy pt-6">
+            <Card>
               <div className="flex gap-5">
                 <IconBadge name="shield" tone="navy" />
                 <div className="min-w-0">
@@ -118,7 +117,7 @@ export default function Insurance() {
                   </p>
                 </div>
               </div>
-            </div>
+            </Card>
           </div>
         </Container>
       </Section>

@@ -15,7 +15,7 @@ function Social({ href, label, children }) {
       target="_blank"
       rel="noreferrer noopener"
       aria-label={label}
-      className="grid h-9 w-9 place-items-center rounded-clinical border border-white/20 text-white transition-colors hover:border-white/50 hover:bg-white/10"
+      className="grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
     >
       {children}
     </a>
@@ -36,9 +36,7 @@ export default function SiteFooter() {
   }, [])
 
   return (
-    <footer className="mt-auto bg-mesh-navy text-navy-100">
-      <div aria-hidden="true" className="h-px w-full rule-brand" />
-
+    <footer className="mt-auto overflow-hidden rounded-t-clinical-xl bg-mesh-navy text-navy-100">
       <div className="mx-auto max-w-[84rem] px-5 pt-16 sm:px-7 lg:px-10 lg:pt-20">
         <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-10">
           <div>
@@ -76,15 +74,16 @@ export default function SiteFooter() {
 
           {footerNav.map((col) => (
             <nav key={col.heading} aria-label={col.heading}>
-              <h2 className="t-kicker border-b border-white/15 pb-3 text-cyan">
+              <h2 className="t-kicker flex items-center gap-2 text-cyan">
+                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-cyan" />
                 {col.heading}
               </h2>
-              <ul className="mt-5 space-y-3 text-[0.95rem]">
+              <ul className="mt-5 space-y-1 text-[0.95rem]">
                 {col.links.map((l) => (
                   <li key={l.to}>
                     <Link
                       to={l.to}
-                      className="link-rule text-navy-200 transition-colors hover:text-white"
+                      className="inline-block rounded-full py-1 text-navy-200 transition-colors hover:text-white"
                     >
                       {l.label}
                     </Link>
@@ -95,11 +94,11 @@ export default function SiteFooter() {
           ))}
         </div>
 
-        {/* Contact, set as ruled columns rather than tiles. */}
-        <div className="mt-16 grid border-t border-white/15 sm:grid-cols-3">
+        {/* Contact, as three soft panels rather than ruled columns. */}
+        <div className="mt-16 grid gap-3 sm:grid-cols-3">
           <a
             href={practice.phoneHref}
-            className="group border-b border-white/15 py-6 sm:border-b-0 sm:border-r sm:pr-8"
+            className="group rounded-clinical bg-white/[0.06] p-6 transition-colors hover:bg-white/10"
           >
             <span className="t-kicker text-navy-200">Talk to us</span>
             <span className="mt-3 block font-display text-xl text-white group-hover:text-cyan">
@@ -109,7 +108,7 @@ export default function SiteFooter() {
 
           <a
             href={`mailto:${practice.email}`}
-            className="group border-b border-white/15 py-6 sm:border-b-0 sm:border-r sm:px-8"
+            className="group rounded-clinical bg-white/[0.06] p-6 transition-colors hover:bg-white/10"
           >
             <span className="t-kicker text-navy-200">Message us</span>
             <span className="mt-3 block break-all font-display text-xl text-white group-hover:text-cyan">
@@ -117,7 +116,7 @@ export default function SiteFooter() {
             </span>
           </a>
 
-          <div className="py-6 sm:pl-8">
+          <div className="rounded-clinical bg-white/[0.06] p-6">
             <span className="t-kicker text-navy-200">Visit us</span>
             <address className="mt-3 not-italic text-[0.95rem] leading-relaxed text-white">
               {practice.address.line1} {practice.address.line2}
@@ -129,7 +128,7 @@ export default function SiteFooter() {
         </div>
 
         {/* Crisis block - always present in the footer as well as the ribbon. */}
-        <div className="mt-8 border border-coral/40 bg-coral/15 p-6">
+        <div className="mt-4 rounded-clinical-lg border border-coral/40 bg-coral/15 p-6">
           <p className="t-kicker flex items-center gap-2 text-white">
             <Icon name="alert-triangle" size={15} aria-hidden="true" />
             24/7 crisis support
@@ -147,7 +146,7 @@ export default function SiteFooter() {
           </p>
         </div>
 
-        <div className="mt-12 border-t border-white/15 pt-7">
+        <div className="mt-12 rounded-clinical bg-white/[0.04] p-6">
           <p className="max-w-4xl text-xs leading-relaxed text-navy-200">
             This website is for general information and is not a substitute for
             individual medical advice, diagnosis, or treatment. Contacting
@@ -155,14 +154,14 @@ export default function SiteFooter() {
             clinician–patient relationship. If you are in crisis, please use the
             988 Lifeline or call 911.
           </p>
-          <div className="mt-6 flex flex-col gap-3 text-xs text-navy-200 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mt-6 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-navy-200 sm:flex-row sm:items-center sm:justify-between">
             <p>
               © {year} {practice.legalName}. All rights reserved.
             </p>
             <p className="flex flex-wrap items-center gap-x-5 gap-y-1">
               <Link
                 to="/privacy-policy"
-                className="link-rule transition-colors hover:text-white"
+                className="transition-colors hover:text-white"
               >
                 Privacy Policy
               </Link>
@@ -180,11 +179,11 @@ export default function SiteFooter() {
           <p className="sr-only">{addressOneLine}</p>
         </div>
 
-        {/* Colophon wordmark: a masthead sign-off, hidden from assistive tech
-            because the practice name is already announced above. */}
+        {/* Colophon wordmark: a sign-off, hidden from assistive tech because the
+            practice name is already announced above. */}
         <p
           aria-hidden="true"
-          className="mt-14 select-none overflow-hidden text-center font-display text-[clamp(2.2rem,11vw,9rem)] font-medium leading-[0.86] tracking-[-0.04em] text-white/[0.07]"
+          className="mt-14 select-none overflow-hidden text-center font-display text-[clamp(2.2rem,11vw,9rem)] font-semibold leading-[0.86] tracking-[-0.03em] text-white/[0.06]"
         >
           Cornerstone
         </p>

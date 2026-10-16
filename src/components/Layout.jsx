@@ -27,10 +27,10 @@ export default function Layout() {
   useRouteScrollReset()
 
   return (
-    <div className="flex min-h-screen flex-col bg-calm">
+    <div className="flex min-h-screen flex-col bg-cream">
       <a
         href="#main"
-        className="sr-only-focusable fixed left-4 top-4 z-[60] rounded-clinical bg-navy px-4 py-2 text-sm font-bold text-white"
+        className="sr-only-focusable fixed left-4 top-4 z-[60] rounded-full bg-navy px-4 py-2 text-sm font-bold text-white"
       >
         Skip to main content
       </a>

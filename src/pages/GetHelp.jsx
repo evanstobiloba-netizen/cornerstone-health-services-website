@@ -3,6 +3,7 @@ import { crisis, getHelp, practice, services } from '../data/site.js'
 import Button from '../components/Button.jsx'
 import Icon from '../components/Icon.jsx'
 import {
+  Card,
   CheckList,
   Container,
   IconBadge,
@@ -22,9 +23,9 @@ export default function GetHelp() {
   return (
     <>
       {/* Crisis first — before anything else on the page. */}
-      <div className="border-t-2 border-coral bg-coral-50">
+      <div className="bg-coral-50">
         <Container className="py-12 lg:py-16">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl rounded-clinical-xl border border-coral/30 bg-white p-7 shadow-clinical sm:p-9">
             <p className="t-kicker flex items-center gap-2 text-coral-deep">
               <Icon name="alert-triangle" size={15} strokeWidth={2.2} aria-hidden="true" />
               24/7 crisis support
@@ -46,7 +47,7 @@ export default function GetHelp() {
         </Container>
       </div>
 
-      <Section tone="white" rule spacing="opening">
+      <Section tone="cream" spacing="opening">
         <Container>
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-4">
@@ -84,7 +85,7 @@ export default function GetHelp() {
         </Container>
       </Section>
 
-      <Section tone="calm" rule>
+      <Section tone="white">
         <Container>
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-5">
@@ -167,15 +168,8 @@ export default function GetHelp() {
                     </>
                   ),
                 },
-              ].map((c, i, arr) => (
-                <div
-                  key={c.title}
-                  className={`border-t border-[rgba(14,15,59,0.12)] py-7 ${
-                    i === arr.length - 1
-                      ? 'border-b border-[rgba(14,15,59,0.12)]'
-                      : ''
-                  }`}
-                >
+              ].map((c) => (
+                <Card key={c.title} className="mb-4 last:mb-0">
                   <div className="flex gap-5">
                     <IconBadge name={c.icon} tone={c.tone} />
                     <div>
@@ -185,7 +179,7 @@ export default function GetHelp() {
                       </p>
                     </div>
                   </div>
-                </div>
+                </Card>
               ))}
             </div>
           </div>

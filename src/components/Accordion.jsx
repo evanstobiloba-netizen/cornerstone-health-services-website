@@ -7,50 +7,51 @@ import Icon from './Icon.jsx'
  * announced correctly by screen readers with zero JavaScript, and it still
  * works if the bundle fails to load.
  *
- * Editorial treatment: one ruled list rather than a stack of cards. Questions
- * are separated by hairlines the way a Q&A column would be set, and the
- * marker is a plain plus that becomes a minus when the panel is open.
+ * Treatment: each question is a soft rounded card that lifts when open, with a
+ * numbered sand tile in front and a round marker that fills navy on hover. The
+ * marker swaps a plus for a minus rather than rotating anything, so the state
+ * is unambiguous without motion.
  */
 export default function Accordion({ items, className = '' }) {
   return (
-    <div className={`border-b border-[rgba(14,15,59,0.12)] ${className}`}>
+    <div className={`space-y-3 ${className}`}>
       {items.map((item, i) => (
         <details
           key={item.q}
-          className="group border-t border-[rgba(14,15,59,0.12)]"
           open={i === 0}
+          className="group rounded-clinical-lg border border-line bg-white shadow-clinical transition-shadow duration-200 open:shadow-clinical-lg"
         >
-          <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-left transition-colors hover:text-blue-deep sm:py-6 [&::-webkit-details-marker]:hidden">
-            <span className="flex items-baseline gap-5">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-5 px-5 py-5 transition-colors sm:px-6 [&::-webkit-details-marker]:hidden">
+            <span className="flex items-center gap-4">
               <span
                 aria-hidden="true"
-                className="tnum t-kicker pt-1.5 text-navy-300"
+                className="tnum grid h-9 w-9 shrink-0 place-items-center rounded-full bg-sand text-[0.78rem] font-semibold text-navy-500"
               >
                 {String(i + 1).padStart(2, '0')}
               </span>
-              <span className="t-subtitle text-navy group-hover:text-blue-deep">
+              <span className="t-subtitle-sm text-navy transition-colors group-hover:text-blue-deep">
                 {item.q}
               </span>
             </span>
-            <span className="relative mt-0.5 block h-5 w-5 shrink-0 text-navy-400 transition-colors duration-200 group-hover:text-navy">
+            <span className="relative grid h-9 w-9 shrink-0 place-items-center rounded-full bg-sand text-navy-500 transition-colors duration-200 group-hover:bg-navy group-hover:text-white">
               <Icon
                 name="plus"
-                size={20}
-                strokeWidth={1.9}
+                size={18}
+                strokeWidth={2.2}
                 aria-hidden="true"
-                className="absolute inset-0 transition-opacity duration-200 group-open:opacity-0"
+                className="absolute transition-opacity duration-200 group-open:opacity-0"
               />
               <Icon
                 name="minus"
-                size={20}
-                strokeWidth={1.9}
+                size={18}
+                strokeWidth={2.2}
                 aria-hidden="true"
-                className="absolute inset-0 opacity-0 transition-opacity duration-200 group-open:opacity-100"
+                className="absolute opacity-0 transition-opacity duration-200 group-open:opacity-100"
               />
             </span>
           </summary>
-          <div className="pb-7">
-            <p className="max-w-3xl text-[1rem] leading-relaxed text-body sm:pl-[3.25rem]">
+          <div className="px-5 pb-6 sm:px-6 sm:pl-[4.75rem]">
+            <p className="max-w-3xl text-[1rem] leading-relaxed text-body">
               {item.a}
             </p>
           </div>

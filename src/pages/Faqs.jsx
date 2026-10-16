@@ -2,12 +2,12 @@ import { crisis, faqs, practice } from '../data/site.js'
 import Accordion from '../components/Accordion.jsx'
 import Button from '../components/Button.jsx'
 import Icon from '../components/Icon.jsx'
-import { Container, Kicker, Section } from '../components/Ui.jsx'
+import { Card, Container, Kicker, Section } from '../components/Ui.jsx'
 
 export default function Faqs() {
   return (
     <>
-      <Section tone="white" rule spacing="opening">
+      <Section tone="soft" spacing="opening">
         <Container>
           <Kicker>Questions</Kicker>
           <h1 className="t-display mt-6 max-w-4xl text-navy">
@@ -20,12 +20,12 @@ export default function Faqs() {
         </Container>
       </Section>
 
-      <Section tone="calm" rule>
+      <Section tone="cream">
         <Container>
           <Accordion items={faqs} />
 
-          <div className="mt-14 grid gap-10 lg:grid-cols-2 lg:gap-14">
-            <div className="border-t-2 border-navy pt-6">
+          <div className="mt-14 grid gap-6 lg:grid-cols-2 lg:gap-8">
+            <Card>
               <Kicker>Still have a question?</Kicker>
               <h2 className="t-subtitle mt-5 text-navy">
                 We are happy to answer it
@@ -55,9 +55,9 @@ export default function Faqs() {
                   Book Now
                 </Button>
               </div>
-            </div>
+            </Card>
 
-            <div className="border-t-2 border-coral pt-6">
+            <div className="rounded-clinical-lg border border-coral/30 bg-coral-50 p-6 sm:p-7">
               <p className="t-kicker flex items-center gap-2 text-coral-deep">
                 <Icon name="alert-triangle" size={15} aria-hidden="true" />
                 If you need help right now

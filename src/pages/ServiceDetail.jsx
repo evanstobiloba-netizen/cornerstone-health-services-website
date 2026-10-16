@@ -3,6 +3,7 @@ import { practice, services } from '../data/site.js'
 import Button from '../components/Button.jsx'
 import Icon from '../components/Icon.jsx'
 import {
+  Card,
   CheckList,
   Container,
   Figure,
@@ -31,7 +32,7 @@ export default function ServiceDetail() {
 
   return (
     <>
-      <Section tone="white" rule spacing="opening">
+      <Section tone="soft" spacing="opening">
         <Container>
           <nav aria-label="Breadcrumb" className="mb-10">
             <ol className="t-kicker flex flex-wrap items-center gap-2.5 text-navy-400">
@@ -89,7 +90,7 @@ export default function ServiceDetail() {
         </Container>
       </Section>
 
-      <Section tone="calm" rule>
+      <Section tone="cream">
         <Container>
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-7">
@@ -97,8 +98,8 @@ export default function ServiceDetail() {
               <CheckList items={service.includes} className="mt-8" />
             </div>
 
-            <div className="lg:col-span-5 lg:pt-3">
-              <div className="border-t-2 border-navy pt-6">
+            <div className="lg:col-span-5">
+              <Card>
                 <Kicker>Still deciding?</Kicker>
                 <h3 className="t-subtitle mt-5 text-navy">
                   Not sure if this is right for you?
@@ -116,48 +117,29 @@ export default function ServiceDetail() {
                 >
                   Request an appointment
                 </Button>
-              </div>
+              </Card>
             </div>
           </div>
         </Container>
       </Section>
 
-      <Section tone="white" rule>
+      <Section tone="sand">
         <Container>
           <SectionHeading
+            align="center"
             eyebrow="Keep exploring"
             title="Other services"
             size="md"
           />
-          <ul className="mt-12 border-b border-[rgba(14,15,59,0.12)]">
-            {others.map((s, i) => (
-              <li key={s.slug} className="border-t border-[rgba(14,15,59,0.12)]">
-                <Link
-                  to={`/services/${s.slug}`}
-                  className="group flex items-start gap-5 py-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
-                >
-                  <span className="tnum t-kicker pt-2 text-navy-300">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="t-subtitle block text-navy transition-colors group-hover:text-blue-deep">
-                      {s.title}
-                    </span>
-                    <span className="mt-2 block max-w-xl text-[0.97rem] leading-relaxed text-body">
-                      {s.card}
-                    </span>
-                    <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep">
-                      Read more
-                      <Icon
-                        name="arrow"
-                        size={15}
-                        aria-hidden="true"
-                        className="transition-transform duration-200 group-hover:translate-x-0.5"
-                      />
-                    </span>
-                  </span>
-                  <span className="hidden w-36 shrink-0 sm:block">
-                    <span className="relative block aspect-[3/2] overflow-hidden rounded-clinical bg-navy-50">
+          <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {others.map((s) => (
+              <li key={s.slug} className="h-full">
+                <Card interactive padded={false} className="h-full overflow-hidden">
+                  <Link
+                    to={`/services/${s.slug}`}
+                    className="group flex h-full flex-col rounded-clinical-lg focus-visible:outline-none"
+                  >
+                    <span className="relative block aspect-[3/2] overflow-hidden bg-sand">
                       <img
                         src={asset(`services/${s.slug}.jpg`)}
                         alt=""
@@ -167,8 +149,25 @@ export default function ServiceDetail() {
                         className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.05]"
                       />
                     </span>
-                  </span>
-                </Link>
+                    <span className="flex flex-1 flex-col p-6">
+                      <span className="t-subtitle text-navy transition-colors group-hover:text-blue-deep">
+                        {s.title}
+                      </span>
+                      <span className="mt-3 flex-1 text-[0.97rem] leading-relaxed text-body">
+                        {s.card}
+                      </span>
+                      <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep">
+                        Read more
+                        <Icon
+                          name="arrow"
+                          size={15}
+                          aria-hidden="true"
+                          className="transition-transform duration-200 group-hover:translate-x-0.5"
+                        />
+                      </span>
+                    </span>
+                  </Link>
+                </Card>
               </li>
             ))}
           </ul>

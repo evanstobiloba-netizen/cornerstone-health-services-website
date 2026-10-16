@@ -357,13 +357,13 @@ export const forms = {
 /* --------------------------------------------------------------- navigation */
 
 export const nav = [
-  { label: 'Home', to: '/' },
-  { label: 'About Us', to: '/about' },
-  { label: 'Services', to: '/services' },
-  { label: 'Resources', to: '/resources' },
-  { label: "FAQ's", to: '/faqs' },
-  { label: 'Insurance', to: '/insurance' },
-  { label: 'Contact Us', to: '/contact' },
+  { label: 'Home', to: '/', icon: 'building' },
+  { label: 'About Us', to: '/about', icon: 'users' },
+  { label: 'Services', to: '/services', icon: 'stethoscope' },
+  { label: 'Resources', to: '/resources', icon: 'book' },
+  { label: "FAQ's", to: '/faqs', icon: 'chat' },
+  { label: 'Insurance', to: '/insurance', icon: 'shield' },
+  { label: 'Contact Us', to: '/contact', icon: 'map-pin' },
 ]
 
 export const footerNav = [

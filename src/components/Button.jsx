@@ -11,21 +11,22 @@ import Icon from './Icon.jsx'
  *
  * `primary` is solid navy with white text (18.26:1).
  *
- * Buttons are near-square in this system: the editorial page is built from
- * rules and the grid, so a pill would fight it. `link` is the text-and-arrow
- * variant used for secondary actions inside prose, with the rule that draws
- * itself on hover.
+ * In this system every button is a pill: the whole warm, human concept is about
+ * generous rounding, so a squared-off control would fight it. Filled variants
+ * lift slightly on hover; `link` is the text-and-arrow variant used for
+ * secondary actions inside prose, with the rule that draws itself on hover.
  */
 const variants = {
   accent:
-    'bg-brand-gradient text-navy font-semibold hover:brightness-[1.06] shadow-clinical',
-  primary: 'bg-navy text-white font-semibold hover:bg-navy-600',
-  coral: 'bg-coral text-white font-semibold hover:bg-coral-deep',
+    'bg-brand-gradient text-navy font-semibold hover:brightness-[1.05] shadow-clinical hover:shadow-clinical-lg',
+  primary: 'bg-navy text-white font-semibold hover:bg-navy-600 shadow-clinical',
+  coral: 'bg-coral text-white font-semibold hover:bg-coral-deep shadow-clinical',
   outline:
-    'border border-navy-200 bg-transparent text-navy font-semibold hover:border-navy hover:bg-navy-50',
+    'border border-navy-200 bg-white text-navy font-semibold hover:border-navy-300 hover:bg-white hover:shadow-clinical',
+  soft: 'bg-sand text-navy font-semibold hover:bg-navy-100',
   ghost: 'text-navy font-semibold hover:bg-navy-50',
   onDark:
-    'border border-white/30 bg-transparent text-white font-semibold hover:border-white hover:bg-white/10',
+    'border border-white/30 bg-white/5 text-white font-semibold hover:border-white hover:bg-white/10',
   link: 'text-blue-deep font-semibold !px-0 !py-0 hover:text-navy',
 }
 
@@ -48,7 +49,7 @@ export default function Button({
 }) {
   const isLink = variant === 'link'
   const cls = [
-    'group inline-flex items-center justify-center gap-2.5 rounded-clinical',
+    'group inline-flex items-center justify-center gap-2.5 rounded-full',
     'transition duration-200 whitespace-nowrap',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
     'active:translate-y-px',

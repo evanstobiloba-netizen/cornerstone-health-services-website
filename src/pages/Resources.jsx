@@ -4,14 +4,14 @@ import Icon from '../components/Icon.jsx'
 import { Container, Kicker, Section } from '../components/Ui.jsx'
 
 /**
- * Resources, set as a numbered index — the most editorial way to present a
- * directory. Each organisation is a ruled row rather than a card, so the
- * names read as a list you can scan.
+ * Resources, a scannable directory of soft rounded rows — each organisation
+ * carries its number in a warm sand chip, so the list reads at a glance while
+ * still feeling like part of the surface.
  */
 export default function Resources() {
   return (
     <>
-      <Section tone="white" rule spacing="opening">
+      <Section tone="soft" spacing="opening">
         <Container>
           <Kicker>Mental Health Resources</Kicker>
           <h1 className="t-display mt-6 max-w-4xl text-navy">
@@ -25,18 +25,18 @@ export default function Resources() {
         </Container>
       </Section>
 
-      <Section tone="calm" rule>
+      <Section tone="cream">
         <Container>
-          <ul className="border-b border-[rgba(14,15,59,0.12)]">
+          <ul className="grid gap-3">
             {resources.map((r, i) => (
-              <li key={r.url} className="border-t border-[rgba(14,15,59,0.12)]">
+              <li key={r.url}>
                 <a
                   href={r.url}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="group grid grid-cols-[auto_1fr_auto] items-center gap-5 py-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
+                  className="group grid grid-cols-[auto_1fr_auto] items-center gap-5 rounded-clinical border border-line bg-white px-5 py-5 shadow-clinical transition duration-200 hover:-translate-y-0.5 hover:shadow-clinical-lg focus-visible:outline-none"
                 >
-                  <span className="tnum t-kicker text-navy-300">
+                  <span className="tnum grid h-9 w-9 place-items-center rounded-full bg-sand text-[0.78rem] font-semibold text-navy-500">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <span className="min-w-0">
@@ -61,7 +61,7 @@ export default function Resources() {
             ))}
           </ul>
 
-          <div className="mt-12 border-t-2 border-coral pt-6">
+          <div className="mt-12 rounded-clinical-lg border border-coral/30 bg-coral-50 p-6">
             <p className="t-kicker flex items-center gap-2 text-coral-deep">
               <Icon name="alert-triangle" size={15} aria-hidden="true" />
               If you need help right now

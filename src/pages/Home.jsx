@@ -18,6 +18,7 @@ import InsuranceLogo from '../components/InsuranceLogo.jsx'
 import LocationMap from '../components/LocationMap.jsx'
 import {
   Badge,
+  Card,
   CheckList,
   Container,
   IconBadge,
@@ -31,16 +32,17 @@ import {
 import { asset } from '../lib/asset.js'
 
 /**
- * The front page.
+ * The front page, rebuilt for the "warm & human" concept.
  *
- * Built like the opening spread of a publication rather than a stack of
- * feature bands: a dark cover carrying the single <h1>, then a numbered spine
- * of sections (01 Welcome, 02 Offerings, 03 Journey, 04 Support, 05 Questions,
- * 06 Contact) separated by hairlines, with the interstitials — the insurance
- * ticker, the figures band, the vision pull quote — carrying no number.
+ * The old front page was an editorial cover: a dark opening spread, numbered
+ * folios and hairline lists. This one opens the way a kind practice would —
+ * light, rounded and unhurried. It leads with a warm hero over a photograph,
+ * answers "are you covered?" immediately with the insurance ticker, then walks
+ * through who we are, what we offer, how it works, and how to reach us.
  *
- * Every word of copy is unchanged from the previous build. Only the order,
- * the grouping and the setting are new.
+ * The single dark moment is now the closing panel, which grounds the page just
+ * before the footer instead of competing with the opening. Every word of copy
+ * is unchanged; only the order, the grouping and the setting are new.
  */
 export default function Home() {
   return (
@@ -70,24 +72,20 @@ function Cover() {
   ]
 
   return (
-    <Section tone="navy" spacing="opening" className="relative overflow-hidden">
+    <Section tone="soft" spacing="opening" className="relative overflow-hidden">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 pattern-dots text-white/[0.07]"
+        className="pointer-events-none absolute -right-32 -top-40 h-[34rem] w-[34rem] rounded-full bg-cyan/20 blur-[140px]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-40 -top-44 h-[36rem] w-[36rem] rounded-full bg-cyan/20 blur-[150px]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-48 right-0 h-[30rem] w-[30rem] rounded-full bg-blue/20 blur-[150px]"
+        className="pointer-events-none absolute -bottom-40 -left-28 h-[30rem] w-[30rem] rounded-full bg-coral/10 blur-[140px]"
       />
 
       <Container className="relative">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-7">
-            <Badge tone="light">
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-6">
+            <Badge tone="white">
               <span className="relative flex h-2 w-2" aria-hidden="true">
                 <span className="absolute inline-flex h-full w-full rounded-full bg-cyan opacity-70" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-gradient" />
@@ -95,17 +93,15 @@ function Cover() {
               Accepting new patients
             </Badge>
 
-            <p className="t-kicker mt-8 text-cyan">
+            <p className="t-kicker mt-8 text-blue-deep">
               Mental Wellness, Within Reach
             </p>
 
-            <h1 className="t-display mt-5 text-white">
+            <h1 className="t-display mt-5 text-navy">
               Compassionate psychiatric care for adults across Massachusetts
             </h1>
 
-            <p className="t-lead mt-7 max-w-xl text-navy-100">
-              {about.homepageWelcome}
-            </p>
+            <p className="t-lead mt-7 max-w-xl">{about.homepageWelcome}</p>
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Button to="/book" size="lg" icon="calendar">
@@ -113,7 +109,7 @@ function Cover() {
               </Button>
               <Button
                 href={practice.phoneHref}
-                variant="onDark"
+                variant="outline"
                 size="lg"
                 icon="phone"
               >
@@ -121,29 +117,29 @@ function Cover() {
               </Button>
             </div>
 
-            <ul className="mt-12 flex flex-wrap gap-x-7 gap-y-3 border-t border-white/15 pt-7">
+            <ul className="mt-10 flex flex-wrap gap-2.5">
               {trust.map((t) => (
                 <li
                   key={t.text}
-                  className="inline-flex items-center gap-2.5 text-[0.9rem] font-medium text-navy-100"
+                  className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[0.9rem] font-medium text-navy-600 shadow-clinical"
                 >
-                  <Icon name={t.icon} size={17} className="text-cyan" />
+                  <Icon name={t.icon} size={16} className="text-cyan-deep" />
                   {t.text}
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="lg:col-span-5">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-clinical-lg ring-1 ring-white/15">
+          <div className="lg:col-span-6">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-clinical-xl shadow-clinical-xl sm:aspect-[16/11] lg:aspect-[4/5]">
               <HeroSlideshow className="absolute inset-0 h-full w-full" />
               {/* Sits at the top so it never collides with the slide dots. */}
-              <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-clinical-sm bg-white/90 px-3 py-1.5 text-[0.72rem] font-semibold text-navy shadow-clinical backdrop-blur">
+              <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-white/90 px-3.5 py-1.5 text-[0.75rem] font-semibold text-navy shadow-clinical backdrop-blur">
                 <Icon name="video" size={14} className="text-cyan-deep" />
                 In person &amp; telehealth
               </span>
             </div>
-            <p className="t-kicker mt-3 text-navy-200">
+            <p className="t-kicker mt-4 text-navy-400">
               Cornerstone Health Services Inc — Quincy, Massachusetts
             </p>
           </div>
@@ -172,7 +168,7 @@ function InsuranceMarquee() {
       {insurances.map((i) => (
         <li
           key={i.slug}
-          className="flex h-16 items-center justify-center rounded-clinical-sm border border-[rgba(14,15,59,0.12)] bg-white px-6"
+          className="flex h-16 items-center justify-center rounded-clinical bg-cream px-6"
         >
           <InsuranceLogo item={i} imgClassName="h-9" />
         </li>
@@ -181,10 +177,7 @@ function InsuranceMarquee() {
   )
 
   return (
-    <section
-      aria-label="Insurance plans accepted"
-      className="relative border-b border-[rgba(14,15,59,0.12)] bg-white"
-    >
+    <section aria-label="Insurance plans accepted" className="bg-white">
       <div className="mx-auto flex max-w-[84rem] items-center gap-6 px-5 py-6 sm:px-7 lg:px-10">
         <p className="t-kicker hidden shrink-0 items-center gap-2 text-navy-400 sm:flex">
           <Icon name="shield" size={15} className="text-cyan-deep" />
@@ -202,7 +195,7 @@ function InsuranceMarquee() {
 
         <Link
           to="/insurance"
-          className="link-rule inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-blue-deep"
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-full text-sm font-semibold text-blue-deep transition-colors hover:text-navy"
         >
           All {insurances.length} plans
           <Icon name="arrow" size={15} />
@@ -216,13 +209,13 @@ function InsuranceMarquee() {
 
 function Welcome() {
   return (
-    <Section tone="white" spacing="opening">
+    <Section tone="cream" spacing="opening">
       <Container>
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
             <Kicker index="01">{practice.welcome.script}</Kicker>
-            <h2 className="t-title mt-5 text-navy">{practice.welcome.title}</h2>
-            <p className="t-lead drop-cap mt-7 max-w-2xl">{about.intro}</p>
+            <h2 className="t-title mt-6 text-navy">{practice.welcome.title}</h2>
+            <p className="t-lead mt-7 max-w-2xl">{about.intro}</p>
 
             <div className="mt-9 flex flex-wrap gap-3">
               <Button to="/about" variant="primary" size="lg" icon="arrow" iconRight>
@@ -234,16 +227,16 @@ function Welcome() {
             </div>
           </div>
 
-          <div className="lg:col-span-5 lg:pt-2">
-            <div className="border-t-2 border-navy pt-6">
+          <div className="lg:col-span-5">
+            <Card className="h-full">
               <span className="flex items-center gap-3">
-                <IconBadge name="heart-pulse" tone="gradient" size="sm" />
+                <IconBadge name="heart-pulse" tone="gradient" size="md" />
                 <h3 className="t-subtitle text-navy">Our Mission</h3>
               </span>
-              <p className="mt-4 text-[0.97rem] leading-relaxed text-body">
+              <p className="mt-5 text-[1rem] leading-relaxed text-body">
                 {about.mission}
               </p>
-            </div>
+            </Card>
           </div>
         </div>
       </Container>
@@ -255,78 +248,72 @@ function Welcome() {
 
 function ServicesIndex() {
   return (
-    <Section tone="calm" rule className="relative overflow-hidden">
-      <Container className="relative">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-4">
-            <Kicker index="02">Available Services</Kicker>
-            <h2 className="t-title mt-5 text-navy">
-              Our Mental Health Offerings
-            </h2>
-            <p className="t-lead mt-5">
-              Explore our wide range of services designed to promote mental
-              wellness and personal growth.
-            </p>
-            <Button
-              to="/services"
-              variant="outline"
-              icon="arrow"
-              iconRight
-              className="mt-7"
-            >
-              View all services
-            </Button>
-          </div>
+    <Section tone="sand">
+      <Container>
+        <SectionHeading
+          align="center"
+          index="02"
+          eyebrow="Available Services"
+          title="Our Mental Health Offerings"
+          body="Explore our wide range of services designed to promote mental wellness and personal growth."
+        />
 
-          <div className="lg:col-span-8">
-            <ul className="border-b border-[rgba(14,15,59,0.12)]">
-              {services.map((s, i) => (
-                <li key={s.slug} className="border-t border-[rgba(14,15,59,0.12)]">
-                  <Link
-                    to={`/services/${s.slug}`}
-                    className="group grid grid-cols-[auto_1fr] items-start gap-5 py-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 sm:grid-cols-[auto_1fr_11rem] sm:gap-7"
-                  >
-                    <span
+        <ul className="mt-14 grid gap-6 sm:grid-cols-2">
+          {services.map((s, i) => (
+            <li key={s.slug} className="h-full">
+              <Card interactive padded={false} className="h-full overflow-hidden">
+                <Link
+                  to={`/services/${s.slug}`}
+                  className="group flex h-full flex-col rounded-clinical-lg focus-visible:outline-none"
+                >
+                  <span className="relative block aspect-[3/2] overflow-hidden bg-cream">
+                    <img
+                      src={asset(`services/${s.slug}.jpg`)}
+                      alt=""
                       aria-hidden="true"
-                      className="tnum t-kicker pt-2 text-navy-300"
-                    >
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.05]"
+                    />
+                  </span>
 
-                    <span className="min-w-0">
-                      <span className="t-subtitle block text-navy transition-colors group-hover:text-blue-deep">
+                  <span className="flex flex-1 flex-col p-6 sm:p-7">
+                    <span className="flex items-center gap-3">
+                      <span
+                        aria-hidden="true"
+                        className="tnum grid h-9 w-9 shrink-0 place-items-center rounded-full bg-sand text-[0.78rem] font-semibold text-navy-500"
+                      >
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <span className="t-subtitle text-navy transition-colors group-hover:text-blue-deep">
                         {s.title}
                       </span>
-                      <span className="mt-2.5 block max-w-xl text-[0.97rem] leading-relaxed text-body">
-                        {s.card}
-                      </span>
-                      <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep">
-                        Read more
-                        <Icon
-                          name="arrow"
-                          size={15}
-                          className="transition-transform duration-200 group-hover:translate-x-0.5"
-                        />
-                      </span>
                     </span>
 
-                    <span className="hidden sm:block">
-                      <span className="relative block aspect-[3/2] overflow-hidden rounded-clinical bg-navy-50">
-                        <img
-                          src={asset(`services/${s.slug}.jpg`)}
-                          alt=""
-                          aria-hidden="true"
-                          loading="lazy"
-                          decoding="async"
-                          className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.05]"
-                        />
-                      </span>
+                    <span className="mt-4 flex-1 text-[0.97rem] leading-relaxed text-body">
+                      {s.card}
                     </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+
+                    <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep">
+                      Read more
+                      <Icon
+                        name="arrow"
+                        size={15}
+                        aria-hidden="true"
+                        className="transition-transform duration-200 group-hover:translate-x-0.5"
+                      />
+                    </span>
+                  </span>
+                </Link>
+              </Card>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-12 flex justify-center">
+          <Button to="/services" variant="outline" size="lg" icon="arrow" iconRight>
+            View all services
+          </Button>
         </div>
       </Container>
     </Section>
@@ -358,31 +345,39 @@ function PathToHealing() {
   ]
 
   return (
-    <Section tone="white">
+    <Section tone="cream">
       <Container>
         <SectionHeading
+          align="center"
           index="03"
           eyebrow="Your Path to Healing"
           title="Start Your Healing Journey"
           body="Take the first step toward a healthier, more balanced life. Our compassionate care team is here to guide you every step of the way."
         />
 
-        <ol className="mt-14 grid gap-10 sm:grid-cols-3 sm:gap-8">
+        <ol className="mt-14 grid gap-6 sm:grid-cols-3">
           {steps.map((s) => (
-            <li key={s.step} className="border-t-2 border-navy pt-6">
-              <span className="inline-flex items-center gap-3">
-                <Icon name={s.icon} size={19} className="text-cyan-deep" />
-                <span className="tnum t-kicker text-navy-400">{s.step}</span>
-              </span>
-              <h3 className="t-subtitle mt-5 text-navy">{s.title}</h3>
-              <p className="mt-3 text-[0.97rem] leading-relaxed text-body">
-                {s.body}
-              </p>
+            <li key={s.step} className="h-full">
+              <Card className="h-full">
+                <span className="flex items-start justify-between gap-4">
+                  <IconBadge name={s.icon} tone="gradient" size="md" />
+                  <span
+                    aria-hidden="true"
+                    className="tnum font-display text-[1.7rem] font-semibold leading-none text-navy-100"
+                  >
+                    {s.step}
+                  </span>
+                </span>
+                <h3 className="t-subtitle mt-6 text-navy">{s.title}</h3>
+                <p className="mt-3 text-[0.97rem] leading-relaxed text-body">
+                  {s.body}
+                </p>
+              </Card>
             </li>
           ))}
         </ol>
 
-        <div className="mt-12 flex flex-col gap-3 sm:flex-row">
+        <div className="mt-12 flex flex-col justify-center gap-3 sm:flex-row">
           <Button to="/book" size="lg" icon="calendar">
             Request an appointment
           </Button>
@@ -399,18 +394,13 @@ function PathToHealing() {
 
 function StatsBand() {
   return (
-    <Section
-      tone="mist"
-      tight
-      className="border-t-2 border-navy"
-      aria-label="Practice at a glance"
-    >
+    <Section tone="white" aria-label="Practice at a glance">
       <Container>
-        <dl className="grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-4">
+        <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6">
           {stats.map((s) => (
-            <div key={s.label}>
+            <div key={s.label} className="h-full">
               <dt className="sr-only">{s.label}</dt>
-              <dd>
+              <dd className="h-full">
                 <Stat value={s.value} label={s.label} />
               </dd>
             </div>
@@ -425,9 +415,11 @@ function StatsBand() {
 
 function VisionQuote() {
   return (
-    <Section tone="paper" tight rule>
-      <Container size="narrow">
-        <PullQuote attribution="Our vision">{about.vision}</PullQuote>
+    <Section tone="blush" tight>
+      <Container>
+        <Card className="sm:p-10">
+          <PullQuote attribution="Our vision">{about.vision}</PullQuote>
+        </Card>
       </Container>
     </Section>
   )
@@ -464,50 +456,46 @@ function GetSupport() {
   ]
 
   return (
-    <Section tone="calm" rule>
+    <Section tone="cream">
       <Container>
         <SectionHeading
+          align="center"
           index="04"
           eyebrow="How you can reach us"
           title="More ways to get support"
         />
 
-        <ul className="mt-12 grid border-b border-[rgba(14,15,59,0.12)] sm:grid-cols-2">
-          {tiles.map((t, i) => (
-            <li
-              key={t.to}
-              className="border-t border-[rgba(14,15,59,0.12)] sm:odd:border-r"
-            >
-              <Link
-                to={t.to}
-                className="group flex h-full flex-col p-7 transition-colors hover:bg-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
-              >
-                <span className="flex items-center justify-between gap-4">
-                  <span className="tnum t-kicker text-navy-300">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
+        <ul className="mt-14 grid gap-6 sm:grid-cols-2">
+          {tiles.map((t) => (
+            <li key={t.to} className="h-full">
+              <Card interactive padded={false} className="h-full">
+                <Link
+                  to={t.to}
+                  className="group flex h-full flex-col rounded-clinical-lg p-7 focus-visible:outline-none"
+                >
                   <IconBadge
                     name={t.icon}
                     tone="cyan"
-                    size="sm"
-                    className="transition-colors group-hover:bg-brand-gradient group-hover:text-navy"
+                    size="md"
+                    className="transition-colors duration-300 group-hover:bg-brand-gradient group-hover:text-navy"
                   />
-                </span>
-                <h3 className="t-subtitle mt-6 text-navy transition-colors group-hover:text-blue-deep">
-                  {t.title}
-                </h3>
-                <p className="mt-3 flex-1 text-[0.97rem] leading-relaxed text-body">
-                  {t.body}
-                </p>
-                <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep">
-                  Learn more
-                  <Icon
-                    name="arrow"
-                    size={15}
-                    className="transition-transform duration-200 group-hover:translate-x-0.5"
-                  />
-                </span>
-              </Link>
+                  <h3 className="t-subtitle mt-6 text-navy transition-colors group-hover:text-blue-deep">
+                    {t.title}
+                  </h3>
+                  <p className="mt-3 flex-1 text-[0.97rem] leading-relaxed text-body">
+                    {t.body}
+                  </p>
+                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep">
+                    Learn more
+                    <Icon
+                      name="arrow"
+                      size={15}
+                      aria-hidden="true"
+                      className="transition-transform duration-200 group-hover:translate-x-0.5"
+                    />
+                  </span>
+                </Link>
+              </Card>
             </li>
           ))}
         </ul>
@@ -525,7 +513,7 @@ function FaqPreview() {
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-4">
             <Kicker index="05">Questions</Kicker>
-            <h2 className="t-title mt-5 text-navy">
+            <h2 className="t-title mt-6 text-navy">
               Frequently Asked Questions
             </h2>
             <Button
@@ -553,7 +541,7 @@ function FaqPreview() {
 
 function Location() {
   return (
-    <Section tone="calm" rule>
+    <Section tone="cream">
       <Container>
         <SectionHeading
           index="06"
@@ -574,7 +562,7 @@ function Location() {
                   <a
                     key="call"
                     href={practice.phoneHref}
-                    className="link-rule text-navy"
+                    className="text-navy"
                   >
                     {practice.phoneDisplay}
                   </a>,
@@ -584,7 +572,7 @@ function Location() {
                   <a
                     key="email"
                     href={`mailto:${practice.email}`}
-                    className="link-rule break-all text-navy"
+                    className="break-all text-navy"
                   >
                     {practice.email}
                   </a>,
@@ -593,7 +581,7 @@ function Location() {
             />
           </div>
 
-          <div className="space-y-9">
+          <div className="space-y-6">
             <Panel title="Need assistance?">
               <p className="text-[0.97rem] leading-relaxed text-body">
                 Reach out to our team with any questions or concerns and we will
@@ -639,7 +627,7 @@ function Location() {
               <CheckList items={resources.slice(0, 3).map((r) => r.name)} />
               <Link
                 to="/resources"
-                className="link-rule mt-5 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep"
+                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep transition-colors hover:text-navy"
               >
                 All resources
                 <Icon name="arrow" size={15} />
@@ -652,13 +640,13 @@ function Location() {
   )
 }
 
-/** A ruled editorial aside block. */
+/** A soft card aside block. */
 function Panel({ title, children }) {
   return (
-    <div className="border-t-2 border-navy pt-5">
+    <Card>
       <h3 className="t-subtitle text-navy">{title}</h3>
       <div className="mt-4">{children}</div>
-    </div>
+    </Card>
   )
 }
 
@@ -671,82 +659,80 @@ function ClosingCta() {
     'We contact you within 24–48 business hours',
   ]
   return (
-    <Section tone="navy" spacing="opening" className="relative overflow-hidden">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 pattern-dots text-white/[0.08]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-32 -top-40 h-[28rem] w-[28rem] rounded-full bg-cyan/25 blur-[150px]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-40 -right-24 h-[28rem] w-[28rem] rounded-full bg-blue/20 blur-[150px]"
-      />
+    <Section tone="cream" spacing="opening">
+      <Container>
+        <div className="relative overflow-hidden rounded-clinical-xl bg-mesh-navy p-6 sm:p-10 lg:p-14">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 pattern-dots text-white/[0.06]"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -left-24 -top-32 h-[26rem] w-[26rem] rounded-full bg-cyan/25 blur-[130px]"
+          />
 
-      <Container className="relative">
-        <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16">
-          <div>
-            <Kicker light>Struggling with your mental health?</Kicker>
-            <h2 className="t-title mt-5 text-white">
-              We&rsquo;re here to help.
-            </h2>
-            <p className="t-lead mt-6 max-w-xl text-navy-100">
-              Book now and let us guide you toward a brighter tomorrow. If you
-              would rather speak to someone first, call us — a real person answers
-              during office hours.
-            </p>
-
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Button
-                href={practice.phoneHref}
-                variant="accent"
-                size="lg"
-                icon="phone"
-              >
-                {practice.phoneDisplay}
-              </Button>
-              <Button
-                href={`mailto:${practice.email}`}
-                variant="onDark"
-                size="lg"
-                icon="document"
-              >
-                Email us
-              </Button>
-            </div>
-
-            <div className="mt-9 border border-coral/50 bg-coral/15 p-5">
-              <p className="t-kicker flex items-center gap-2 text-white">
-                <Icon name="alert-triangle" size={15} aria-hidden="true" />
-                24/7 crisis support
+          <div className="relative grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-14">
+            <div>
+              <Kicker light>Struggling with your mental health?</Kicker>
+              <h2 className="t-title mt-6 text-white">
+                We&rsquo;re here to help.
+              </h2>
+              <p className="t-lead mt-6 max-w-xl text-navy-100">
+                Book now and let us guide you toward a brighter tomorrow. If you
+                would rather speak to someone first, call us — a real person
+                answers during office hours.
               </p>
-              <p className="mt-3 text-[0.95rem] leading-relaxed text-white/95">
-                Call or text{' '}
-                <a
-                  href={crisis.lifelineHref}
-                  className="font-bold text-white underline underline-offset-4"
+
+              <div className="mt-9 flex flex-wrap gap-3">
+                <Button
+                  href={practice.phoneHref}
+                  variant="accent"
+                  size="lg"
+                  icon="phone"
                 >
-                  988
-                </a>{' '}
-                — free and confidential, any time.
+                  {practice.phoneDisplay}
+                </Button>
+                <Button
+                  href={`mailto:${practice.email}`}
+                  variant="onDark"
+                  size="lg"
+                  icon="document"
+                >
+                  Email us
+                </Button>
+              </div>
+
+              <div className="mt-9 rounded-clinical-lg border border-coral/50 bg-coral/15 p-5">
+                <p className="t-kicker flex items-center gap-2 text-white">
+                  <Icon name="alert-triangle" size={15} aria-hidden="true" />
+                  24/7 crisis support
+                </p>
+                <p className="mt-3 text-[0.95rem] leading-relaxed text-white/95">
+                  Call or text{' '}
+                  <a
+                    href={crisis.lifelineHref}
+                    className="font-bold text-white underline underline-offset-4"
+                  >
+                    988
+                  </a>{' '}
+                  — free and confidential, any time.
+                </p>
+              </div>
+            </div>
+
+            <div className="rounded-clinical-lg bg-white p-7 shadow-clinical-xl sm:p-9">
+              <Kicker>Start your healing journey</Kicker>
+              <h3 className="t-subtitle mt-6 text-navy">
+                Request an appointment
+              </h3>
+              <CheckList items={expectations} className="mt-7" />
+              <Button to="/book" size="lg" icon="calendar" className="mt-7 w-full">
+                Book Now
+              </Button>
+              <p className="mt-3 text-center text-xs text-navy-400">
+                Takes about 2 minutes. We reply within 24–48 business hours.
               </p>
             </div>
-          </div>
-
-          <div className="border border-white/20 bg-white/[0.07] p-7 backdrop-blur sm:p-9">
-            <Kicker light>Start your healing journey</Kicker>
-            <h3 className="t-subtitle mt-5 text-white">
-              Request an appointment
-            </h3>
-            <CheckList items={expectations} light className="mt-7" />
-            <Button to="/book" size="lg" icon="calendar" className="mt-7 w-full">
-              Book Now
-            </Button>
-            <p className="mt-3 text-center text-xs text-navy-200">
-              Takes about 2 minutes. We reply within 24–48 business hours.
-            </p>
           </div>
         </div>
       </Container>

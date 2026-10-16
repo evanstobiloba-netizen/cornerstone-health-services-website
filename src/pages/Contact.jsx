@@ -5,6 +5,7 @@ import Icon from '../components/Icon.jsx'
 import LocationMap from '../components/LocationMap.jsx'
 import LeadForm from '../components/LeadForm.jsx'
 import {
+  Card,
   Container,
   IconBadge,
   Kicker,
@@ -25,16 +26,16 @@ export default function Contact() {
 
   return (
     <>
-      <Section tone="white" rule spacing="opening">
+      <Section tone="soft" spacing="opening">
         <Container>
           <Kicker>{form.script}</Kicker>
           <h1 className="t-display mt-6 max-w-4xl text-navy">{form.title}</h1>
           <p className="t-lead mt-7 max-w-2xl">{form.lede}</p>
 
-          <div className="mt-14 grid border-t border-[rgba(14,15,59,0.12)] sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <a
               href={practice.phoneHref}
-              className="flex items-start gap-4 border-b border-[rgba(14,15,59,0.12)] py-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:border-b-0 lg:border-r lg:pr-7"
+              className="flex items-start gap-4 rounded-clinical border border-line bg-white p-6 shadow-clinical transition duration-200 hover:-translate-y-0.5 hover:shadow-clinical-lg focus-visible:outline-none"
             >
               <IconBadge name="phone" tone="cyan" />
               <span>
@@ -47,7 +48,7 @@ export default function Contact() {
 
             <a
               href={`mailto:${practice.email}`}
-              className="flex items-start gap-4 border-b border-[rgba(14,15,59,0.12)] py-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:border-b-0 lg:border-r lg:px-7"
+              className="flex items-start gap-4 rounded-clinical border border-line bg-white p-6 shadow-clinical transition duration-200 hover:-translate-y-0.5 hover:shadow-clinical-lg focus-visible:outline-none"
             >
               <IconBadge name="document" tone="blue" />
               <span className="min-w-0">
@@ -58,7 +59,7 @@ export default function Contact() {
               </span>
             </a>
 
-            <div className="flex items-start gap-4 border-b border-[rgba(14,15,59,0.12)] py-6 sm:col-span-2 lg:col-span-1 lg:border-b-0 lg:pl-7">
+            <div className="flex items-start gap-4 rounded-clinical border border-line bg-white p-6 shadow-clinical sm:col-span-2 lg:col-span-1">
               <IconBadge name="map-pin" tone="navy" />
               <span>
                 <span className="t-kicker block text-navy-400">Office</span>
@@ -74,13 +75,13 @@ export default function Contact() {
         </Container>
       </Section>
 
-      <Section tone="calm" rule>
+      <Section tone="cream">
         <Container>
           <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-14">
             <div>
               <LocationMap height="h-[20rem]" />
 
-              <div id="appointments" className="mt-10 scroll-mt-32 border-t-2 border-navy pt-6">
+              <Card id="appointments" className="mt-10 scroll-mt-32">
                 <Kicker>Appointments</Kicker>
                 <h2 className="t-subtitle mt-5 text-navy">How we schedule</h2>
                 <p className="mt-4 text-[0.97rem] leading-relaxed text-body">
@@ -111,10 +112,10 @@ export default function Contact() {
                     {practice.domain}
                   </Button>
                 </div>
-              </div>
+              </Card>
 
               {/* PRD anchor: referrals */}
-              <div id="refer" className="mt-10 scroll-mt-32 border-t border-[rgba(14,15,59,0.12)] pt-6">
+              <Card id="refer" className="mt-6 scroll-mt-32">
                 <Kicker>For referrers</Kicker>
                 <h2 className="t-subtitle mt-5 text-navy">
                   Referring a patient
@@ -130,10 +131,10 @@ export default function Contact() {
                   </Link>{' '}
                   form, or call us to discuss a case before sending it.
                 </p>
-              </div>
+              </Card>
 
               {/* PRD anchor: providers */}
-              <div id="providers" className="mt-10 scroll-mt-32 border-t border-[rgba(14,15,59,0.12)] pt-6">
+              <Card id="providers" className="mt-6 scroll-mt-32">
                 <Kicker>Our clinicians</Kicker>
                 <h2 className="t-subtitle mt-5 text-navy">Who you will see</h2>
                 <p className="mt-4 text-[0.97rem] leading-relaxed text-body">
@@ -147,7 +148,7 @@ export default function Contact() {
                   Credentials and licence numbers can be verified with the
                   issuing board on request.
                 </p>
-              </div>
+              </Card>
             </div>
 
             <div className="lg:pt-1">
