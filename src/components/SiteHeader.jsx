@@ -65,7 +65,7 @@ export default function SiteHeader() {
           </span>
         </div>
 
-        <nav aria-label="Primary" className="hidden md:block min-w-0 flex-shrink-0">
+        <nav aria-label="Primary" className="hidden lg:block min-w-0 flex-shrink-0">
           <ul className="flex flex-wrap items-center gap-1.5">
             {nav.map((item) => (
               <li key={item.to}>
@@ -86,13 +86,13 @@ export default function SiteHeader() {
             {practice.phoneDisplay}
           </a>
 
-          <Button to="/book" size="sm" className="hidden md:inline-flex">
+          <Button to="/book" size="sm" className="hidden lg:inline-flex">
             Book Now
           </Button>
 
           <a
             href={practice.phoneHref}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line bg-white text-navy transition-colors hover:border-navy-200 md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line bg-white text-navy transition-colors hover:border-navy-200 lg:hidden"
             aria-label={`Call Cornerstone Health Services at ${practice.phoneDisplay}`}
           >
             <Icon name="phone" size={17} aria-hidden="true" />
@@ -103,7 +103,7 @@ export default function SiteHeader() {
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? 'Close menu' : 'Open menu'}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line bg-white text-navy transition-colors hover:border-navy-200 md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line bg-white text-navy transition-colors hover:border-navy-200 lg:hidden"
           >
             <Icon name={open ? 'close' : 'menu'} size={19} aria-hidden="true" />
           </button>
@@ -113,7 +113,7 @@ export default function SiteHeader() {
       <div
         id="mobile-menu"
         hidden={!open}
-        className="bg-cream md:hidden"
+        className="bg-cream lg:hidden"
       >
         <nav
           aria-label="Mobile"
