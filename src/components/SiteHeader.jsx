@@ -55,7 +55,7 @@ export default function SiteHeader() {
     >
       <div className="mx-auto flex h-16 max-w-[84rem] items-center justify-between gap-2 px-3 sm:h-[4.5rem] sm:gap-4 sm:px-5 md:px-6 lg:px-10">
         <div className="flex min-w-0 items-center gap-3 sm:gap-4 lg:gap-5">
-          <Logo height={30} />
+          <Logo height={40} />
           <span
             aria-hidden="true"
             className="hidden h-7 w-px bg-line lg:block"
