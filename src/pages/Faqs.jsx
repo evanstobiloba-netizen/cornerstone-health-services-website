@@ -7,7 +7,7 @@ import { Container, Kicker, Section } from '../components/Ui.jsx'
 export default function Faqs() {
   return (
     <>
-      <Section tone="white" rule>
+      <Section tone="white" rule spacing="opening">
         <Container>
           <Kicker>Questions</Kicker>
           <h1 className="t-display mt-6 max-w-4xl text-navy">

@@ -66,20 +66,33 @@ const SECTION_TONES = {
   navy: 'bg-mesh-navy text-white',
 }
 
+/**
+ * Vertical rhythm. Three deliberate steps rather than one flat padding, so a
+ * long page has cadence: an opening spread breathes, ordinary sections sit at
+ * the default, and interstitials (a figures band, a pull quote) run tight.
+ */
+const SECTION_SPACING = {
+  opening: 'py-20 sm:py-24 lg:py-32',
+  default: 'py-16 sm:py-20 lg:py-24',
+  dense: 'py-12 sm:py-14 lg:py-16',
+}
+
 export function Section({
   children,
   className = '',
   tone = 'none',
   tight = false,
+  spacing,
   rule = false,
   as: As = 'section',
   ...rest
 }) {
+  const pad = tight
+    ? SECTION_SPACING.dense
+    : (SECTION_SPACING[spacing] ?? SECTION_SPACING.default)
   return (
     <As
-      className={`${SECTION_TONES[tone]} ${
-        tight ? 'py-12 sm:py-14 lg:py-16' : 'py-16 sm:py-20 lg:py-24'
-      } ${rule ? 'rule-top' : ''} ${className}`}
+      className={`${SECTION_TONES[tone]} ${pad} ${rule ? 'rule-top' : ''} ${className}`}
       {...rest}
     >
       {children}
@@ -101,17 +114,27 @@ export function Kicker({
 }) {
   return (
     <p
-      className={`t-kicker inline-flex items-center gap-3 ${
+      className={`t-kicker inline-flex flex-wrap items-baseline gap-x-2.5 gap-y-1 ${
         light ? 'text-cyan' : 'text-blue-deep'
       } ${className}`}
     >
       {index && (
-        <span
-          aria-hidden="true"
-          className={`tnum ${light ? 'text-navy-200' : 'text-navy-300'}`}
-        >
-          {index}
-        </span>
+        <>
+          <span
+            aria-hidden="true"
+            className={`tnum ${light ? 'text-navy-200' : 'text-navy-300'}`}
+          >
+            {index}
+          </span>
+          {/* The number is a section mark, so it is separated from the label
+              the way a printed folio is: "01 — Welcome". */}
+          <span
+            aria-hidden="true"
+            className={light ? 'text-navy-200' : 'text-navy-300'}
+          >
+            —
+          </span>
+        </>
       )}
       {icon && !index && (
         <Icon name={icon} size={14} strokeWidth={2.2} aria-hidden="true" />
@@ -173,7 +196,7 @@ export function SectionHeading({
     xl: 't-display',
     lg: 't-title',
     md: 't-subtitle',
-    sm: 'text-xl sm:text-2xl',
+    sm: 't-subtitle-sm',
   }
   return (
     <div
@@ -362,7 +385,7 @@ export function IndexRow({
         name={trailing}
         size={18}
         aria-hidden="true"
-        className="mt-1.5 hidden shrink-0 text-navy-300 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-navy sm:block"
+        className="mt-1.5 shrink-0 self-center text-navy-300 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-navy"
       />
     </>
   )

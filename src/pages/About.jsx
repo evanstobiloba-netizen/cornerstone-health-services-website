@@ -38,7 +38,7 @@ function Intro() {
   ]
 
   return (
-    <Section tone="white" rule>
+    <Section tone="white" rule spacing="opening">
       <Container>
         <div className="grid gap-12 lg:grid-cols-12 lg:items-start lg:gap-14">
           <div className="lg:col-span-7">
@@ -224,7 +224,7 @@ function Facts() {
 
 function Cta() {
   return (
-    <Section tone="navy" tight className="relative overflow-hidden">
+    <Section tone="navy" spacing="opening" className="relative overflow-hidden">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 pattern-dots text-white/[0.08]"

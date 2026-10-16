@@ -46,7 +46,7 @@ export default function GetHelp() {
         </Container>
       </div>
 
-      <Section tone="white" rule>
+      <Section tone="white" rule spacing="opening">
         <Container>
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-4">

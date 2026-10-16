@@ -32,8 +32,21 @@ export default function Accordion({ items, className = '' }) {
                 {item.q}
               </span>
             </span>
-            <span className="mt-1 shrink-0 text-navy-400 transition-transform duration-200 group-open:rotate-45">
-              <Icon name="plus" size={20} strokeWidth={1.9} aria-hidden="true" />
+            <span className="relative mt-0.5 block h-5 w-5 shrink-0 text-navy-400 transition-colors duration-200 group-hover:text-navy">
+              <Icon
+                name="plus"
+                size={20}
+                strokeWidth={1.9}
+                aria-hidden="true"
+                className="absolute inset-0 transition-opacity duration-200 group-open:opacity-0"
+              />
+              <Icon
+                name="minus"
+                size={20}
+                strokeWidth={1.9}
+                aria-hidden="true"
+                className="absolute inset-0 opacity-0 transition-opacity duration-200 group-open:opacity-100"
+              />
             </span>
           </summary>
           <div className="pb-7">

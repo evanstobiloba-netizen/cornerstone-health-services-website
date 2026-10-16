@@ -250,6 +250,17 @@
     overflow-wrap: break-word;
   }
 
+  /* The step below .t-subtitle, for dense grids of small serif headings.
+     Keeps the serif voice instead of dropping to a sans utility size. */
+  .t-subtitle-sm {
+    font-family: var(--font-display);
+    font-size: clamp(1.12rem, 1.5vw, 1.32rem);
+    line-height: 1.2;
+    letter-spacing: -0.012em;
+    font-weight: 500;
+    overflow-wrap: break-word;
+  }
+
   .t-lead {
     font-size: clamp(1.12rem, 1.5vw, 1.4rem);
     line-height: 1.5;

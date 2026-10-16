@@ -48,7 +48,7 @@ export default function Button({
 }) {
   const isLink = variant === 'link'
   const cls = [
-    'inline-flex items-center justify-center gap-2.5 rounded-clinical',
+    'group inline-flex items-center justify-center gap-2.5 rounded-clinical',
     'transition duration-200 whitespace-nowrap',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
     'active:translate-y-px',
@@ -77,14 +77,14 @@ export default function Button({
 
   if (to) {
     return (
-      <Link to={to} className={`group ${cls}`} {...rest}>
+      <Link to={to} className={cls} {...rest}>
         {inner}
       </Link>
     )
   }
   if (href) {
     return (
-      <a href={href} className={`group ${cls}`} {...rest}>
+      <a href={href} className={cls} {...rest}>
         {inner}
       </a>
     )

@@ -33,7 +33,7 @@ const SECTIONS = [
 export default function Privacy() {
   return (
     <>
-      <Section tone="white" rule>
+      <Section tone="white" rule spacing="opening">
         <Container>
           <Kicker>Your information</Kicker>
           <h1 className="t-display mt-6 max-w-4xl text-navy">Privacy Policy</h1>

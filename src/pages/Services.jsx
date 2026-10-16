@@ -30,7 +30,7 @@ export default function Services() {
 
 function Hero() {
   return (
-    <Section tone="white" rule>
+    <Section tone="white" rule spacing="opening">
       <Container>
         <Kicker>Services</Kicker>
         <h1 className="t-display mt-6 max-w-4xl text-navy">
@@ -209,7 +209,7 @@ function WhatSetsUsApart() {
 
 function Cta() {
   return (
-    <Section tone="navy" tight className="relative overflow-hidden">
+    <Section tone="navy" spacing="opening" className="relative overflow-hidden">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 pattern-dots text-white/[0.08]"

@@ -25,7 +25,7 @@ export default function Contact() {
 
   return (
     <>
-      <Section tone="white" rule>
+      <Section tone="white" rule spacing="opening">
         <Container>
           <Kicker>{form.script}</Kicker>
           <h1 className="t-display mt-6 max-w-4xl text-navy">{form.title}</h1>

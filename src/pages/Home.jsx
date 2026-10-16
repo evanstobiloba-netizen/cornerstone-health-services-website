@@ -70,7 +70,7 @@ function Cover() {
   ]
 
   return (
-    <Section tone="navy" className="relative overflow-hidden">
+    <Section tone="navy" spacing="opening" className="relative overflow-hidden">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 pattern-dots text-white/[0.07]"
@@ -99,7 +99,7 @@ function Cover() {
               Mental Wellness, Within Reach
             </p>
 
-            <h1 className="mt-5 font-display text-[clamp(2.3rem,5vw,4.3rem)] font-medium leading-[0.99] tracking-[-0.03em] text-white">
+            <h1 className="t-display mt-5 text-white">
               Compassionate psychiatric care for adults across Massachusetts
             </h1>
 
@@ -216,7 +216,7 @@ function InsuranceMarquee() {
 
 function Welcome() {
   return (
-    <Section tone="white">
+    <Section tone="white" spacing="opening">
       <Container>
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-7">
@@ -242,16 +242,6 @@ function Welcome() {
               </span>
               <p className="mt-4 text-[0.97rem] leading-relaxed text-body">
                 {about.mission}
-              </p>
-            </div>
-
-            <div className="mt-8 border-t border-[rgba(14,15,59,0.12)] pt-6">
-              <span className="flex items-center gap-3">
-                <IconBadge name="sparkle" tone="cyan" size="sm" />
-                <h3 className="t-subtitle text-navy">Our Vision</h3>
-              </span>
-              <p className="mt-4 text-[0.97rem] leading-relaxed text-body">
-                {about.vision}
               </p>
             </div>
           </div>
@@ -410,27 +400,18 @@ function PathToHealing() {
 function StatsBand() {
   return (
     <Section
-      tone="navy"
+      tone="mist"
       tight
-      className="relative overflow-hidden"
+      className="border-t-2 border-navy"
       aria-label="Practice at a glance"
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 pattern-dots text-white/10"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-40 left-1/2 h-96 w-[52rem] -translate-x-1/2 rounded-full bg-cyan/20 blur-[150px]"
-      />
-
-      <Container className="relative">
+      <Container>
         <dl className="grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-4">
           {stats.map((s) => (
             <div key={s.label}>
               <dt className="sr-only">{s.label}</dt>
               <dd>
-                <Stat value={s.value} label={s.label} light />
+                <Stat value={s.value} label={s.label} />
               </dd>
             </div>
           ))}
@@ -444,7 +425,7 @@ function StatsBand() {
 
 function VisionQuote() {
   return (
-    <Section tone="paper" tight>
+    <Section tone="paper" tight rule>
       <Container size="narrow">
         <PullQuote attribution="Our vision">{about.vision}</PullQuote>
       </Container>
@@ -519,7 +500,7 @@ function GetSupport() {
                   {t.body}
                 </p>
                 <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-blue-deep">
-                  Continue
+                  Learn more
                   <Icon
                     name="arrow"
                     size={15}
@@ -690,7 +671,7 @@ function ClosingCta() {
     'We contact you within 24–48 business hours',
   ]
   return (
-    <Section tone="navy" className="relative overflow-hidden">
+    <Section tone="navy" spacing="opening" className="relative overflow-hidden">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 pattern-dots text-white/[0.08]"

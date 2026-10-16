@@ -14,7 +14,7 @@ import { Container, Kicker, Rule, Section } from '../components/Ui.jsx'
  */
 export default function FormPage({ form, aside }) {
   return (
-    <Section tone="white">
+    <Section tone="white" spacing="opening">
       <Container>
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start lg:gap-16">
           <div className="lg:sticky lg:top-28">

@@ -31,7 +31,7 @@ export default function ServiceDetail() {
 
   return (
     <>
-      <Section tone="white" rule>
+      <Section tone="white" rule spacing="opening">
         <Container>
           <nav aria-label="Breadcrumb" className="mb-10">
             <ol className="t-kicker flex flex-wrap items-center gap-2.5 text-navy-400">
