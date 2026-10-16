@@ -65,8 +65,8 @@ export default function SiteHeader() {
           </span>
         </div>
 
-        <nav aria-label="Primary" className="hidden md:block min-w-0 overflow-x-auto flex-shrink-0">
-          <ul className="flex flex-nowrap items-center gap-1.5 whitespace-nowrap">
+        <nav aria-label="Primary" className="hidden md:block min-w-0 flex-shrink-0">
+          <ul className="flex flex-wrap items-center gap-1.5">
             {nav.map((item) => (
               <li key={item.to}>
                 <NavLink to={item.to} end={item.to === '/'} className={pill}>
