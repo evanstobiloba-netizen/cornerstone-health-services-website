@@ -12,8 +12,7 @@ import Icon from './Icon.jsx'
  * soft pills that fill with white on hover — the same rounded language as the
  * rest of the site. Depth is a quiet shadow that only appears once you have
  * scrolled away from the top, so the opening band and the bar read as one
- * surface. The standfirst ("Psychiatric care · Quincy, MA") sits beside the logo
- * on wide screens.
+ * surface.
  */
 export default function SiteHeader() {
   const [open, setOpen] = useState(false)
@@ -56,13 +55,6 @@ export default function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-[84rem] items-center justify-between gap-2 px-3 sm:h-[4.5rem] sm:gap-4 sm:px-5 md:px-6 lg:px-10">
         <div className="flex min-w-0 items-center gap-3 sm:gap-4 lg:gap-5">
           <Logo height={50} />
-          <span
-            aria-hidden="true"
-            className="hidden h-7 w-px bg-line lg:block"
-          />
-          <span className="t-kicker hidden text-navy-400 md:block">
-            Psychiatric care · Quincy, MA
-          </span>
         </div>
 
         <nav aria-label="Primary" className="hidden lg:block min-w-0 flex-shrink-0">
