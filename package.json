@@ -11,12 +11,14 @@
     "build:ssr": "vite build --ssr src/entry-server.jsx --outDir dist-ssr",
     "prerender": "node scripts/prerender.mjs",
     "preview": "vite preview",
+    "start": "node server.js",
     "deploy:vercel": "vercel --prod"
   },
   "engines": {
     "node": ">=20.19.0"
   },
   "dependencies": {
+    "express": "^5.3.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-router-dom": "^7.18.4"
