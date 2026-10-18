@@ -122,7 +122,7 @@ function Cover() {
           </div>
 
           <div className="lg:col-span-6">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-clinical-xl shadow-clinical-xl sm:aspect-[16/11] lg:aspect-[4/5]">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-clinical-xl shadow-clinical-xl sm:aspect-[16/11] lg:aspect-[4/5]">
               <HeroSlideshow className="absolute inset-0 h-full w-full" />
               {/* Sits at the top so it never collides with the slide dots. */}
               <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-white/90 px-3.5 py-1.5 text-[0.75rem] font-semibold text-navy shadow-clinical backdrop-blur">

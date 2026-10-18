@@ -82,7 +82,7 @@ practice's **Insurance** select is kept alongside it, since coverage must be
 confirmed before an appointment is offered.
 
 `/mobile` is the explicit app-shell variant: sticky crisis header, one-tap
-calling, fixed bottom tab bar, no desktop chrome. To make it non-public, remove
+calling, no desktop chrome. To make it non-public, remove
 the route in `src/App.jsx` and the "Mobile view" link in `SiteFooter.jsx`.
 
 ---
@@ -509,10 +509,9 @@ src/
   data/site.js             ALL content, single source of truth
   data/seo.js              per-route title/description/canonical/JSON-LD
   components/
-    Layout.jsx             skip link, sticky ribbon+header, footer, tab bar
+    Layout.jsx             skip link, sticky ribbon+header, footer
     CrisisRibbon.jsx       persistent 988 ribbon
     SiteHeader.jsx         nav + mobile drawer
-    MobileTabBar.jsx       fixed bottom tabs with centre Call button
     SiteFooter.jsx         sitemap, contact, crisis card, disclaimer
     Seo.jsx                keeps <head> in sync on client-side navigation
     LeadForm.jsx           one validated form, config-driven for 6 pages

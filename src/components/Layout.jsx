@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 import CrisisRibbon from './CrisisRibbon.jsx'
 import SiteHeader from './SiteHeader.jsx'
 import SiteFooter from './SiteFooter.jsx'
-import MobileTabBar from './MobileTabBar.jsx'
 
 /**
  * Route scroll restoration: jump to top on navigation, or to the hash target
@@ -46,10 +45,6 @@ export default function Layout() {
       </main>
 
       <SiteFooter />
-
-      {/* Reserve space so the fixed tab bar never covers footer content. */}
-      <div aria-hidden="true" className="h-20 md:hidden" />
-      <MobileTabBar />
     </div>
   )
 }

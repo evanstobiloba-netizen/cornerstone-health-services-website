@@ -76,9 +76,9 @@ const SECTION_TONES = {
  * the default, and interstitials (a figures band, a pull quote) run tight.
  */
 const SECTION_SPACING = {
-  opening: 'py-20 sm:py-24 lg:py-28',
-  default: 'py-16 sm:py-20 lg:py-24',
-  dense: 'py-12 sm:py-14 lg:py-16',
+  opening: 'py-14 sm:py-24 lg:py-28',
+  default: 'py-12 sm:py-20 lg:py-24',
+  dense: 'py-10 sm:py-14 lg:py-16',
 }
 
 export function Section({

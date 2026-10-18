@@ -9,7 +9,6 @@ import {
 } from '../data/site.js'
 import Icon from '../components/Icon.jsx'
 import LeadForm from '../components/LeadForm.jsx'
-import MobileTabBar from '../components/MobileTabBar.jsx'
 import Button from '../components/Button.jsx'
 import { asset } from '../lib/asset.js'
 
@@ -17,10 +16,10 @@ import { asset } from '../lib/asset.js'
  * Dedicated mobile home screen from the PRD inventory.
  *
  * The main site is already mobile-first and responsive, so /mobile is the
- * explicit app-shell variant: sticky crisis header, one-tap calling, and the
- * fixed bottom tab bar, with no desktop chrome at all. Content is constrained
- * to a phone-width column so it renders identically in a device frame or on a
- * desktop preview. Copy is unchanged.
+ * explicit app-shell variant: sticky crisis header and one-tap calling, with
+ * no desktop chrome at all. Content is constrained to a phone-width column so
+ * it renders identically in a device frame or on a desktop preview. Copy is
+ * unchanged.
  */
 export default function MobileHome() {
   return (
@@ -207,9 +206,6 @@ export default function MobileHome() {
           This site is general information, not medical advice.
         </p>
       </div>
-
-      <div aria-hidden="true" className="h-24" />
-      <MobileTabBar />
     </div>
   )
 }
