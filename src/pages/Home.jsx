@@ -17,7 +17,6 @@ import Icon from '../components/Icon.jsx'
 import InsuranceLogo from '../components/InsuranceLogo.jsx'
 import LocationMap from '../components/LocationMap.jsx'
 import {
-  Badge,
   Card,
   CheckList,
   Container,
@@ -85,15 +84,7 @@ function Cover() {
       <Container className="relative">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
-            <Badge tone="white">
-              <span className="relative flex h-2 w-2" aria-hidden="true">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-cyan opacity-70" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-gradient" />
-              </span>
-              Accepting new patients
-            </Badge>
-
-            <p className="t-kicker mt-8 text-blue-deep">
+            <p className="t-kicker text-blue-deep">
               Mental Wellness, Within Reach
             </p>
 

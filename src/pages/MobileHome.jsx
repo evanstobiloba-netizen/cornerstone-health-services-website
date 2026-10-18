@@ -67,15 +67,7 @@ export default function MobileHome() {
 
       <div className="mx-auto max-w-lg px-4 pb-8 pt-6">
         {/* Hero */}
-        <p className="t-kicker inline-flex items-center gap-2 border border-[rgba(14,15,59,0.14)] bg-white px-3 py-1.5 text-navy">
-          <span
-            className="h-2 w-2 rounded-full bg-brand-gradient"
-            aria-hidden="true"
-          />
-          Accepting new patients
-        </p>
-
-        <p className="t-kicker mt-6 text-blue-deep">
+        <p className="t-kicker text-blue-deep">
           Mental Wellness, Within Reach
         </p>
         <h1 className="mt-3 font-display text-[2rem] font-medium leading-[1.05] tracking-[-0.03em] text-navy">
